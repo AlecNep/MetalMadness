@@ -135,16 +135,17 @@ public class PlayerControls : MonoBehaviour {
         {
             mTargetRotation = Quaternion.Euler(mTargetShiftAngle, mTargetTurnAngle, 0f);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mShiftRotatationSpeed);
-            //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(mDesiredAgnles), mShiftRotatationSpeed);
-
-
-            //transform.Rotate(new Vector3(mTargetShiftAngle, mTargetTurnAngle, 0), Space.Self);
-            Vector3 lTemp = transform.rotation.eulerAngles;
-            //mCamera.transform.rotation = Quaternion.Euler(0, 0, temp.z);
-            mCamera.transform.rotation = Quaternion.Euler(0, 0, lTemp.x);
         }
+
         mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
-        
+        Vector3 lTemp = transform.rotation.eulerAngles;
+
+        //So if I use Z, the camera turns fine N and S, but goes apeshit on E and W
+        //but if I use X, the camera turns fine for all directions except N
+        //Ideally it would look the best if the camera turned with the player, but for now it just needs to work
+        mCamera.transform.rotation = Quaternion.Euler(0, 0, lTemp.x);
+        //mCamera.transform.rotation = Quaternion.Euler(0, 0, mDesiredAgnles.x); same issue as lTemp.z
+
 
         Vector2 lGravInput = new Vector2(Input.GetAxis("RStickX"), Input.GetAxis("RStickY"));
         float lGravAngle = 0f;
