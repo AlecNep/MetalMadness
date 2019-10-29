@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System; //Probably need to get rid of this
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -65,6 +66,7 @@ public class PlayerControls : MonoBehaviour {
                 mGravNormal = Vector3.left;
                 mMovementVector = Vector3.down;
                 mTargetShiftAngle = -90f;
+                //mTargetShiftAngle = 90f; //doesn't seem to make a difference
                 break;
             case 2: //North
                 mGravNormal = Vector3.up;
@@ -75,6 +77,7 @@ public class PlayerControls : MonoBehaviour {
                 mGravNormal = Vector3.right;
                 mMovementVector = Vector3.up;
                 mTargetShiftAngle = 90f;
+                //mTargetShiftAngle = -90f; //doesn't seem to make a difference
                 break;
             default:
                 break;
@@ -94,13 +97,16 @@ public class PlayerControls : MonoBehaviour {
                         mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0);
                         break;
                     case 1: //West
-                        mDesiredAgnles = new Vector3(90, mTargetTurnAngle, 0);
+                        //mDesiredAgnles = new Vector3(90, mTargetTurnAngle, 0);
+                        mDesiredAgnles = new Vector3(mTargetTurnAngle, 180, 90);
                         break;
                     case 2: //North
-                        mDesiredAgnles = new Vector3(180, mTargetTurnAngle, 0);
+                        //mDesiredAgnles = new Vector3(180, mTargetTurnAngle, 0);
+                        mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180); //
                         break;
                     case 3: //East
-                        mDesiredAgnles = new Vector3(-90, mTargetTurnAngle, 0);
+                        //mDesiredAgnles = new Vector3(-90, mTargetTurnAngle, 0);
+                        mDesiredAgnles = new Vector3(-mTargetTurnAngle, 180, -90); //
                         break;
                 }
             }
@@ -112,39 +118,61 @@ public class PlayerControls : MonoBehaviour {
                 switch ((int)mCurGravity)
                 {
                     case 0: //south
-                        mDesiredAgnles = new Vector3(0, -mTargetTurnAngle, 0);
+                        mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0); //
                         break;
                     case 1: //West
-                        mDesiredAgnles = new Vector3(-90, -mTargetTurnAngle, 0);
+                        //mDesiredAgnles = new Vector3(-90, -mTargetTurnAngle, 0);
+                        mDesiredAgnles = new Vector3(mTargetTurnAngle, 180, 90); //
                         break;
                     case 2: //North
-                        mDesiredAgnles = new Vector3(180, -mTargetTurnAngle, 0);
+                        //mDesiredAgnles = new Vector3(180, -mTargetTurnAngle, 0);
+                        mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180);
                         break;
                     case 3: //East
-                        mDesiredAgnles = new Vector3(90, -mTargetTurnAngle, 0);
+                        //mDesiredAgnles = new Vector3(90, -mTargetTurnAngle, 0);
+                        mDesiredAgnles = new Vector3(-mTargetTurnAngle, 180, -90);
                         break;
                 }
             }
+
             transform.position += mMovementVector * (lLx * mMovementSpeed);
             //mRb.AddForce(transform.right * (lLx * mMovementSpeed), ForceMode.Force);
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         }
         mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
 
-        if (mTargetShiftAngle != transform.rotation.eulerAngles.x || transform.rotation.eulerAngles.y != mTargetTurnAngle)
+        //The problem is likely in the section below; everything above seems fine
+        //The problem is that the character is turning along the world y-axis, not its own
+
+        
+        //Temporary, ugly code
+        if((int)mCurGravity % 2 == 1)
         {
-            mTargetRotation = Quaternion.Euler(mTargetShiftAngle, mTargetTurnAngle, 0f);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mShiftRotatationSpeed);
+            if (mTargetShiftAngle != transform.rotation.eulerAngles.y || transform.rotation.eulerAngles.x != mTargetTurnAngle)
+            {
+                //mTargetRotation = Quaternion.Euler(mTargetShiftAngle, mTargetTurnAngle, 0f); //rotates around world-y
+                //mTargetRotation = Quaternion.Euler(mTargetTurnAngle, mTargetShiftAngle, 0f); //rotates around world-z
+                //mTargetRotation = Quaternion.Euler(0f, mTargetTurnAngle, mTargetShiftAngle); //rotates around world-y but is sideways
+                //mTargetRotation = Quaternion.Euler(0f, mTargetShiftAngle, mTargetTurnAngle); //rotates around the right axis, but it sideways
+                mTargetRotation = Quaternion.Euler(mDesiredAgnles); //rotates perfectly when moving, but doesn't automatically switch like north and south
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mShiftRotatationSpeed);
+            }
+        }
+        else
+        {
+            if (mTargetShiftAngle != transform.rotation.eulerAngles.x || transform.rotation.eulerAngles.y != mTargetTurnAngle)
+            {
+                mTargetRotation = Quaternion.Euler(mTargetShiftAngle, mTargetTurnAngle, 0f);
+                //mTargetRotation = Quaternion.Euler(mDesiredAgnles); //doesn't rotate when sideways
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mShiftRotatationSpeed);
+            }
         }
 
         mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
         Vector3 lTemp = transform.rotation.eulerAngles;
 
-        //So if I use Z, the camera turns fine N and S, but goes apeshit on E and W
-        //but if I use X, the camera turns fine for all directions except N
         //Ideally it would look the best if the camera turned with the player, but for now it just needs to work
-        mCamera.transform.rotation = Quaternion.Euler(0, 0, lTemp.x);
-        //mCamera.transform.rotation = Quaternion.Euler(0, 0, mDesiredAgnles.x); same issue as lTemp.z
+        mCamera.transform.rotation = Quaternion.Euler(0, 0, mTargetShiftAngle);
 
 
         Vector2 lGravInput = new Vector2(Input.GetAxis("RStickX"), Input.GetAxis("RStickY"));
