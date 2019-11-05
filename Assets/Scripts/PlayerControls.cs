@@ -154,6 +154,7 @@ public class PlayerControls : MonoBehaviour {
                 //mTargetRotation = Quaternion.Euler(mTargetTurnAngle, mTargetShiftAngle, 0f); //rotates around world-z
                 //mTargetRotation = Quaternion.Euler(0f, mTargetTurnAngle, mTargetShiftAngle); //rotates around world-y but is sideways
                 //mTargetRotation = Quaternion.Euler(0f, mTargetShiftAngle, mTargetTurnAngle); //rotates around the right axis, but it sideways
+                //mTargetRotation = Quaternion.Euler(mTargetTurnAngle, mTargetShiftAngle, mDesiredAgnles.z);
                 mTargetRotation = Quaternion.Euler(mDesiredAgnles); //rotates perfectly when moving, but doesn't automatically switch like north and south
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mShiftRotatationSpeed);
             }
@@ -163,7 +164,7 @@ public class PlayerControls : MonoBehaviour {
             if (mTargetShiftAngle != transform.rotation.eulerAngles.x || transform.rotation.eulerAngles.y != mTargetTurnAngle)
             {
                 mTargetRotation = Quaternion.Euler(mTargetShiftAngle, mTargetTurnAngle, 0f);
-                //mTargetRotation = Quaternion.Euler(mDesiredAgnles); //doesn't rotate when sideways
+                //mTargetRotation = Quaternion.Euler(mDesiredAgnles); //nope
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mShiftRotatationSpeed);
             }
         }
