@@ -61,6 +61,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\CommandPattern.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\InputManager.cs" />
     <Compile Include="Assets\Scripts\PlayerControls.cs" />
     <None Include="Assets\Metal Mayhem Music Pack\1 - Info.txt" />
     <Reference Include="UnityEditor.StandardEvents">
