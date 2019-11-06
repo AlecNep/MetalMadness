@@ -8,7 +8,7 @@ namespace CommandPattern
     {
 
         //Player transform
-        public Transform mPlayerTrans;
+        public Rigidbody mPlayerRB;
         //Controls on a basic Xbox 360 controller
         private Command mAButton, mBButton, mXButton, mYButton, mRBumper, mLBumper, mUp, mDown, mLeft, mRight; //mRTrigger, mLTrigger; //not sure if/how well these will work here since they're triggers
 
@@ -16,7 +16,8 @@ namespace CommandPattern
         // Use this for initialization
         void Start()
         {
-
+            //Default bindings
+            //mAButton = 
         }
 
         // Update is called once per frame
