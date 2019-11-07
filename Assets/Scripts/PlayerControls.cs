@@ -21,10 +21,11 @@ public class PlayerControls : MonoBehaviour {
     private float mTimer = 0f;
     private bool mCanShift = true;
     private bool mIsGrounded = true;
+    private bool mCanDoubleJump = false;
     private float mGravityFactor = 10f;
-    private Vector3 mGravNormal;
+    public Vector3 mGravNormal { get; private set; }
     private Vector3 mMovementVector;
-    private float mJumpforce = 5f;
+    public readonly float mJumpforce = 5f;
 
     public bool mShifting = false;
     public enum Gravity {South = 0, West = 1, North = 2, East = 3};
@@ -218,18 +219,18 @@ public class PlayerControls : MonoBehaviour {
             }
         }
 
-        if (Input.GetButtonDown("AButton"))
+        /*if (Input.GetButtonDown("AButton"))
         {
             if (IsGrounded())
             {
                 //mRb.AddForce(mJumpforce * transform.up, ForceMode.Impulse); //original
                 mRb.AddForce(mJumpforce * (-mGravNormal), ForceMode.Impulse);
             }
-        }
+        }*/
 
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         return Physics.Raycast(transform.position, -transform.up, mDistToGround + 0.1f);
     }

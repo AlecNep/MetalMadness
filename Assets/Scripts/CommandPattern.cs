@@ -5,11 +5,19 @@ using UnityEngine;
 namespace CommandPattern
 {
 
-    public abstract class Command
+    public abstract class Command : MonoBehaviour
     {
         public GameObject mPlayer;
+        public Rigidbody mPlayerRb;
+        public PlayerControls mPlayerControls;
         //Parent function
         public abstract void Execute();
+        public Command()
+        {
+            mPlayer = GameObject.FindGameObjectWithTag("Player");
+            mPlayerRb = mPlayer.GetComponent<Rigidbody>();
+            mPlayerControls = mPlayer.GetComponent<PlayerControls>();
+        }
     }
 
     //~~~Child classes~~~
@@ -20,7 +28,16 @@ namespace CommandPattern
     {
         public override void Execute()
         {
-            
+            if (mPlayerControls.IsGrounded())
+            {
+                //mRb.AddForce(mJumpforce * transform.up, ForceMode.Impulse); //original
+                mPlayerRb.AddForce(mPlayerControls.mJumpforce * (-mPlayerControls.mGravNormal), ForceMode.Impulse);
+            }
+        }
+
+        public Jump() : base()
+        {
+
         }
     }
 
@@ -63,6 +80,15 @@ namespace CommandPattern
 
         }
     }
+
+    public class Pause : Command
+    {
+        public override void Execute()
+        {
+
+        }
+    }
+
     //End active gameplay commands
 
 
