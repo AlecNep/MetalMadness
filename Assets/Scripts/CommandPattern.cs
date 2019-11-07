@@ -28,9 +28,9 @@ namespace CommandPattern
     {
         public override void Execute()
         {
-            if (mPlayerControls.IsGrounded())
+            
+            if (mPlayerControls.IsGrounded())// || mPlayerControls.mCanDoubleJump)
             {
-                //mRb.AddForce(mJumpforce * transform.up, ForceMode.Impulse); //original
                 mPlayerRb.AddForce(mPlayerControls.mJumpforce * (-mPlayerControls.mGravNormal), ForceMode.Impulse);
             }
         }
@@ -45,6 +45,11 @@ namespace CommandPattern
     {
         public override void Execute()
         {
+            
+        }
+
+        public Attack() : base()
+        {
 
         }
     }
@@ -52,6 +57,11 @@ namespace CommandPattern
     public class SwapWeapon : Command
     {
         public override void Execute()
+        {
+            
+        }
+
+        public SwapWeapon() : base()
         {
 
         }
@@ -61,6 +71,11 @@ namespace CommandPattern
     {
         public override void Execute()
         {
+            
+        }
+
+        public WeaponWheel() : base()
+        {
 
         }
     }
@@ -68,6 +83,11 @@ namespace CommandPattern
     public class Dash : Command
     {
         public override void Execute()
+        {
+            
+        }
+
+        public Dash() : base()
         {
 
         }
@@ -77,6 +97,11 @@ namespace CommandPattern
     {
         public override void Execute()
         {
+            
+        }
+
+        public OpenMap() : base()
+        {
 
         }
     }
@@ -84,6 +109,11 @@ namespace CommandPattern
     public class Pause : Command
     {
         public override void Execute()
+        {
+            
+        }
+
+        public Pause() : base()
         {
 
         }
@@ -97,6 +127,11 @@ namespace CommandPattern
     {
         public override void Execute()
         {
+            
+        }
+
+        public Select() : base()
+        {
 
         }
     }
@@ -104,6 +139,11 @@ namespace CommandPattern
     public class Cancel : Command
     {
         public override void Execute()
+        {
+            
+        }
+
+        public Cancel() : base()
         {
 
         }
@@ -113,6 +153,11 @@ namespace CommandPattern
     {
         public override void Execute()
         {
+            
+        }
+
+        public NextTab() : base()
+        {
 
         }
     }
@@ -120,6 +165,11 @@ namespace CommandPattern
     public class PreviousTab : Command
     {
         public override void Execute()
+        {
+            
+        }
+
+        public PreviousTab() : base()
         {
 
         }
@@ -131,6 +181,11 @@ namespace CommandPattern
     {
         public override void Execute()
         {
+            
+        }
+
+        public PlaceMarker() : base()
+        {
 
         }
     }
@@ -138,6 +193,11 @@ namespace CommandPattern
     public class Close : Command
     {
         public override void Execute()
+        {
+            
+        }
+
+        public Close() : base()
         {
 
         }
@@ -147,6 +207,11 @@ namespace CommandPattern
     {
         public override void Execute()
         {
+            
+        }
+
+        public ZoomIn() : base()
+        {
 
         }
     }
@@ -154,6 +219,11 @@ namespace CommandPattern
     public class ZoomOut : Command
     {
         public override void Execute()
+        {
+            
+        }
+
+        public ZoomOut() : base()
         {
 
         }
@@ -166,6 +236,7 @@ namespace CommandPattern
         public override void Execute()
         {
             //Intentionally blank
+            
         }
     }
 }

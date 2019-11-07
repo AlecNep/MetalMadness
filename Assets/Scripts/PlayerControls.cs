@@ -219,15 +219,6 @@ public class PlayerControls : MonoBehaviour {
             }
         }
 
-        /*if (Input.GetButtonDown("AButton"))
-        {
-            if (IsGrounded())
-            {
-                //mRb.AddForce(mJumpforce * transform.up, ForceMode.Impulse); //original
-                mRb.AddForce(mJumpforce * (-mGravNormal), ForceMode.Impulse);
-            }
-        }*/
-
     }
 
     public bool IsGrounded()
@@ -239,7 +230,7 @@ public class PlayerControls : MonoBehaviour {
     {
         T[] arr = (T[])System.Enum.GetValues(typeof(Gravity));
         int j = (int)(mCurGravity + mNew) % 4;
-        print(arr[j]);
+        
         return arr[j];
     }
 }
