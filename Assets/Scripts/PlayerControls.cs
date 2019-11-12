@@ -9,6 +9,12 @@ public class PlayerControls : MonoBehaviour {
     private Rigidbody mRb;
     private Camera mCamera;
     private Quaternion mTargetRotation;
+    private Transform mArms;
+    private readonly float DEFAULT_ARM_ROTATION = 90f;
+    private readonly float DEFAULT_ARM_UP = 180f;
+    private readonly float DEFAULT_ARM_DOWN = 0f;
+    private readonly float ARM_SHIFTING_THRESHOLD = (float)(Math.Sqrt(2) / 2f);
+
 
     private float mTargetShiftAngle = 0f;
     private float mTargetTurnAngle = 0f;
@@ -17,7 +23,7 @@ public class PlayerControls : MonoBehaviour {
     private float mTurnRotationSpeed = 15f;
 
     private float mMovementSpeed = 1.5f;
-    private const float mGravShiftDelay = 1.5f;
+    private const float mGravShiftDelay = 1.5f; //potentially allow the player to increase this later
     private float mTimer = 0f;
     private bool mCanShift = true;
     private bool mIsGrounded = true;
@@ -35,6 +41,9 @@ public class PlayerControls : MonoBehaviour {
 
     private Vector3 mDesiredAgnles = Vector3.up * -90;
 
+    //Actual player stats
+    private float mHealth = 100f;
+
 	// Use this for initialization
 	void Start () {
         mRb = GetComponent<Rigidbody>();
@@ -42,6 +51,10 @@ public class PlayerControls : MonoBehaviour {
         mRb.constraints = RigidbodyConstraints.FreezeRotationX;
         mGravNormal = Vector3.down;
         mDistToGround = GetComponent<Collider>().bounds.extents.y;
+
+        mArms = transform.Find("Arms");
+        mArms.localEulerAngles = new Vector3(DEFAULT_ARM_ROTATION, 0, 0);
+
 	}
 
     private void FixedUpdate()
@@ -137,17 +150,29 @@ public class PlayerControls : MonoBehaviour {
             }
 
             transform.position += mMovementVector * (lLx * mMovementSpeed);
-            //mRb.AddForce(transform.right * (lLx * mMovementSpeed), ForceMode.Force);
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         }
         mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
 
-        //The problem is likely in the section below; everything above seems fine
-        //The problem is that the character is turning along the world y-axis, not its own
+        if (Math.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
+        {
+            Vector3 lArmRot = lLy > 0 ? 180 * Vector3.right : 0 * Vector3.right;
+            //Caused the arms to spaz the fuck out
+            //mArms.localRotation = Quaternion.RotateTowards(mArms.rotation, Quaternion.Euler(lArmRot), mShiftRotatationSpeed);
+        }
+        else
+        {
+            mArms.localEulerAngles = Vector3.right * 90; //default, but it snaps into place
+            //Caused the arms to spaz the fuck out
+            //mArms.localRotation = Quaternion.RotateTowards(mArms.rotation, Quaternion.Euler(Vector3.right * 90), mShiftRotatationSpeed);
+        }
 
-        
+
+
+        //The problem was definitely below! Still not perfect, but it works for now!
+
         //Temporary, ugly code
-        if((int)mCurGravity % 2 == 1)
+        if ((int)mCurGravity % 2 == 1)
         {
             if (mTargetShiftAngle != transform.rotation.eulerAngles.y || transform.rotation.eulerAngles.x != mTargetTurnAngle)
             {
@@ -165,7 +190,6 @@ public class PlayerControls : MonoBehaviour {
             if (mTargetShiftAngle != transform.rotation.eulerAngles.x || transform.rotation.eulerAngles.y != mTargetTurnAngle)
             {
                 mTargetRotation = Quaternion.Euler(mTargetShiftAngle, mTargetTurnAngle, 0f);
-                //mTargetRotation = Quaternion.Euler(mDesiredAgnles); //nope
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mShiftRotatationSpeed);
             }
         }
