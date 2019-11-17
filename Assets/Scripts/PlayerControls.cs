@@ -154,15 +154,18 @@ public class PlayerControls : MonoBehaviour {
         }
         mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
 
+        //Arm movement section
         if (Math.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
         {
             Vector3 lArmRot = lLy > 0 ? 180 * Vector3.right : 0 * Vector3.right;
+            mArms.localEulerAngles = lArmRot;
             //Caused the arms to spaz the fuck out
             //mArms.localRotation = Quaternion.RotateTowards(mArms.rotation, Quaternion.Euler(lArmRot), mShiftRotatationSpeed);
         }
         else
         {
             mArms.localEulerAngles = Vector3.right * 90; //default, but it snaps into place
+            
             //Caused the arms to spaz the fuck out
             //mArms.localRotation = Quaternion.RotateTowards(mArms.rotation, Quaternion.Euler(Vector3.right * 90), mShiftRotatationSpeed);
         }
