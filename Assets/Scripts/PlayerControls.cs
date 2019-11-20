@@ -13,7 +13,7 @@ public class PlayerControls : MonoBehaviour {
     private readonly float DEFAULT_ARM_ROTATION = 90f;
     private readonly float DEFAULT_ARM_UP = 180f;
     private readonly float DEFAULT_ARM_DOWN = 0f;
-    private readonly float ARM_SHIFTING_THRESHOLD = (float)(Math.Sqrt(2) / 2f);
+    private readonly float ARM_SHIFTING_THRESHOLD = 0.25f; //(float)(Math.Sqrt(2) / 2f);
 
 
     private float mTargetShiftAngle = 0f;
@@ -21,6 +21,7 @@ public class PlayerControls : MonoBehaviour {
     private float mCurRotation = 0f;
     private float mShiftRotatationSpeed = 10f;
     private float mTurnRotationSpeed = 15f;
+    private float mArmRotationSpeed = 20f;
 
     private float mMovementSpeed = 1.5f;
     private const float mGravShiftDelay = 1.5f; //potentially allow the player to increase this later
@@ -111,15 +112,12 @@ public class PlayerControls : MonoBehaviour {
                         mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0);
                         break;
                     case 1: //West
-                        //mDesiredAgnles = new Vector3(90, mTargetTurnAngle, 0);
                         mDesiredAgnles = new Vector3(mTargetTurnAngle, 180, 90);
                         break;
                     case 2: //North
-                        //mDesiredAgnles = new Vector3(180, mTargetTurnAngle, 0);
                         mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180); //
                         break;
                     case 3: //East
-                        //mDesiredAgnles = new Vector3(-90, mTargetTurnAngle, 0);
                         mDesiredAgnles = new Vector3(-mTargetTurnAngle, 180, -90); //
                         break;
                 }
@@ -135,15 +133,12 @@ public class PlayerControls : MonoBehaviour {
                         mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0); //
                         break;
                     case 1: //West
-                        //mDesiredAgnles = new Vector3(-90, -mTargetTurnAngle, 0);
                         mDesiredAgnles = new Vector3(mTargetTurnAngle, 180, 90); //
                         break;
                     case 2: //North
-                        //mDesiredAgnles = new Vector3(180, -mTargetTurnAngle, 0);
                         mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180);
                         break;
                     case 3: //East
-                        //mDesiredAgnles = new Vector3(90, -mTargetTurnAngle, 0);
                         mDesiredAgnles = new Vector3(-mTargetTurnAngle, 180, -90);
                         break;
                 }
@@ -157,17 +152,15 @@ public class PlayerControls : MonoBehaviour {
         //Arm movement section
         if (Math.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
         {
-            Vector3 lArmRot = lLy > 0 ? 180 * Vector3.right : 0 * Vector3.right;
-            mArms.localEulerAngles = lArmRot;
-            //Caused the arms to spaz the fuck out
-            //mArms.localRotation = Quaternion.RotateTowards(mArms.rotation, Quaternion.Euler(lArmRot), mShiftRotatationSpeed);
+            Vector3 lArmRot = lLy > 0 ? 180 * Vector3.right : Vector3.zero;
+            
+            //The problem was you were using ".roation" instead of ".localRotation
+            mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(lArmRot), mArmRotationSpeed);
         }
         else
         {
-            mArms.localEulerAngles = Vector3.right * 90; //default, but it snaps into place
-            
-            //Caused the arms to spaz the fuck out
-            //mArms.localRotation = Quaternion.RotateTowards(mArms.rotation, Quaternion.Euler(Vector3.right * 90), mShiftRotatationSpeed);
+            //The problem was you were using ".roation" instead of ".localRotation
+            mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(Vector3.right * 90), mArmRotationSpeed);
         }
 
 
