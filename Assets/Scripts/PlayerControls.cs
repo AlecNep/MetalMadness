@@ -1,4 +1,4 @@
-﻿using System; //Probably need to get rid of this
+﻿//using System; //Probably need to get rid of this
 using System.Collections;
 using System.Collections.Generic;
 
@@ -13,7 +13,7 @@ public class PlayerControls : MonoBehaviour {
     private readonly float DEFAULT_ARM_ROTATION = 90f;
     private readonly float DEFAULT_ARM_UP = 180f;
     private readonly float DEFAULT_ARM_DOWN = 0f;
-    private readonly float ARM_SHIFTING_THRESHOLD = 0.25f; //(float)(Math.Sqrt(2) / 2f);
+    private readonly float ARM_SHIFTING_THRESHOLD = 0.25f;
 
 
     private float mTargetShiftAngle = 0f;
@@ -150,7 +150,7 @@ public class PlayerControls : MonoBehaviour {
         mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
 
         //Arm movement section
-        if (Math.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
+        if (Mathf.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
         {
             Vector3 lArmRot = lLy > 0 ? 180 * Vector3.right : Vector3.zero;
             

@@ -5,10 +5,13 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour {
 
     protected GameObject mShot;
+    protected Rigidbody mShotRB;
     protected GameObject mVFX;
     protected GameObject mModel; //really not sure if this is necessary
     protected Vector3 mFiringLocation;
+    [SerializeField]
     protected float mFireRate;
+
 
     public void Awake()
     {
