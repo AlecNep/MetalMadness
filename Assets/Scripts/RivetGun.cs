@@ -5,11 +5,8 @@ using UnityEditor;
 
 public class RivetGun : Weapon {
 
-    [SerializeField]
-    private float mShotVelocity;
     private float mShotDelayTimer;
-    [SerializeField]
-    private float mLifeSpan;
+    
 
 	// Use this for initialization
 	void Start () {
@@ -19,7 +16,12 @@ public class RivetGun : Weapon {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (mShotDelayTimer > 0)
+        {
+            mShotDelayTimer -= Time.deltaTime;
+        }
+        if (mShotDelayTimer < 0)
+            mShotDelayTimer = 0;
 	}
 
     public override void Fire()
@@ -28,8 +30,12 @@ public class RivetGun : Weapon {
         {
             mShotDelayTimer = mFireRate;
 
-            Instantiate(mShot, mFiringLocation, transform.localRotation);
-            //Add the movement behavior to the shot itself
+            GameObject lBullet = Instantiate(mShot, mFiringLocation, Quaternion.Euler(-transform.up)) as GameObject; //update soon
+            //Rigidbody lBulletRb = lBullet.GetComponent<Rigidbody>();
+            //lBulletRb.velocity = -transform.up;
+            lBullet.GetComponent<Bullet>().SetDirection(-mArmsParent.up);
         }
+        else
+            print("Can't shoot yet");
     }
 }

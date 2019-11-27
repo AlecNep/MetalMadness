@@ -9,7 +9,7 @@ public class PlayerControls : MonoBehaviour {
     private Rigidbody mRb;
     private Camera mCamera;
     private Quaternion mTargetRotation;
-    private Transform mArms;
+    public Transform mArms { get; private set; }
     private readonly float DEFAULT_ARM_ROTATION = 90f;
     private readonly float DEFAULT_ARM_UP = 180f;
     private readonly float DEFAULT_ARM_DOWN = 0f;
