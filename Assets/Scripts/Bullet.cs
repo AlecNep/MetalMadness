@@ -14,15 +14,13 @@ public class Bullet : MonoBehaviour {
 	void Awake () {
 		mRb = GetComponent<Rigidbody>();
         mLifespan = 0;
-        print("parent: " + transform.parent);
-        //mRb.velocity = transform.forward * mSpeed;
     }
 
     
 
     // Update is called once per frame
     void Update () {
-        mRb.velocity = transform.right * mSpeed;
+        //mRb.velocity = transform.right * mSpeed; //FUCK THIS FUCKING LINE FUCKING ALL MY FUCKING SHIT UP. F U C K
         mLifespan += Time.deltaTime;
         if (mLifespan >= mMaxLifespan)
             Destroy(gameObject);
