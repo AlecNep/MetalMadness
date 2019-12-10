@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour {
 	void Awake () {
 		mRb = GetComponent<Rigidbody>();
         mLifespan = 0;
-
+        print("parent: " + transform.parent);
         //mRb.velocity = transform.forward * mSpeed;
     }
 
@@ -35,6 +35,7 @@ public class Bullet : MonoBehaviour {
 
     public void OnCollisionEnter(Collision collision)
     {
+        print(collision.collider.name);
         Destroy(gameObject);
     }
 }

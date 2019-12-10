@@ -15,15 +15,16 @@ public abstract class Weapon : MonoBehaviour {
 
     protected Transform mArmsParent;
     protected Transform mPlayer;
+    protected Transform mBulletSpawn;
 
 
     public void Awake()
     {
-        mFiringLocation = new Vector3(0, -GetComponent<Collider>().bounds.max.y, 0);
+        mBulletSpawn = transform.Find("BulletSpawn");
+        mFiringLocation = mBulletSpawn.position;
+        
         mArmsParent = transform.parent.parent;
-        print("mArmsParent: " + mArmsParent.name);
         mPlayer = mArmsParent.parent;
-        print("mPlayer: " + mPlayer.name);
     }
 
     public abstract void Fire();

@@ -30,10 +30,10 @@ public class RivetGun : Weapon {
         {
             mShotDelayTimer = mFireRate;
 
-            GameObject lBullet = Instantiate(mShot, mFiringLocation, Quaternion.Euler(-transform.up)) as GameObject; //update soon
+            GameObject lBullet = Instantiate(mShot, mBulletSpawn.transform.position, Quaternion.Euler(-transform.up)) as GameObject; //update soon
             //Rigidbody lBulletRb = lBullet.GetComponent<Rigidbody>();
             //lBulletRb.velocity = -transform.up;
-            lBullet.GetComponent<Bullet>().SetDirection(-mArmsParent.up);
+            lBullet.GetComponent<Bullet>().SetDirection(transform.InverseTransformDirection(-mBulletSpawn.up));
         }
         else
             print("Can't shoot yet");

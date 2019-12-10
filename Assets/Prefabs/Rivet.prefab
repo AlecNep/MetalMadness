@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33448156450011664}
   - component: {fileID: 23664857623537180}
   - component: {fileID: 136555546634894150}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 33262263746242336}
   - component: {fileID: 23341738498325104}
   - component: {fileID: 136651269537694642}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 54269156772075526}
   - component: {fileID: 114047393947210046}
   - component: {fileID: 122781736629081404}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rivet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
