@@ -33,7 +33,6 @@ public class Bullet : MonoBehaviour {
 
     public void OnCollisionEnter(Collision collision)
     {
-        print(collision.collider.name);
         Destroy(gameObject);
     }
 }
