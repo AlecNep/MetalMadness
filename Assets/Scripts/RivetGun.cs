@@ -16,9 +16,9 @@ public class RivetGun : Weapon {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.DrawRay(mBulletSpawn.position, mBulletSpawn.position - Vector3.up, Color.cyan);
+        Debug.DrawRay(mBulletSpawn.position, mBulletSpawn.position - transform.position, Color.cyan);
 
-		if (mShotDelayTimer > 0)
+        if (mShotDelayTimer > 0)
         {
             mShotDelayTimer -= Time.deltaTime;
         }
@@ -31,11 +31,11 @@ public class RivetGun : Weapon {
         if (mShotDelayTimer == 0)
         {
             mShotDelayTimer = mFireRate;
-            Vector3 lDirection = Vector3.Normalize(transform.position + mBulletSpawn.position);
-            GameObject lBullet = Instantiate(mShot, mBulletSpawn.transform.position, Quaternion.Euler(lDirection)) as GameObject; //update soon
+            Vector3 lDirection = Vector3.Normalize(mBulletSpawn.position - transform.position);
+            GameObject lBullet = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lDirection)) as GameObject; //update soon
             //Rigidbody lBulletRb = lBullet.GetComponent<Rigidbody>();
             //lBulletRb.velocity = -transform.up;
-            lBullet.GetComponent<Bullet>().SetDirection(transform.TransformDirection(lDirection));
+            lBullet.GetComponent<Bullet>().SetDirection(lDirection);
         }
         else
             print("Can't shoot yet");
