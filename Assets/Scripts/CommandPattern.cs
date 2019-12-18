@@ -10,7 +10,7 @@ namespace CommandPattern
         public GameObject mPlayer;
         public Rigidbody mPlayerRb;
         public PlayerControls mPlayerControls;
-        public Weapon mCurrentWeapon; //almost certainly will need to be changed
+        public Weapon [] mCurrentWeapon; //almost certainly will need to be changed
         //Parent function
         public abstract void Execute();
         public Command()
@@ -18,8 +18,8 @@ namespace CommandPattern
             mPlayer = GameObject.FindGameObjectWithTag("Player");
             mPlayerRb = mPlayer.GetComponent<Rigidbody>();
             mPlayerControls = mPlayer.GetComponent<PlayerControls>();
-            mCurrentWeapon = mPlayer.GetComponentInChildren<Weapon>(); //will almost certainly need to be changed too
-
+            mCurrentWeapon = new Weapon[2];
+            mCurrentWeapon = mPlayer.GetComponentsInChildren<Weapon>(); //will almost certainly need to be changed too
         }
     }
 
@@ -48,7 +48,9 @@ namespace CommandPattern
     {
         public override void Execute()
         {
-            mCurrentWeapon.Fire();
+            //Should probably check if the weapon is valid before firing; changing it will probably make it null
+            mCurrentWeapon[0].Fire();
+            mCurrentWeapon[1].Fire();
         }
 
         public Attack() : base()

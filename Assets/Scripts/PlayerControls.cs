@@ -20,7 +20,7 @@ public class PlayerControls : MonoBehaviour {
     private float mTargetTurnAngle = 0f;
     private float mCurRotation = 0f;
     private float mShiftRotatationSpeed = 10f;
-    private float mTurnRotationSpeed = 15f;
+    private float mTurnRotationSpeed = 20f;
     private float mArmRotationSpeed = 20f;
 
     private float mMovementSpeed = 1.5f;

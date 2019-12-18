@@ -32,7 +32,8 @@ public class RivetGun : Weapon {
         {
             mShotDelayTimer = mFireRate;
             Vector3 lDirection = Vector3.Normalize(mBulletSpawn.position - transform.position);
-            GameObject lBullet = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lDirection)) as GameObject; //update soon
+            
+            GameObject lBullet = Instantiate(mShot, mBulletSpawn.position, mArmsParent.rotation) as GameObject; //update soon
             
             lBullet.GetComponent<Bullet>().SetDirection(lDirection);
         }
