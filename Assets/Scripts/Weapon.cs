@@ -14,7 +14,7 @@ public abstract class Weapon : MonoBehaviour {
     protected float mFireRate;
 
     protected Transform mArmsParent;
-    protected Transform mPlayer;
+    protected PlayerControls mPlayer;
     protected Transform mBulletSpawn;
 
 
@@ -24,7 +24,7 @@ public abstract class Weapon : MonoBehaviour {
         mFiringLocation = mBulletSpawn.position;
         
         mArmsParent = transform.parent.parent;
-        mPlayer = mArmsParent.parent;
+        mPlayer = mArmsParent.parent.GetComponent<PlayerControls>();
     }
 
     public abstract void Fire();

@@ -23,6 +23,17 @@ public class PlayerControls : MonoBehaviour {
     private float mTurnRotationSpeed = 20f;
     private float mArmRotationSpeed = 20f;
 
+    //private int mGravityVariable; //leaving this here in case you want to make the mistake again, BUT it's the same as (int)mCurGravity
+    private int mArmVariable;
+    private int mTurnVariable; //probably won't be used, BUT exists to set arm variable back when not holding up or down
+    public int mShotOrientation
+    {
+        get
+        {
+            return 90 * (((int)mCurGravity + mArmVariable) % 4);
+        }
+    }
+
     private float mMovementSpeed = 1.5f;
     private const float mGravShiftDelay = 1.5f; //potentially allow the player to increase this later
     private float mTimer = 0f;
@@ -102,7 +113,7 @@ public class PlayerControls : MonoBehaviour {
         {
             if (lLx < 0)
             { //turn to the relative left
-                
+                mArmVariable = mTurnVariable = 2;
                 mTargetTurnAngle = 90f;
 
                 //This is going to be some awful code, but I'm at a loss and need it to at least "work" for now
@@ -124,6 +135,7 @@ public class PlayerControls : MonoBehaviour {
             }
             else
             { //turn to the relative right
+                mArmVariable = mTurnVariable = 0;
                 mTargetTurnAngle = -90f;
 
                 //This is going to be some awful code, but I'm at a loss and need it to at least "work" for now
@@ -152,17 +164,27 @@ public class PlayerControls : MonoBehaviour {
         //Arm movement section
         if (Mathf.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
         {
-            Vector3 lArmRot = lLy > 0 ? 180 * Vector3.right : Vector3.zero;
-            
+            //Vector3 lArmRot = lLy > 0 ? 180 * Vector3.right : Vector3.zero;
+            Vector3 lArmRot;
+            if (lLy > 0)
+            {
+                lArmRot = 180 * Vector3.right;
+                mArmVariable = 1;
+            }
+            else
+            {
+                lArmRot = Vector3.zero;
+                mArmVariable = 3;
+            }
             //The problem was you were using ".roation" instead of ".localRotation
             mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(lArmRot), mArmRotationSpeed);
         }
         else
         {
             //The problem was you were using ".roation" instead of ".localRotation
+            mArmVariable = mTurnVariable;
             mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(Vector3.right * 90), mArmRotationSpeed);
         }
-
 
 
         //The problem was definitely below! Still not perfect, but it works for now!

@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour {
     void Update () {
         //mRb.velocity = transform.right * mSpeed; //FUCK THIS FUCKING LINE FUCKING ALL MY FUCKING SHIT UP. F U C K
         mLifespan += Time.deltaTime;
-        if (mLifespan >= mMaxLifespan)
+        if (mLifespan >= mMaxLifespan || Mathf.Abs(transform.position.z) >= 2)
             Destroy(gameObject);
 	}
 
