@@ -30,7 +30,7 @@ public class PlayerControls : MonoBehaviour {
     {
         get
         {
-            return 90 * (((int)mCurGravity + mArmVariable) % 4);
+            return 90 * (((int)mCurGravity + mArmVariable) % 4); //adding +2 just made the opposite true for S+W and E+W
         }
     }
 
@@ -43,10 +43,11 @@ public class PlayerControls : MonoBehaviour {
     private float mGravityFactor = 10f;
     public Vector3 mGravNormal { get; private set; }
     private Vector3 mMovementVector;
-    public readonly float mJumpforce = 5f;
+    public readonly float mJumpforce = 6f;
 
     public bool mShifting = false;
-    public enum Gravity {South = 0, West = 1, North = 2, East = 3};
+    public enum Gravity {South = 0, East = 1, North = 2, West = 3}; //Swapping east and west didn't seem to change a damn thing
+    //but for fuck's sake don't swap north and south
     private Gravity mCurGravity = Gravity.South;
 
     private float mDistToGround;
@@ -80,7 +81,7 @@ public class PlayerControls : MonoBehaviour {
         float lLy = Input.GetAxis("LStickY");
 
         
-
+        //probably shouldn't be called every cycle
         switch ((int)mCurGravity)
         {
             case 0: //South (normal gravity)
@@ -164,17 +165,18 @@ public class PlayerControls : MonoBehaviour {
         //Arm movement section
         if (Mathf.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
         {
-            //Vector3 lArmRot = lLy > 0 ? 180 * Vector3.right : Vector3.zero;
+            //When up=1 & down=3, S+N are perfect but E+W are totally wrong
+            //When up=3 & down=1, the real-world up and down are always wrong but real-world left and right are perfect
             Vector3 lArmRot;
-            if (lLy > 0)
+            if (lLy > 0) //Aiming to the relative up
             {
                 lArmRot = 180 * Vector3.right;
-                mArmVariable = 1;
+                mArmVariable = 1; //swapped with down; when swapped, "up" and "down" are good, but left and right aren't
             }
-            else
+            else //Aiming to the relative down
             {
                 lArmRot = Vector3.zero;
-                mArmVariable = 3;
+                mArmVariable = 3; //swapped with up; 
             }
             //The problem was you were using ".roation" instead of ".localRotation
             mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(lArmRot), mArmRotationSpeed);
@@ -182,7 +184,7 @@ public class PlayerControls : MonoBehaviour {
         else
         {
             //The problem was you were using ".roation" instead of ".localRotation
-            mArmVariable = mTurnVariable;
+            mArmVariable = mTurnVariable; //swapped; making this negative made the opposite true for east and west
             mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(Vector3.right * 90), mArmRotationSpeed);
         }
 
