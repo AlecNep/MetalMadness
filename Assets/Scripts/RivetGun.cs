@@ -27,6 +27,11 @@ public class RivetGun : Weapon {
 
     public override void Fire()
     {
+        //print("Arm Variable: " + mPlayer.mArmVariable);
+        print("Gravity: " + (int)mPlayer.mCurGravity);
+        //print("Turn variable: " + mPlayer.mTurnVariable);
+
+        //print("orientation number: " + (mPlayer.mShotOrientation / 90));
         if (mShotDelayTimer == 0)
         {
             mShotDelayTimer = mFireRate;
@@ -36,7 +41,5 @@ public class RivetGun : Weapon {
             
             lBullet.GetComponent<Bullet>().SetDirection(lDirection);
         }
-        else
-            print("Can't shoot yet");
     }
 }

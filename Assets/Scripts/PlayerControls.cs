@@ -24,8 +24,8 @@ public class PlayerControls : MonoBehaviour {
     private float mArmRotationSpeed = 20f;
 
     //private int mGravityVariable; //leaving this here in case you want to make the mistake again, BUT it's the same as (int)mCurGravity
-    private int mArmVariable;
-    private int mTurnVariable; //probably won't be used, BUT exists to set arm variable back when not holding up or down
+    public int mArmVariable;
+    public int mTurnVariable; //probably won't be used, BUT exists to set arm variable back when not holding up or down
     public int mShotOrientation
     {
         get
@@ -48,7 +48,7 @@ public class PlayerControls : MonoBehaviour {
     public bool mShifting = false;
     public enum Gravity {South = 0, East = 1, North = 2, West = 3}; //Swapping east and west didn't seem to change a damn thing
     //but for fuck's sake don't swap north and south
-    private Gravity mCurGravity = Gravity.South;
+    public Gravity mCurGravity = Gravity.South;
 
     private float mDistToGround;
 
@@ -171,20 +171,18 @@ public class PlayerControls : MonoBehaviour {
             if (lLy > 0) //Aiming to the relative up
             {
                 lArmRot = 180 * Vector3.right;
-                mArmVariable = 1; //swapped with down; when swapped, "up" and "down" are good, but left and right aren't
+                mArmVariable = 1; 
             }
             else //Aiming to the relative down
             {
                 lArmRot = Vector3.zero;
-                mArmVariable = 3; //swapped with up; 
+                mArmVariable = 3; 
             }
-            //The problem was you were using ".roation" instead of ".localRotation
             mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(lArmRot), mArmRotationSpeed);
         }
         else
         {
-            //The problem was you were using ".roation" instead of ".localRotation
-            mArmVariable = mTurnVariable; //swapped; making this negative made the opposite true for east and west
+            mArmVariable = mTurnVariable; 
             mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(Vector3.right * 90), mArmRotationSpeed);
         }
 
@@ -236,6 +234,12 @@ public class PlayerControls : MonoBehaviour {
         }
             
 
+        /*
+         * The shot orientation problem might be here
+         * currently the gravity variable for E and W are backwards
+         * and the values below don't match up with the other values above
+         * but swapping the ones below causes the left and right grav shifts to be reversed
+         */
         if (lGravInput.magnitude > 0.1f && mCanShift)
         {
             mCanShift = false;
@@ -254,12 +258,12 @@ public class PlayerControls : MonoBehaviour {
             else if (lGravAngle > 45f && lGravAngle <= 135f)
             {
                 //Shift gravity to the relative "right"
-                mCurGravity = ShiftGravity<Gravity>(3);
+                mCurGravity = ShiftGravity<Gravity>(3); 
             }
             else if (lGravAngle <= -45f && lGravAngle >= -135f)
             {
                 //Shift gravity to the relative "left"
-                mCurGravity = ShiftGravity<Gravity>(1);
+                mCurGravity = ShiftGravity<Gravity>(1); 
             }
         }
 
