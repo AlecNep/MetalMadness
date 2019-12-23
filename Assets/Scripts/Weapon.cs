@@ -10,6 +10,7 @@ public abstract class Weapon : MonoBehaviour {
     protected GameObject mVFX;
     protected GameObject mModel; //really not sure if this is necessary
     protected Vector3 mFiringLocation;
+    protected float mShotDelayTimer;
     [SerializeField]
     protected float mFireRate;
 
@@ -25,6 +26,16 @@ public abstract class Weapon : MonoBehaviour {
         
         mArmsParent = transform.parent.parent;
         mPlayer = mArmsParent.parent.GetComponent<PlayerControls>();
+    }
+
+    public void Update()
+    {
+        if (mShotDelayTimer > 0)
+        {
+            mShotDelayTimer -= Time.deltaTime;
+        }
+        if (mShotDelayTimer < 0)
+            mShotDelayTimer = 0;
     }
 
     public abstract void Fire();

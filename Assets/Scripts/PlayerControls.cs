@@ -207,6 +207,7 @@ public class PlayerControls : MonoBehaviour {
         {
             if (mTargetShiftAngle != transform.rotation.eulerAngles.x || transform.rotation.eulerAngles.y != mTargetTurnAngle)
             {
+                //Not sure why targetTurnAngle needed to be negative, but it works now
                 mTargetRotation = Quaternion.Euler(mTargetShiftAngle, -mTargetTurnAngle, 0f);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mShiftRotatationSpeed);
             }

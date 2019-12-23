@@ -5,7 +5,7 @@ using UnityEditor;
 
 public class RivetGun : Weapon {
 
-    private float mShotDelayTimer;
+    
     
 
 	// Use this for initialization
@@ -15,23 +15,13 @@ public class RivetGun : Weapon {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	/*void Update () {
 
-        if (mShotDelayTimer > 0)
-        {
-            mShotDelayTimer -= Time.deltaTime;
-        }
-        if (mShotDelayTimer < 0)
-            mShotDelayTimer = 0;
-	}
+        
+	}*/
 
     public override void Fire()
     {
-        //print("Arm Variable: " + mPlayer.mArmVariable);
-        print("Gravity: " + (int)mPlayer.mCurGravity);
-        //print("Turn variable: " + mPlayer.mTurnVariable);
-
-        //print("orientation number: " + (mPlayer.mShotOrientation / 90));
         if (mShotDelayTimer == 0)
         {
             mShotDelayTimer = mFireRate;
