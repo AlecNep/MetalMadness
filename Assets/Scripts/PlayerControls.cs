@@ -90,10 +90,10 @@ public class PlayerControls : MonoBehaviour {
                 mTargetShiftAngle = 0f;
                 break;
             case 1: //West
-                mGravNormal = Vector3.left;
-                mMovementVector = Vector3.down;
-                mTargetShiftAngle = -90f;
-                //mTargetShiftAngle = 90f; //doesn't seem to make a difference
+                mGravNormal = Vector3.right;
+                mMovementVector = Vector3.up;
+                //mTargetShiftAngle = -90f;
+                mTargetShiftAngle = 90f; //doesn't seem to make a difference
                 break;
             case 2: //North
                 mGravNormal = Vector3.up;
@@ -101,10 +101,10 @@ public class PlayerControls : MonoBehaviour {
                 mTargetShiftAngle = 180f;
                 break;
             case 3: //East
-                mGravNormal = Vector3.right;
-                mMovementVector = Vector3.up;
-                mTargetShiftAngle = 90f;
-                //mTargetShiftAngle = -90f; //doesn't seem to make a difference
+                mGravNormal = Vector3.left;
+                mMovementVector = Vector3.down;
+                //mTargetShiftAngle = 90f;
+                mTargetShiftAngle = -90f; //doesn't seem to make a difference
                 break;
             default:
                 break;
@@ -115,7 +115,7 @@ public class PlayerControls : MonoBehaviour {
             if (lLx < 0)
             { //turn to the relative left
                 mArmVariable = mTurnVariable = 2;
-                mTargetTurnAngle = 90f;
+                mTargetTurnAngle = -90f;
 
                 //This is going to be some awful code, but I'm at a loss and need it to at least "work" for now
                 switch ((int)mCurGravity)
@@ -124,20 +124,20 @@ public class PlayerControls : MonoBehaviour {
                         mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0);
                         break;
                     case 1: //West
-                        mDesiredAgnles = new Vector3(mTargetTurnAngle, 180, 90);
+                        mDesiredAgnles = new Vector3(mTargetTurnAngle, 0, 90);
                         break;
                     case 2: //North
                         mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180); //
                         break;
                     case 3: //East
-                        mDesiredAgnles = new Vector3(-mTargetTurnAngle, 180, -90); //
+                        mDesiredAgnles = new Vector3(-mTargetTurnAngle, 0, -90); //
                         break;
                 }
             }
             else
             { //turn to the relative right
                 mArmVariable = mTurnVariable = 0;
-                mTargetTurnAngle = -90f;
+                mTargetTurnAngle = 90f;
 
                 //This is going to be some awful code, but I'm at a loss and need it to at least "work" for now
                 switch ((int)mCurGravity)
@@ -146,13 +146,13 @@ public class PlayerControls : MonoBehaviour {
                         mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0); //
                         break;
                     case 1: //West
-                        mDesiredAgnles = new Vector3(mTargetTurnAngle, 180, 90); //
+                        mDesiredAgnles = new Vector3(mTargetTurnAngle, 0, 90); //
                         break;
                     case 2: //North
                         mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180);
                         break;
                     case 3: //East
-                        mDesiredAgnles = new Vector3(-mTargetTurnAngle, 180, -90);
+                        mDesiredAgnles = new Vector3(-mTargetTurnAngle, 0, -90);
                         break;
                 }
             }
@@ -207,7 +207,7 @@ public class PlayerControls : MonoBehaviour {
         {
             if (mTargetShiftAngle != transform.rotation.eulerAngles.x || transform.rotation.eulerAngles.y != mTargetTurnAngle)
             {
-                mTargetRotation = Quaternion.Euler(mTargetShiftAngle, mTargetTurnAngle, 0f);
+                mTargetRotation = Quaternion.Euler(mTargetShiftAngle, -mTargetTurnAngle, 0f);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mShiftRotatationSpeed);
             }
         }
@@ -258,12 +258,12 @@ public class PlayerControls : MonoBehaviour {
             else if (lGravAngle > 45f && lGravAngle <= 135f)
             {
                 //Shift gravity to the relative "right"
-                mCurGravity = ShiftGravity<Gravity>(3); 
+                mCurGravity = ShiftGravity<Gravity>(1); 
             }
             else if (lGravAngle <= -45f && lGravAngle >= -135f)
             {
                 //Shift gravity to the relative "left"
-                mCurGravity = ShiftGravity<Gravity>(1); 
+                mCurGravity = ShiftGravity<Gravity>(3); 
             }
         }
 
