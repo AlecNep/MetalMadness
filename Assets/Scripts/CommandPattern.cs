@@ -18,8 +18,7 @@ namespace CommandPattern
             mPlayer = GameObject.FindGameObjectWithTag("Player");
             mPlayerRb = mPlayer.GetComponent<Rigidbody>();
             mPlayerControls = mPlayer.GetComponent<PlayerControls>();
-            mCurrentWeapon = new Weapon[2];
-            mCurrentWeapon = mPlayer.GetComponentsInChildren<Weapon>(); //will almost certainly need to be changed too
+            
         }
     }
 
@@ -55,7 +54,8 @@ namespace CommandPattern
 
         public Attack() : base()
         {
-
+            mCurrentWeapon = new Weapon[2]; //will find the weapon even if the component or object itself is disabled
+            mCurrentWeapon = mPlayer.GetComponentsInChildren<Weapon>(); //will almost certainly need to be changed too
         }
     }
 

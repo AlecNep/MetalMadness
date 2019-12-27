@@ -5,20 +5,12 @@ using UnityEditor;
 
 public class RivetGun : Weapon {
 
-    
-    
 
 	// Use this for initialization
 	void Start () {
         mShot = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Rivet.prefab", typeof(GameObject));
         mShotRB = mShot.GetComponent<Rigidbody>(); //really needs to be safer
 	}
-	
-	// Update is called once per frame
-	/*void Update () {
-
-        
-	}*/
 
     public override void Fire()
     {
