@@ -10,9 +10,20 @@ namespace CommandPattern
         public GameObject mPlayer;
         public Rigidbody mPlayerRb;
         public PlayerControls mPlayerControls;
+        public enum mType { press = 0, hold = 1, pAndR = 2 }
+        public mType mButtonType = 0;
         public Weapon [] mCurrentWeapon; //almost certainly will need to be changed
         //Parent function
         public abstract void Execute();
+        public void SetButtonType(int t)
+        {
+            if (t >= 0 && t < 3)
+            {
+                mButtonType = (mType)t;
+            }
+            else
+                mButtonType = 0;
+        }
         public Command()
         {
             mPlayer = GameObject.FindGameObjectWithTag("Player");
@@ -39,7 +50,7 @@ namespace CommandPattern
 
         public Jump() : base()
         {
-
+            mButtonType = mType.press;
         }
     }
 
@@ -74,6 +85,9 @@ namespace CommandPattern
 
     public class WeaponWheel : Command
     {
+        GameObject mWheel;
+        
+
         public override void Execute()
         {
             
@@ -81,7 +95,12 @@ namespace CommandPattern
 
         public WeaponWheel() : base()
         {
-
+            mButtonType = (mType)2;
+            mWheel = GameObject.Find("UI").GetComponent<Transform>().Find("Weapon Wheel").gameObject;
+            if (mWheel != null)
+            {
+                mWheel.SetActive(false);
+            }
         }
     }
 
