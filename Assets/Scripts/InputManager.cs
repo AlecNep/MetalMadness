@@ -35,7 +35,7 @@ namespace CommandPattern
             mDown = new DoNothing();
             mLeft = new DoNothing();
             mRight = new DoNothing();
-            mRTrigger = new DoNothing();
+            mRTrigger = new OverCharge();
             mLTrigger = new DoNothing();
             mRClick = new DoNothing();
             mLClick = new DoNothing();
@@ -50,18 +50,6 @@ namespace CommandPattern
 
         public void HandleInput()
         {
-            //Maybe put this somewhere else
-            //The buttons stay the same, it's their context that changes
-            /*switch ((int)mGameMode)
-            {
-                case 0: //Active gameplay
-                    
-                    break;
-                case 1: //Menu
-                    break;
-                case 2: //Map
-                    break;
-            }*/
             if (Input.GetButtonDown("AButton"))
             {
                 mAButton.Execute();

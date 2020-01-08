@@ -12,7 +12,16 @@ namespace CommandPattern
         public PlayerControls mPlayerControls;
         public enum mType { press = 0, hold = 1, pAndR = 2 }
         public mType mButtonType = 0;
-        public Weapon [] mCurrentWeapon; //almost certainly will need to be changed
+        //Idea: if the button type calls for it, start a timer once the button is pressed and stop it once it's released
+        //could also create a toggle for things where the duration doesn't matter
+        //essentially writing button code from scratch!
+
+        //Ex. 1: if the weapon wheel button is released before a certain threshold, only swap to the last weapon
+        //e.g. after releasing: if (pressTime < threshold) {swapWeapon();} else {openWheel();}
+        //Ex. 2: for weapons like the minigun or FT, turn on a variable once the fire button is pressed and turn it off when released
+        //e.g. in weapon script update function: if (firing) {fire()} keep in mind timer is already taken care of in parent class
+
+
         //Parent function
         public abstract void Execute();
         public void SetButtonType(int t)
@@ -56,17 +65,23 @@ namespace CommandPattern
 
     public class Attack : Command
     {
+        public Weapon[] mWeapons;
+        public Weapon[] mCurrentWeapon = new Weapon[2]; //might not need it
+        int weaponIndex = 0;
+
         public override void Execute()
         {
             //Should probably check if the weapon is valid before firing; changing it will probably make it null
-            mCurrentWeapon[0].Fire();
-            mCurrentWeapon[1].Fire();
+            mWeapons[weaponIndex].Fire();
+            mWeapons[weaponIndex + 1].Fire();
         }
 
         public Attack() : base()
         {
-            mCurrentWeapon = new Weapon[2]; //will find the weapon even if the component or object itself is disabled
-            mCurrentWeapon = mPlayer.GetComponentsInChildren<Weapon>(); //will almost certainly need to be changed too
+            //Whole thing will need to be changed once new weapons are added
+            //mCurrentWeapon = new Weapon[mPlayer.transform.childCount]; //will find the weapon even if the component or object itself is disabled
+            mWeapons = mPlayer.GetComponentsInChildren<Weapon>(); //will almost certainly need to be changed too
+            print("weapon count: " + mWeapons.Length);
         }
     }
 
@@ -112,6 +127,19 @@ namespace CommandPattern
         }
 
         public Dash() : base()
+        {
+
+        }
+    }
+
+    public class OverCharge : Command
+    {
+        public override void Execute()
+        {
+
+        }
+
+        public OverCharge() : base()
         {
 
         }
