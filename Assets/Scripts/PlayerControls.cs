@@ -57,8 +57,13 @@ public class PlayerControls : MonoBehaviour {
     //Actual player stats
     private float mHealth = 100f;
 
-	// Use this for initialization
-	void Start () {
+    public Weapon[] mWeapons; //TEMPORARY; DO NOT KEEP PUBLIC
+    public Weapon[] mCurrentWeapon = new Weapon[2]; //might not need it //TEMPORARY; DO NOT KEEP PUBLIC
+    public int mWeaponIndex = 0; //TEMPORARY; DO NOT KEEP PUBLIC
+    public int mWeaponCount; //TEMPORARY; DO NOT KEEP PUBLIC
+
+    // Use this for initialization
+    void Start() {
         mRb = GetComponent<Rigidbody>();
         mCamera = Camera.main;
         mRb.constraints = RigidbodyConstraints.FreezeRotationX;
@@ -68,7 +73,11 @@ public class PlayerControls : MonoBehaviour {
         mArms = transform.Find("Arms");
         mArms.localEulerAngles = new Vector3(DEFAULT_ARM_ROTATION, 0, 0);
 
-	}
+        mWeapons = GetComponentsInChildren<Weapon>();
+        mWeaponCount = mWeapons.Length / 2;
+
+        ClearWeapons();
+    }
 
     private void FixedUpdate()
     {
@@ -235,12 +244,6 @@ public class PlayerControls : MonoBehaviour {
         }
             
 
-        /*
-         * The shot orientation problem might be here
-         * currently the gravity variable for E and W are backwards
-         * and the values below don't match up with the other values above
-         * but swapping the ones below causes the left and right grav shifts to be reversed
-         */
         if (lGravInput.magnitude > 0.1f && mCanShift)
         {
             mCanShift = false;
@@ -268,6 +271,18 @@ public class PlayerControls : MonoBehaviour {
             }
         }
 
+    }
+
+    public void ClearWeapons()
+    {
+        for (int i = 0; i < mWeaponCount * 2; i++)
+        {
+            if (i != mWeaponIndex && i != mWeaponIndex + 2)
+            {
+                mWeapons[i].gameObject.SetActive(false);
+            }
+            else mWeapons[i].gameObject.SetActive(true);
+        }
     }
 
     public bool IsGrounded()

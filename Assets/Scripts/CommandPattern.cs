@@ -65,23 +65,25 @@ namespace CommandPattern
 
     public class Attack : Command
     {
-        public Weapon[] mWeapons;
-        public Weapon[] mCurrentWeapon = new Weapon[2]; //might not need it
-        int weaponIndex = 0;
+        
 
         public override void Execute()
         {
             //Should probably check if the weapon is valid before firing; changing it will probably make it null
-            mWeapons[weaponIndex].Fire();
-            mWeapons[weaponIndex + 1].Fire();
+            mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex].Fire();
+            mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex + 2].Fire();
         }
 
         public Attack() : base()
         {
             //Whole thing will need to be changed once new weapons are added
             //mCurrentWeapon = new Weapon[mPlayer.transform.childCount]; //will find the weapon even if the component or object itself is disabled
-            mWeapons = mPlayer.GetComponentsInChildren<Weapon>(); //will almost certainly need to be changed too
-            print("weapon count: " + mWeapons.Length);
+            /*mPlayerControls.mWeapons = mPlayer.GetComponentsInChildren<Weapon>(); //will almost certainly need to be changed too
+            mPlayerControls.mWeaponCount = mWeapons.Length / 2;
+            print("Weapon 0: " + mWeapons[0].name);
+            print("Weapon 1: " + mWeapons[1].name);
+            print("Weapon 2: " + mWeapons[2].name);
+            print("Weapon 3: " + mWeapons[3].name);*/
         }
     }
 
@@ -89,7 +91,9 @@ namespace CommandPattern
     {
         public override void Execute()
         {
-            
+            //IMPORTANT: this is only temporary code
+            mPlayerControls.mWeaponIndex = 2 / (mPlayerControls.mWeaponIndex + 2);
+            mPlayerControls.ClearWeapons();
         }
 
         public SwapWeapon() : base()
