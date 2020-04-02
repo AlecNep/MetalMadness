@@ -35,7 +35,7 @@ public class Shotgun : Weapon {
                 mPieces[i] = Random.rotation;
                 GameObject s = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject;
                 s.transform.rotation = Quaternion.RotateTowards(s.transform.rotation, mPieces[i], mConeSpreadMax);
-                s.GetComponent<Bullet>().SetDirection(lDirection);
+                s.GetComponent<Bullet>().SetDirection(s.transform.right); //?
             }
             /*GameObject lBullet1 = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject; //update soon
 
