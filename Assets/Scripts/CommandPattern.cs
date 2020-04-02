@@ -78,12 +78,7 @@ namespace CommandPattern
         {
             //Whole thing will need to be changed once new weapons are added
             //mCurrentWeapon = new Weapon[mPlayer.transform.childCount]; //will find the weapon even if the component or object itself is disabled
-            /*mPlayerControls.mWeapons = mPlayer.GetComponentsInChildren<Weapon>(); //will almost certainly need to be changed too
-            mPlayerControls.mWeaponCount = mWeapons.Length / 2;
-            print("Weapon 0: " + mWeapons[0].name);
-            print("Weapon 1: " + mWeapons[1].name);
-            print("Weapon 2: " + mWeapons[2].name);
-            print("Weapon 3: " + mWeapons[3].name);*/
+            
         }
     }
 
@@ -92,7 +87,14 @@ namespace CommandPattern
         public override void Execute()
         {
             //IMPORTANT: this is only temporary code
-            mPlayerControls.mWeaponIndex = 2 / (mPlayerControls.mWeaponIndex + 2);
+            //mPlayerControls.mWeaponIndex = 2 / (mPlayerControls.mWeaponIndex + 2);
+            print("prev: " + mPlayerControls.mPreviousWeaponIndex);     //WHY DOES THIS KEEP COMING UP AS 0????
+            //Update: somehow this is working now. I honestly don't remember what, if anything, I did to fix this
+            int lTemp = mPlayerControls.mWeaponIndex;
+            //print("Before: cur=" + mPlayerControls.mWeaponIndex + ", prev=" + mPlayerControls.mPreviousWeaponIndex + ", temp=" + lTemp);
+            mPlayerControls.mWeaponIndex = mPlayerControls.mPreviousWeaponIndex;
+            mPlayerControls.mPreviousWeaponIndex = lTemp;
+            //print("Before: cur=" + mPlayerControls.mWeaponIndex + ", prev=" + mPlayerControls.mPreviousWeaponIndex + ", temp=" + lTemp);
             mPlayerControls.ClearWeapons();
         }
 

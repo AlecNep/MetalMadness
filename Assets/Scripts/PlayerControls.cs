@@ -58,8 +58,10 @@ public class PlayerControls : MonoBehaviour {
     private float mHealth = 100f;
 
     public Weapon[] mWeapons; //TEMPORARY; DO NOT KEEP PUBLIC
-    public Weapon[] mCurrentWeapon = new Weapon[2]; //might not need it //TEMPORARY; DO NOT KEEP PUBLIC
+    //public Weapon[] mCurrentWeapon = new Weapon[2]; //might not need it //TEMPORARY; DO NOT KEEP PUBLIC
+    //public Weapon[] mPreviousWeapon = new Weapon[2]; //not being used
     public int mWeaponIndex = 0; //TEMPORARY; DO NOT KEEP PUBLIC
+    public int mPreviousWeaponIndex = 1;
     public int mWeaponCount; //TEMPORARY; DO NOT KEEP PUBLIC
 
     // Use this for initialization

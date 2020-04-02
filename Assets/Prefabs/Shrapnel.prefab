@@ -25,8 +25,8 @@ GameObject:
   - component: {fileID: 122936176817143166}
   - component: {fileID: 54348449354486038}
   - component: {fileID: 114158110479493174}
-  m_Layer: 0
-  m_Name: Shotgun Shrapnel
+  m_Layer: 9
+  m_Name: Shrapnel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38,13 +38,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1627864919729150}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.17, y: 1.5856969, z: 1.9422593}
-  m_LocalScale: {x: 0.1, y: 0.2, z: 0.1}
+  m_LocalScale: {x: 0.05, y: 0.1, z: 0.05}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23263974185835542
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -124,8 +124,8 @@ Halo:
   m_Enabled: 1
   m_Color:
     serializedVersion: 2
-    rgba: 1192944632
-  m_Size: 0.3
+    rgba: 739959800
+  m_Size: 0.03
 --- !u!136 &136651450743259254
 CapsuleCollider:
   m_ObjectHideFlags: 1

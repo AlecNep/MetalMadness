@@ -1319,7 +1319,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mShot: {fileID: 1627864919729150, guid: f85f8646efcd93c42a38ff5762659812, type: 2}
+  mFiring: 0
   mFireRate: 1
+  mConeSpreadMax: 10
+  mPieceCount: 5
 --- !u!65 &1471514259
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1424,7 +1427,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mShot: {fileID: 1627864919729150, guid: f85f8646efcd93c42a38ff5762659812, type: 2}
+  mFiring: 0
   mFireRate: 1
+  mConeSpreadMax: 10
+  mPieceCount: 5
 --- !u!65 &1768126550
 BoxCollider:
   m_ObjectHideFlags: 0
