@@ -48,12 +48,14 @@ namespace CommandPattern
             HandleInput();
         }
 
+        //There should hopefully be a faster/neater way of doing this. For now it's a tedious mess
         public void HandleInput()
         {
             if (Input.GetButtonDown("AButton"))
             {
                 mAButton.Execute();
             }
+            
             if (Input.GetButtonDown("BButton"))
             {
                 mBButton.Execute();

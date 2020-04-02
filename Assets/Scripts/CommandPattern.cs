@@ -44,6 +44,12 @@ namespace CommandPattern
 
     //~~~Child classes~~~
 
+    public abstract class HoldableCommand : Command
+    {
+        public abstract void Hold();
+        public abstract void Release();
+    }
+
     
     //Active gameplay commands
     public class Jump : Command
@@ -56,14 +62,14 @@ namespace CommandPattern
                 mPlayerRb.AddForce(mPlayerControls.mJumpforce * (-mPlayerControls.mGravNormal), ForceMode.Impulse);
             }
         }
-
+        
         public Jump() : base()
         {
             mButtonType = mType.press;
         }
     }
 
-    public class Attack : Command
+    public class Attack : HoldableCommand
     {
         
 
@@ -72,6 +78,16 @@ namespace CommandPattern
             //Should probably check if the weapon is valid before firing; changing it will probably make it null
             mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex].Fire();
             mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex + 2].Fire();
+        }
+
+        public override void Hold()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Release()
+        {
+            throw new System.NotImplementedException();
         }
 
         public Attack() : base()
@@ -88,8 +104,7 @@ namespace CommandPattern
         {
             //IMPORTANT: this is only temporary code
             //mPlayerControls.mWeaponIndex = 2 / (mPlayerControls.mWeaponIndex + 2);
-            print("prev: " + mPlayerControls.mPreviousWeaponIndex);     //WHY DOES THIS KEEP COMING UP AS 0????
-            //Update: somehow this is working now. I honestly don't remember what, if anything, I did to fix this
+            
             int lTemp = mPlayerControls.mWeaponIndex;
             //print("Before: cur=" + mPlayerControls.mWeaponIndex + ", prev=" + mPlayerControls.mPreviousWeaponIndex + ", temp=" + lTemp);
             mPlayerControls.mWeaponIndex = mPlayerControls.mPreviousWeaponIndex;
@@ -104,14 +119,34 @@ namespace CommandPattern
         }
     }
 
-    public class WeaponWheel : Command
+    public class WeaponWheel : HoldableCommand
     {
         GameObject mWheel;
+        bool mIsActive = false;
         
 
         public override void Execute()
         {
-            
+            if (mIsActive)
+            {
+                Release();
+            }
+            else
+            {
+                Hold();
+            }
+        }
+
+        public override void Hold()
+        {
+            mWheel.SetActive(true);
+            mIsActive = !mIsActive;
+        }
+
+        public override void Release()
+        {
+            mWheel.SetActive(false);
+            mIsActive = !mIsActive;
         }
 
         public WeaponWheel() : base()
@@ -138,11 +173,21 @@ namespace CommandPattern
         }
     }
 
-    public class OverCharge : Command
+    public class OverCharge : HoldableCommand
     {
         public override void Execute()
         {
 
+        }
+
+        public override void Hold()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Release()
+        {
+            throw new System.NotImplementedException();
         }
 
         public OverCharge() : base()
@@ -261,11 +306,21 @@ namespace CommandPattern
         }
     }
 
-    public class ZoomIn : Command
+    public class ZoomIn : HoldableCommand
     {
         public override void Execute()
         {
             
+        }
+
+        public override void Hold()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Release()
+        {
+            throw new System.NotImplementedException();
         }
 
         public ZoomIn() : base()
@@ -274,11 +329,21 @@ namespace CommandPattern
         }
     }
 
-    public class ZoomOut : Command
+    public class ZoomOut : HoldableCommand
     {
         public override void Execute()
         {
             
+        }
+
+        public override void Hold()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Release()
+        {
+            throw new System.NotImplementedException();
         }
 
         public ZoomOut() : base()
@@ -289,12 +354,22 @@ namespace CommandPattern
     //End map commands
 
 
-    public class DoNothing : Command
+    public class DoNothing : HoldableCommand
     {
         public override void Execute()
         {
             //Intentionally blank
             
+        }
+
+        public override void Hold()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Release()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
