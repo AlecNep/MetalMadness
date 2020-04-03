@@ -23,7 +23,8 @@ namespace CommandPattern
 
 
         //Parent function
-        public abstract void Execute();
+        public abstract void Press();
+        public abstract void Release();
         public void SetButtonType(int t)
         {
             if (t >= 0 && t < 3)
@@ -44,17 +45,39 @@ namespace CommandPattern
 
     //~~~Child classes~~~
 
-    public abstract class HoldableCommand : Command
+    //This all might be unneccessary
+    /*public abstract class HoldableCommand : Command
     {
-        public abstract void Hold();
-        public abstract void Release();
-    }
+        bool mIsDown = false;
+
+        public override void Press()
+        {
+            if (mIsDown)
+            {
+                Release();
+            }
+            else
+            {
+                Hold();
+            }
+        }
+
+        public virtual void Hold()
+        {
+            mIsDown = !mIsDown;
+        }
+
+        public virtual void Release()
+        {
+            mIsDown = !mIsDown;
+        }
+    }*/
 
     
     //Active gameplay commands
     public class Jump : Command
     {
-        public override void Execute()
+        public override void Press()
         {
             
             if (mPlayerControls.IsGrounded())// || mPlayerControls.mCanDoubleJump)
@@ -62,32 +85,32 @@ namespace CommandPattern
                 mPlayerRb.AddForce(mPlayerControls.mJumpforce * (-mPlayerControls.mGravNormal), ForceMode.Impulse);
             }
         }
-        
+
+        public override void Release()
+        {
+            
+        }
+
         public Jump() : base()
         {
             mButtonType = mType.press;
         }
     }
 
-    public class Attack : HoldableCommand
+    public class Attack : Command
     {
         
 
-        public override void Execute()
+        public override void Press()
         {
             //Should probably check if the weapon is valid before firing; changing it will probably make it null
             mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex].Fire();
             mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex + 2].Fire();
         }
 
-        public override void Hold()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override void Release()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public Attack() : base()
@@ -100,7 +123,7 @@ namespace CommandPattern
 
     public class SwapWeapon : Command
     {
-        public override void Execute()
+        public override void Press()
         {
             //IMPORTANT: this is only temporary code
             //mPlayerControls.mWeaponIndex = 2 / (mPlayerControls.mWeaponIndex + 2);
@@ -113,40 +136,36 @@ namespace CommandPattern
             mPlayerControls.ClearWeapons();
         }
 
+        public override void Release()
+        {
+            
+        }
+
         public SwapWeapon() : base()
         {
 
         }
     }
 
-    public class WeaponWheel : HoldableCommand
+    public class WeaponWheel : Command
     {
         GameObject mWheel;
         bool mIsActive = false;
-        
-
-        public override void Execute()
+        private void Toggle(bool b)
         {
-            if (mIsActive)
-            {
-                Release();
-            }
-            else
-            {
-                Hold();
-            }
+            b = !b;
         }
 
-        public override void Hold()
+        public override void Press()
         {
             mWheel.SetActive(true);
-            mIsActive = !mIsActive;
+            Toggle(mIsActive);
         }
-
+        
         public override void Release()
         {
             mWheel.SetActive(false);
-            mIsActive = !mIsActive;
+            Toggle(mIsActive);
         }
 
         public WeaponWheel() : base()
@@ -162,7 +181,12 @@ namespace CommandPattern
 
     public class Dash : Command
     {
-        public override void Execute()
+        public override void Press()
+        {
+            
+        }
+
+        public override void Release()
         {
             
         }
@@ -173,21 +197,16 @@ namespace CommandPattern
         }
     }
 
-    public class OverCharge : HoldableCommand
+    public class OverCharge : Command
     {
-        public override void Execute()
+        public override void Press()
         {
 
         }
-
-        public override void Hold()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        
         public override void Release()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public OverCharge() : base()
@@ -198,7 +217,12 @@ namespace CommandPattern
 
     public class OpenMap : Command
     {
-        public override void Execute()
+        public override void Press()
+        {
+            
+        }
+
+        public override void Release()
         {
             
         }
@@ -211,7 +235,12 @@ namespace CommandPattern
 
     public class Pause : Command
     {
-        public override void Execute()
+        public override void Press()
+        {
+            
+        }
+
+        public override void Release()
         {
             
         }
@@ -228,7 +257,12 @@ namespace CommandPattern
     //Menu commands
     public class Select : Command
     {
-        public override void Execute()
+        public override void Press()
+        {
+            
+        }
+
+        public override void Release()
         {
             
         }
@@ -241,7 +275,12 @@ namespace CommandPattern
 
     public class Cancel : Command
     {
-        public override void Execute()
+        public override void Press()
+        {
+            
+        }
+
+        public override void Release()
         {
             
         }
@@ -254,7 +293,12 @@ namespace CommandPattern
 
     public class NextTab : Command
     {
-        public override void Execute()
+        public override void Press()
+        {
+            
+        }
+
+        public override void Release()
         {
             
         }
@@ -267,7 +311,12 @@ namespace CommandPattern
 
     public class PreviousTab : Command
     {
-        public override void Execute()
+        public override void Press()
+        {
+            
+        }
+
+        public override void Release()
         {
             
         }
@@ -282,7 +331,12 @@ namespace CommandPattern
     //Map commands
     public class PlaceMarker : Command
     {
-        public override void Execute()
+        public override void Press()
+        {
+            
+        }
+
+        public override void Release()
         {
             
         }
@@ -295,7 +349,12 @@ namespace CommandPattern
 
     public class Close : Command
     {
-        public override void Execute()
+        public override void Press()
+        {
+            
+        }
+
+        public override void Release()
         {
             
         }
@@ -306,21 +365,16 @@ namespace CommandPattern
         }
     }
 
-    public class ZoomIn : HoldableCommand
+    public class ZoomIn : Command
     {
-        public override void Execute()
+        public override void Press()
         {
             
         }
-
-        public override void Hold()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        
         public override void Release()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public ZoomIn() : base()
@@ -329,21 +383,16 @@ namespace CommandPattern
         }
     }
 
-    public class ZoomOut : HoldableCommand
+    public class ZoomOut : Command
     {
-        public override void Execute()
+        public override void Press()
         {
             
         }
-
-        public override void Hold()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        
         public override void Release()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public ZoomOut() : base()
@@ -354,22 +403,17 @@ namespace CommandPattern
     //End map commands
 
 
-    public class DoNothing : HoldableCommand
+    public class DoNothing : Command
     {
-        public override void Execute()
+        public override void Press()
         {
             //Intentionally blank
             
         }
-
-        public override void Hold()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        
         public override void Release()
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

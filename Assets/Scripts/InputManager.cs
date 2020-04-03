@@ -53,74 +53,132 @@ namespace CommandPattern
         {
             if (Input.GetButtonDown("AButton"))
             {
-                mAButton.Execute();
+                mAButton.Press();
             }
-            
+            if (Input.GetButtonUp("AButton"))
+            {
+                mAButton.Release();
+            }
+
             if (Input.GetButtonDown("BButton"))
             {
-                mBButton.Execute();
+                mBButton.Press();
             }
+            if (Input.GetButtonDown("BButton"))
+            {
+                mBButton.Release();
+            }
+
             if (Input.GetButtonDown("XButton"))
             {
-                mXButton.Execute();
+                mXButton.Press();
             }
+            if (Input.GetButtonUp("XButton"))
+            {
+                mXButton.Release();
+            }
+
             if (Input.GetButtonDown("YButton"))
             {
-                mYButton.Execute();
+                mYButton.Press();
             }
+            if (Input.GetButtonUp("YButton"))
+            {
+                mYButton.Release();
+            }
+
             if (Input.GetButtonDown("RBumper"))
             {
-                mRBumper.Execute();
+                mRBumper.Press();
             }
+            if (Input.GetButtonUp("RBumper"))
+            {
+                mRBumper.Release();
+            }
+
             if (Input.GetButtonDown("LBumper"))
             {
-                mLBumper.Execute();
+                mLBumper.Press();
             }
+            if (Input.GetButtonUp("LBumper"))
+            {
+                mLBumper.Release();
+            }
+
             if (Input.GetButtonDown("Start"))
             {
-                mStart.Execute();
+                mStart.Press();
             }
+            if (Input.GetButtonUp("Start"))
+            {
+                mStart.Release();
+            }
+
             if (Input.GetButtonDown("Back"))
             {
-                mBack.Execute();
+                mBack.Press();
+            }
+            if (Input.GetButtonUp("Back"))
+            {
+                mBack.Release();
             }
 
             //Clicked analog sticks
             if (Input.GetButtonDown("LClick"))
             {
-                mLClick.Execute();
+                mLClick.Press();
             }
+            if (Input.GetButtonUp("LClick"))
+            {
+                mLClick.Release();
+            }
+
             if (Input.GetButtonDown("RClick"))
             {
-                mRClick.Execute();
+                mRClick.Press();
+            }
+            if (Input.GetButtonUp("RClick"))
+            {
+                mRClick.Release();
             }
 
             //D-pad
+            //Not sure how to "Holdify" these
             if (Input.GetAxis("DPadX") > 0)
             {
-                mRight.Execute();
+                mRight.Press();
             }
             if (Input.GetAxis("DPadX") < 0)
             {
-                mLeft.Execute();
+                mLeft.Press();
             }
             if (Input.GetAxis("DPadY") > 0)
             {
-                mUp.Execute();
+                mUp.Press();
             }
             if (Input.GetAxis("DPadY") < 0)
             {
-                mDown.Execute();
+                mDown.Press();
             }
 
             //Triggers
-            if (Input.GetAxis("RTrigger") > 0.3f)
+            //Not sure how to "holdify" these either
+            if (Input.GetButtonDown("RTrigger"))
             {
-                mRTrigger.Execute();
+                mRTrigger.Press();
             }
-            if (Input.GetAxis("LTrigger") > 0.3f)
+            if (Input.GetButtonUp("RTrigger"))
             {
-                mLTrigger.Execute();
+                mRTrigger.Release();
+            }
+
+            if (Input.GetButtonDown("LTrigger"))
+            {
+                mLTrigger.Press();
+            }
+            if (Input.GetButtonUp("LTrigger"))
+            {
+                mLTrigger.Release();
             }
         }
     }
