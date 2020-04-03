@@ -93,8 +93,9 @@ public class PlayerControls : MonoBehaviour {
     void Update () {
         float lLx = Input.GetAxis("LStickX");
         float lLy = Input.GetAxis("LStickY");
+        float lRx = Input.GetAxis("RStickX");
+        float lRy = Input.GetAxis("RStickY");
 
-        
         //probably shouldn't be called every cycle
         switch ((int)mCurGravity)
         {
@@ -124,7 +125,8 @@ public class PlayerControls : MonoBehaviour {
                 break;
         }
 
-        if((int)mCurControls == 0)
+        //Left stick controls
+        if((int)mCurControls < 2) //Can move with the "Gameplay" and "WeaponWheel" modes
         {
             if (lLx != 0)
             {
@@ -237,48 +239,62 @@ public class PlayerControls : MonoBehaviour {
         mCamera.transform.rotation = Quaternion.Euler(0, 0, mTargetShiftAngle);
 
 
-        Vector2 lGravInput = new Vector2(Input.GetAxis("RStickX"), Input.GetAxis("RStickY"));
-        float lGravAngle = 0f;
+        //Right stick controls
+        if (mCurControls == 0) //can only shift gravity in gameplay mode
+        {
+            Vector2 lGravInput = new Vector2(lRx, lRy);
+            float lGravAngle = 0f;
 
+
+            if (mTimer < mGravShiftDelay && !mCanShift)
+            {
+                mTimer += Time.deltaTime;
+            }
+            if (mTimer >= mGravShiftDelay)
+            {
+                mTimer = 0;
+                mCanShift = true;
+            }
+
+
+            if (lGravInput.magnitude > 0.1f && mCanShift)
+            {
+                mCanShift = false;
+
+                lGravAngle = Vector2.Angle(Vector2.up, lGravInput);
+                Vector3 cross = Vector3.Cross(Vector2.up, lGravInput);
+
+                if (cross.z > 0)
+                    lGravAngle = -lGravAngle;
+
+                if (lGravAngle > -45f && lGravAngle <= 45f)
+                {
+                    //Shift gravity to the relative "up"
+                    mCurGravity = ShiftGravity<Gravity>(2);
+                }
+                else if (lGravAngle > 45f && lGravAngle <= 135f)
+                {
+                    //Shift gravity to the relative "right"
+                    mCurGravity = ShiftGravity<Gravity>(1);
+                }
+                else if (lGravAngle <= -45f && lGravAngle >= -135f)
+                {
+                    //Shift gravity to the relative "left"
+                    mCurGravity = ShiftGravity<Gravity>(3);
+                }
+            }
+        }
+        else if ((int)mCurControls == 1) //Weapon wheel mode
+        {
+
+        }
         
-        if (mTimer < mGravShiftDelay && !mCanShift)
-        {
-            mTimer += Time.deltaTime;
-        }
-        if (mTimer >= mGravShiftDelay)
-        {
-            mTimer = 0;
-            mCanShift = true;
-        }
-            
 
-        if (lGravInput.magnitude > 0.1f && mCanShift)
-        {
-            mCanShift = false;
-            
-            lGravAngle = Vector2.Angle(Vector2.up, lGravInput);
-            Vector3 cross = Vector3.Cross(Vector2.up, lGravInput);
+    }
 
-            if (cross.z > 0)
-                lGravAngle = -lGravAngle;
-
-            if (lGravAngle > -45f && lGravAngle <= 45f)
-            {
-                //Shift gravity to the relative "up"
-                mCurGravity = ShiftGravity<Gravity>(2);
-            }
-            else if (lGravAngle > 45f && lGravAngle <= 135f)
-            {
-                //Shift gravity to the relative "right"
-                mCurGravity = ShiftGravity<Gravity>(1); 
-            }
-            else if (lGravAngle <= -45f && lGravAngle >= -135f)
-            {
-                //Shift gravity to the relative "left"
-                mCurGravity = ShiftGravity<Gravity>(3); 
-            }
-        }
-
+    public void ChangeControlMode(int mMode)
+    {
+        mCurControls = (ControlMode)mMode;
     }
 
     public void ClearWeapons()

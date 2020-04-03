@@ -45,34 +45,6 @@ namespace CommandPattern
 
     //~~~Child classes~~~
 
-    //This all might be unneccessary
-    /*public abstract class HoldableCommand : Command
-    {
-        bool mIsDown = false;
-
-        public override void Press()
-        {
-            if (mIsDown)
-            {
-                Release();
-            }
-            else
-            {
-                Hold();
-            }
-        }
-
-        public virtual void Hold()
-        {
-            mIsDown = !mIsDown;
-        }
-
-        public virtual void Release()
-        {
-            mIsDown = !mIsDown;
-        }
-    }*/
-
     
     //Active gameplay commands
     public class Jump : Command
@@ -160,12 +132,14 @@ namespace CommandPattern
         {
             mWheel.SetActive(true);
             Toggle(mIsActive);
+            mPlayerControls.ChangeControlMode(1);
         }
         
         public override void Release()
         {
             mWheel.SetActive(false);
             Toggle(mIsActive);
+            mPlayerControls.ChangeControlMode(0);
         }
 
         public WeaponWheel() : base()
