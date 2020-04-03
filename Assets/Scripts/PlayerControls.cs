@@ -64,6 +64,9 @@ public class PlayerControls : MonoBehaviour {
     public int mPreviousWeaponIndex = 1; //TEMPORARY
     public int mWeaponCount; //TEMPORARY; DO NOT KEEP PUBLIC
 
+    public enum ControlMode {Gameplay = 0, WeaponWheel = 1, Menu = 2, Map = 3 };
+    public ControlMode mCurControls = ControlMode.Gameplay;
+
     // Use this for initialization
     void Start() {
         mRb = GetComponent<Rigidbody>();
@@ -121,80 +124,83 @@ public class PlayerControls : MonoBehaviour {
                 break;
         }
 
-        if (lLx != 0)
+        if((int)mCurControls == 0)
         {
-            if (lLx < 0)
-            { //turn to the relative left
-                mArmVariable = mTurnVariable = 2;
-                mTargetTurnAngle = -90f;
+            if (lLx != 0)
+            {
+                if (lLx < 0)
+                {   //turn to the relative left
+                    mArmVariable = mTurnVariable = 2;
+                    mTargetTurnAngle = -90f;
 
-                //This is going to be some awful code, but I'm at a loss and need it to at least "work" for now
-                switch ((int)mCurGravity)
-                {
-                    case 0: //south
-                        mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0);
-                        break;
-                    case 1: //West
-                        mDesiredAgnles = new Vector3(mTargetTurnAngle, 0, 90);
-                        break;
-                    case 2: //North
-                        mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180); //
-                        break;
-                    case 3: //East
-                        mDesiredAgnles = new Vector3(-mTargetTurnAngle, 0, -90); //
-                        break;
+                    //This is going to be some awful code, but I'm at a loss and need it to at least "work" for now
+                    switch ((int)mCurGravity)
+                    {
+                        case 0: //south
+                            mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0);
+                            break;
+                        case 1: //West
+                            mDesiredAgnles = new Vector3(mTargetTurnAngle, 0, 90);
+                            break;
+                        case 2: //North
+                            mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180); //
+                            break;
+                        case 3: //East
+                            mDesiredAgnles = new Vector3(-mTargetTurnAngle, 0, -90); //
+                            break;
+                    }
                 }
+                else
+                { //turn to the relative right
+                    mArmVariable = mTurnVariable = 0;
+                    mTargetTurnAngle = 90f;
+
+                    //This is going to be some awful code, but I'm at a loss and need it to at least "work" for now
+                    switch ((int)mCurGravity)
+                    {
+                        case 0: //south
+                            mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0); //
+                            break;
+                        case 1: //West
+                            mDesiredAgnles = new Vector3(mTargetTurnAngle, 0, 90); //
+                            break;
+                        case 2: //North
+                            mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180);
+                            break;
+                        case 3: //East
+                            mDesiredAgnles = new Vector3(-mTargetTurnAngle, 0, -90);
+                            break;
+                    }
+                }
+
+                transform.position += mMovementVector * (lLx * mMovementSpeed);
+                transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+            }
+            mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
+
+            //Arm movement section
+            if (Mathf.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
+            {
+                //When up=1 & down=3, S+N are perfect but E+W are totally wrong
+                //When up=3 & down=1, the real-world up and down are always wrong but real-world left and right are perfect
+                Vector3 lArmRot;
+                if (lLy > 0) //Aiming to the relative up
+                {
+                    lArmRot = 180 * Vector3.right;
+                    mArmVariable = 1;
+                }
+                else //Aiming to the relative down
+                {
+                    lArmRot = Vector3.zero;
+                    mArmVariable = 3;
+                }
+                mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(lArmRot), mArmRotationSpeed);
             }
             else
-            { //turn to the relative right
-                mArmVariable = mTurnVariable = 0;
-                mTargetTurnAngle = 90f;
-
-                //This is going to be some awful code, but I'm at a loss and need it to at least "work" for now
-                switch ((int)mCurGravity)
-                {
-                    case 0: //south
-                        mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0); //
-                        break;
-                    case 1: //West
-                        mDesiredAgnles = new Vector3(mTargetTurnAngle, 0, 90); //
-                        break;
-                    case 2: //North
-                        mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180);
-                        break;
-                    case 3: //East
-                        mDesiredAgnles = new Vector3(-mTargetTurnAngle, 0, -90);
-                        break;
-                }
-            }
-
-            transform.position += mMovementVector * (lLx * mMovementSpeed);
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-        }
-        mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
-
-        //Arm movement section
-        if (Mathf.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
-        {
-            //When up=1 & down=3, S+N are perfect but E+W are totally wrong
-            //When up=3 & down=1, the real-world up and down are always wrong but real-world left and right are perfect
-            Vector3 lArmRot;
-            if (lLy > 0) //Aiming to the relative up
             {
-                lArmRot = 180 * Vector3.right;
-                mArmVariable = 1; 
+                mArmVariable = mTurnVariable;
+                mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(Vector3.right * 90), mArmRotationSpeed);
             }
-            else //Aiming to the relative down
-            {
-                lArmRot = Vector3.zero;
-                mArmVariable = 3; 
-            }
-            mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(lArmRot), mArmRotationSpeed);
-        }
-        else
-        {
-            mArmVariable = mTurnVariable; 
-            mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(Vector3.right * 90), mArmRotationSpeed);
         }
 
 
