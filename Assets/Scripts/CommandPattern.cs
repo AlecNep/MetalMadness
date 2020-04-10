@@ -142,12 +142,20 @@ namespace CommandPattern
             mPlayerControls.ChangeControlMode(0);
         }
 
+        public GameObject GetWeaponWheel()
+        {
+            return mWheel;
+        }
+
         public WeaponWheel() : base()
         {
             mButtonType = (mType)2;
-            mWheel = GameObject.Find("UI").GetComponent<Transform>().Find("Weapon Wheel").gameObject;
+            //mWheel = GameObject.Find("UI").GetComponent<Transform>().Find("Weapon Wheel").gameObject;
+            mWheel = GameObject.Find("Weapon Wheel").gameObject;
             if (mWheel != null)
             {
+                //assigning this here is probably a TERRIBLE idea, JS
+                //mPlayerControls.mWeaponWheelCursor = mWheel.transform.Find("Cursor").gameObject;
                 mWheel.SetActive(false);
             }
         }

@@ -58,11 +58,13 @@ public class PlayerControls : MonoBehaviour {
     private float mHealth = 100f;
 
     public Weapon[] mWeapons; //TEMPORARY; DO NOT KEEP PUBLIC
-    //public Weapon[] mCurrentWeapon = new Weapon[2]; //might not need it //TEMPORARY; DO NOT KEEP PUBLIC
-    //public Weapon[] mPreviousWeapon = new Weapon[2]; //not being used
     public int mWeaponIndex = 0; //TEMPORARY; DO NOT KEEP PUBLIC
     public int mPreviousWeaponIndex = 1; //TEMPORARY
     public int mWeaponCount; //TEMPORARY; DO NOT KEEP PUBLIC
+
+    public GameObject mWeaponWheelCursor; //consider changing this into a RectTransform
+    private GameObject mWeaponWheelRef;
+    private float mWheelWidth;
 
     public enum ControlMode {Gameplay = 0, WeaponWheel = 1, Menu = 2, Map = 3 };
     public ControlMode mCurControls = ControlMode.Gameplay;
@@ -81,7 +83,12 @@ public class PlayerControls : MonoBehaviour {
         mWeapons = GetComponentsInChildren<Weapon>();
         mWeaponCount = mWeapons.Length / 2;
 
-        ClearWeapons();
+        ClearWeapons(); //check later on if this is still necessary
+
+        mWeaponWheelRef = GameObject.Find("Weapon Wheel").gameObject;
+        mWheelWidth = mWeaponWheelRef.GetComponent<RectTransform>().sizeDelta.x;
+        mWeaponWheelCursor = mWeaponWheelRef.transform.Find("Cursor").gameObject;
+
     }
 
     private void FixedUpdate()
@@ -286,7 +293,11 @@ public class PlayerControls : MonoBehaviour {
         }
         else if ((int)mCurControls == 1) //Weapon wheel mode
         {
-
+            //using .position sets its starting point to the bottom of the screen
+            //but using .localPosition sets its starting point to the top-right corner of the weapon wheel
+            //mWeaponWheelCursor.transform.position = new Vector3(lRx, lRy)*mWheelWidth;
+            Vector3 lUpRight = Vector3.right + Vector3.up;
+            mWeaponWheelCursor.transform.localPosition = lUpRight * (-mWheelWidth / 2) + new Vector3(lRx, lRy) * (mWheelWidth / 3f);
         }
         
 
