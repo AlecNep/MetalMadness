@@ -19,7 +19,7 @@ public class WheelIcon : MonoBehaviour {
 
     public void Toggle()
     {
-        highlighted = !highlighted; //probably unnecessary
-        gameObject.SetActive(highlighted);
+        highlighted = !highlighted; //probably unnecessary //actually maybe not
+        mGlow.SetActive(highlighted);
     }
 }

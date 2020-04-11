@@ -63,7 +63,7 @@ public class PlayerControls : MonoBehaviour {
     public int mWeaponCount; //TEMPORARY; DO NOT KEEP PUBLIC
 
     public GameObject mWeaponWheelCursor; //consider changing this into a RectTransform
-    private GameObject mWeaponWheelRef;
+    private WeaponWheel mWeaponWheelRef;
     private float mWheelWidth;
 
     public enum ControlMode {Gameplay = 0, WeaponWheel = 1, Menu = 2, Map = 3 };
@@ -85,7 +85,7 @@ public class PlayerControls : MonoBehaviour {
 
         ClearWeapons(); //check later on if this is still necessary
 
-        mWeaponWheelRef = GameObject.Find("Weapon Wheel").gameObject;
+        mWeaponWheelRef = GameObject.Find("Weapon Wheel").GetComponent<WeaponWheel>();
         mWheelWidth = mWeaponWheelRef.GetComponent<RectTransform>().sizeDelta.x;
         mWeaponWheelCursor = mWeaponWheelRef.transform.Find("Cursor").gameObject;
 
@@ -297,7 +297,13 @@ public class PlayerControls : MonoBehaviour {
             //but using .localPosition sets its starting point to the top-right corner of the weapon wheel
             //mWeaponWheelCursor.transform.position = new Vector3(lRx, lRy)*mWheelWidth;
             Vector3 lUpRight = Vector3.right + Vector3.up;
-            mWeaponWheelCursor.transform.localPosition = lUpRight * (-mWheelWidth / 2) + new Vector3(lRx, lRy) * (mWheelWidth / 3f);
+            Vector3 lRStick = new Vector3(lRx, lRy);
+            mWeaponWheelCursor.transform.localPosition = lUpRight * (-mWheelWidth / 2) + lRStick * (mWheelWidth / 3f);
+            if (lRStick.magnitude > 0.1f) //totally arbitrary number right now
+            {
+                mWeaponWheelRef.Selector(lRStick);
+            }
+            
         }
         
 
