@@ -25,7 +25,7 @@ namespace CommandPattern
         //Parent function
         public abstract void Press();
         public abstract void Release();
-        public void SetButtonType(int t)
+        public void SetButtonType(int t) //almost certainly unnecessary
         {
             if (t >= 0 && t < 3)
             {
@@ -122,40 +122,30 @@ namespace CommandPattern
     public class WeaponWheel : Command
     {
         GameObject mWheel;
-        bool mIsActive = false;
-        private void Toggle(bool b)
-        {
-            b = !b;
-        }
 
         public override void Press()
         {
             mWheel.SetActive(true);
-            Toggle(mIsActive);
             mPlayerControls.ChangeControlMode(1);
         }
         
         public override void Release()
         {
             mWheel.SetActive(false);
-            Toggle(mIsActive);
             mPlayerControls.ChangeControlMode(0);
+            WeaponSelector.Reset();
         }
 
-        public GameObject GetWeaponWheel()
+        public GameObject GetWeaponWheel() //probably useless
         {
             return mWheel;
         }
 
         public WeaponWheel() : base()
         {
-            mButtonType = (mType)2;
-            //mWheel = GameObject.Find("UI").GetComponent<Transform>().Find("Weapon Wheel").gameObject;
             mWheel = GameObject.Find("Weapon Wheel").gameObject;
             if (mWheel != null)
             {
-                //assigning this here is probably a TERRIBLE idea, JS
-                //mPlayerControls.mWeaponWheelCursor = mWheel.transform.Find("Cursor").gameObject;
                 mWheel.SetActive(false);
             }
         }

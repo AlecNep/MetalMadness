@@ -70,7 +70,7 @@
     <Compile Include="Assets\Scripts\Shotgun.cs" />
     <Compile Include="Assets\Scripts\Spike.cs" />
     <Compile Include="Assets\Scripts\Weapon.cs" />
-    <Compile Include="Assets\Scripts\WeaponWheel.cs" />
+    <Compile Include="Assets\Scripts\WeaponSelector.cs" />
     <Compile Include="Assets\Scripts\WheelIcon.cs" />
     <None Include="Assets\Metal Mayhem Music Pack\1 - Info.txt" />
     <Reference Include="UnityEditor.StandardEvents">

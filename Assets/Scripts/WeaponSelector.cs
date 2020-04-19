@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponWheel : MonoBehaviour {
+public class WeaponSelector : MonoBehaviour {
 
     List<WheelIcon> mWeapons;
     int mWeaponCount = 5; //NOTE: might not be necessary. Here for placeholder purposes  //hardcoded
-    public int mHighlighted { get; private set; }
+    PlayerControls mPlayerRef;
+    public static int mHighlighted { get; private set; }
 
 	// Use this for initialization
 	void Start () {
         //Need to figure out when and how to determine the weapon amount
         //mWeapons = new List<WheelIcon>(mWeaponCount);\
         mWeapons = new List<WheelIcon>(GetComponentsInChildren<WheelIcon>());
-        print(mWeapons.Count);
+        mPlayerRef = GameObject.Find("Player").GetComponent<PlayerControls>();
 	}
 	
 	// Update is called once per frame
@@ -25,25 +26,37 @@ public class WeaponWheel : MonoBehaviour {
     {
         float lSlotSize = 360f / mWeaponCount;
         float lAngle = Vector2.Angle(Vector2.up, pAngle);
-        int lCurrent;
+        //int lHighlighted = 0;
+        int lSelected;
 
         Vector3 cross = Vector3.Cross(Vector2.up, pAngle);
-        //print("angle before: " + lAngle);
+
         if (cross.z > 0)
         {
-            lAngle = -lAngle;
-            //lAngle = 360f + lAngle;
+            //lAngle = -lAngle;
+            lAngle = 360f - lAngle;
         }
         //print("angle after: " + lAngle);
-        lCurrent = lAngle >= 0 ? (int)(lAngle / lSlotSize) : mWeaponCount + (int)(lAngle / lSlotSize) - 1;
+        //lSelected = lAngle >= 0 ? (int)(lAngle / lSlotSize) : mWeaponCount + (int)(lAngle / lSlotSize) - 1;
+        lSelected = (int)(lAngle / lSlotSize);
         //OR have a "cyclic" index by combnining it wit the max. e.g. if current < 0, current = count + current
-        print("Slot size = " + lSlotSize + ", Angle = " + lAngle + ", Current slot = " + lCurrent);
-        if (lCurrent != mHighlighted)
+        //print("Angle = " + lAngle + ", Current slot = " + lSelected + ", highlighted = " + lHighlighted);
+        if (mHighlighted == -1) //fresh start; nothing has been highlighted since the wheel was opened
+        {
+            mWeapons[lSelected].Toggle();
+            mHighlighted = lSelected;
+        }
+        else if (lSelected != mHighlighted)
         {
             mWeapons[mHighlighted].Toggle();
-            mWeapons[lCurrent].Toggle();
+            mWeapons[lSelected].Toggle();
+            mHighlighted = lSelected;
         }
-        //mWeapons[mHighlighted].Toggle();
-        mHighlighted = lCurrent;
+        
+    }
+
+    public static void Reset()
+    {
+        mHighlighted = -1;
     }
 }

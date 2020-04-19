@@ -63,7 +63,7 @@ public class PlayerControls : MonoBehaviour {
     public int mWeaponCount; //TEMPORARY; DO NOT KEEP PUBLIC
 
     public GameObject mWeaponWheelCursor; //consider changing this into a RectTransform
-    private WeaponWheel mWeaponWheelRef;
+    private WeaponSelector mWeaponWheelRef;
     private float mWheelWidth;
 
     public enum ControlMode {Gameplay = 0, WeaponWheel = 1, Menu = 2, Map = 3 };
@@ -84,8 +84,7 @@ public class PlayerControls : MonoBehaviour {
         mWeaponCount = mWeapons.Length / 2;
 
         ClearWeapons(); //check later on if this is still necessary
-
-        mWeaponWheelRef = GameObject.Find("Weapon Wheel").GetComponent<WeaponWheel>();
+        mWeaponWheelRef = GameObject.Find("Weapon Wheel").GetComponent<WeaponSelector>();
         mWheelWidth = mWeaponWheelRef.GetComponent<RectTransform>().sizeDelta.x;
         mWeaponWheelCursor = mWeaponWheelRef.transform.Find("Cursor").gameObject;
 
