@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponSelector : MonoBehaviour {
 
-    List<WheelIcon> mWeapons;
+    static List<WheelIcon> mWeapons;
     int mWeaponCount = 5; //NOTE: might not be necessary. Here for placeholder purposes  //hardcoded
     PlayerControls mPlayerRef;
     public static int mHighlighted { get; private set; }
@@ -57,6 +57,10 @@ public class WeaponSelector : MonoBehaviour {
 
     public static void Reset()
     {
-        mHighlighted = -1;
+        if(mHighlighted > -1)
+        {
+            mWeapons[mHighlighted].Toggle();
+            mHighlighted = -1;
+        }
     }
 }
