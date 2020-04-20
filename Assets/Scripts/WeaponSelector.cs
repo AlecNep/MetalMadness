@@ -15,6 +15,7 @@ public class WeaponSelector : MonoBehaviour {
         //mWeapons = new List<WheelIcon>(mWeaponCount);\
         mWeapons = new List<WheelIcon>(GetComponentsInChildren<WheelIcon>());
         mPlayerRef = GameObject.Find("Player").GetComponent<PlayerControls>();
+        mHighlighted = -1;
 	}
 	
 	// Update is called once per frame

@@ -298,7 +298,7 @@ public class PlayerControls : MonoBehaviour {
             Vector3 lUpRight = Vector3.right + Vector3.up;
             Vector3 lRStick = new Vector3(lRx, lRy);
             mWeaponWheelCursor.transform.localPosition = lUpRight * (-mWheelWidth / 2) + lRStick * (mWheelWidth / 3f);
-            if (lRStick.magnitude > 0.1f) //totally arbitrary number right now
+            if (lRStick.magnitude > 0.5f) //totally arbitrary number right now
             {
                 mWeaponWheelRef.Selector(lRStick);
             }
