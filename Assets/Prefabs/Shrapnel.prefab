@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSpeed: 13
-  mMaxLifespan: 10
+  mMaxLifespan: 3
 --- !u!122 &122196809892826186
 Halo:
   m_ObjectHideFlags: 1

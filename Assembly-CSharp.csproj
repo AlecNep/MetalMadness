@@ -69,6 +69,8 @@
     <Compile Include="Assets\Scripts\RivetGun.cs" />
     <Compile Include="Assets\Scripts\Shotgun.cs" />
     <Compile Include="Assets\Scripts\Spike.cs" />
+    <Compile Include="Assets\Scripts\StickyBomb.cs" />
+    <Compile Include="Assets\Scripts\StickyBombLauncher.cs" />
     <Compile Include="Assets\Scripts\Weapon.cs" />
     <Compile Include="Assets\Scripts\WeaponSelector.cs" />
     <Compile Include="Assets\Scripts\WheelIcon.cs" />
