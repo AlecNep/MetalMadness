@@ -77,7 +77,7 @@ namespace CommandPattern
         {
             //Should probably check if the weapon is valid before firing; changing it will probably make it null
             mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex].Fire();
-            mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex + 2].Fire();
+            mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex + mPlayerControls.mWeaponCount].Fire();
         }
 
         public override void Release()

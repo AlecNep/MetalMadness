@@ -82,6 +82,7 @@ public class PlayerControls : MonoBehaviour {
 
         mWeapons = GetComponentsInChildren<Weapon>();
         mWeaponCount = mWeapons.Length / 2;
+        print("Weapon count: " + mWeaponCount);
 
         ClearWeapons(); //check later on if this is still necessary
         mWeaponWheelRef = GameObject.Find("Weapon Wheel").GetComponent<WeaponSelector>();
@@ -317,7 +318,7 @@ public class PlayerControls : MonoBehaviour {
     {
         for (int i = 0; i < mWeaponCount * 2; i++)
         {
-            if (i != mWeaponIndex && i != mWeaponIndex + 2)
+            if (i != mWeaponIndex && i != mWeaponIndex + mWeaponCount) //originally 2 instead of weapon count
             {
                 mWeapons[i].gameObject.SetActive(false);
             }

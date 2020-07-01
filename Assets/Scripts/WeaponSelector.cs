@@ -6,7 +6,7 @@ public class WeaponSelector : MonoBehaviour {
 
     static List<WheelIcon> mWeapons;
     int mWeaponCount = 5; //NOTE: might not be necessary. Here for placeholder purposes  //hardcoded
-    PlayerControls mPlayerRef;
+    static PlayerControls mPlayerRef;
     public static int mHighlighted { get; private set; }
 
 	// Use this for initialization
@@ -60,6 +60,9 @@ public class WeaponSelector : MonoBehaviour {
     {
         if(mHighlighted > -1)
         {
+            mPlayerRef.mPreviousWeaponIndex = mPlayerRef.mWeaponIndex;
+            mPlayerRef.mWeaponIndex = mHighlighted;
+            mPlayerRef.ClearWeapons();
             mWeapons[mHighlighted].Toggle();
             mHighlighted = -1;
         }
