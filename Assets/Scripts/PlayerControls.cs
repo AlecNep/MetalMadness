@@ -82,7 +82,6 @@ public class PlayerControls : MonoBehaviour {
 
         mWeapons = GetComponentsInChildren<Weapon>();
         mWeaponCount = mWeapons.Length / 2;
-        print("Weapon count: " + mWeaponCount);
 
         ClearWeapons(); //check later on if this is still necessary
         mWeaponWheelRef = GameObject.Find("Weapon Wheel").GetComponent<WeaponSelector>();
@@ -91,10 +90,6 @@ public class PlayerControls : MonoBehaviour {
 
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update () {
@@ -114,7 +109,6 @@ public class PlayerControls : MonoBehaviour {
             case 1: //West
                 mGravNormal = Vector3.right;
                 mMovementVector = Vector3.up;
-                //mTargetShiftAngle = -90f;
                 mTargetShiftAngle = 90f; //doesn't seem to make a difference
                 break;
             case 2: //North
@@ -125,7 +119,6 @@ public class PlayerControls : MonoBehaviour {
             case 3: //East
                 mGravNormal = Vector3.left;
                 mMovementVector = Vector3.down;
-                //mTargetShiftAngle = 90f;
                 mTargetShiftAngle = -90f; //doesn't seem to make a difference
                 break;
             default:
@@ -190,8 +183,6 @@ public class PlayerControls : MonoBehaviour {
             //Arm movement section
             if (Mathf.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
             {
-                //When up=1 & down=3, S+N are perfect but E+W are totally wrong
-                //When up=3 & down=1, the real-world up and down are always wrong but real-world left and right are perfect
                 Vector3 lArmRot;
                 if (lLy > 0) //Aiming to the relative up
                 {
@@ -220,6 +211,7 @@ public class PlayerControls : MonoBehaviour {
         {
             if (mTargetShiftAngle != transform.rotation.eulerAngles.y || transform.rotation.eulerAngles.x != mTargetTurnAngle)
             {
+                //Leaving this here so you don't make the same mistakes when you eventually try to optimize this
                 //mTargetRotation = Quaternion.Euler(mTargetShiftAngle, mTargetTurnAngle, 0f); //rotates around world-y
                 //mTargetRotation = Quaternion.Euler(mTargetTurnAngle, mTargetShiftAngle, 0f); //rotates around world-z
                 //mTargetRotation = Quaternion.Euler(0f, mTargetTurnAngle, mTargetShiftAngle); //rotates around world-y but is sideways
@@ -305,8 +297,6 @@ public class PlayerControls : MonoBehaviour {
             }
             
         }
-        
-
     }
 
     public void ChangeControlMode(int mMode)
