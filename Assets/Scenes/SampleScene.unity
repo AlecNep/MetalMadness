@@ -235,6 +235,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1808266642835594, guid: 56981ab5b8e0799449f79ca896b724f5, type: 2}
+      propertyPath: m_Name
+      value: GrenadeLauncher
+      objectReference: {fileID: 0}
+    - target: {fileID: 1432780377035336, guid: 56981ab5b8e0799449f79ca896b724f5, type: 2}
+      propertyPath: m_Name
+      value: GrenadeLauncher
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114441552521871882, guid: 56981ab5b8e0799449f79ca896b724f5, type: 2}
     - {fileID: 114655796679745268, guid: 56981ab5b8e0799449f79ca896b724f5, type: 2}
@@ -559,7 +567,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1808266642835594, guid: 56981ab5b8e0799449f79ca896b724f5,
     type: 2}
   m_PrefabInternal: {fileID: 87323371}
---- !u!114 &388177941
+--- !u!114 &388177942
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -570,7 +578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eec000257660b84ca15fa7002aad5ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mShot: {fileID: 1158813895965848, guid: 99844b48838f6e046ad9e511b6ed7941, type: 2}
+  mShot: {fileID: 1741857442226812, guid: 99844b48838f6e046ad9e511b6ed7941, type: 2}
   mFiring: 0
   mFireRate: 2
 --- !u!1 &491657686
@@ -1043,7 +1051,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1432780377035336, guid: 56981ab5b8e0799449f79ca896b724f5,
     type: 2}
   m_PrefabInternal: {fileID: 87323371}
---- !u!114 &1015033549
+--- !u!114 &1015033550
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1054,7 +1062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eec000257660b84ca15fa7002aad5ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mShot: {fileID: 1158813895965848, guid: 99844b48838f6e046ad9e511b6ed7941, type: 2}
+  mShot: {fileID: 1741857442226812, guid: 99844b48838f6e046ad9e511b6ed7941, type: 2}
   mFiring: 0
   mFireRate: 2
 --- !u!1 &1066324061

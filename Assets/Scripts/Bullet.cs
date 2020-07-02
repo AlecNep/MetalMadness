@@ -2,10 +2,10 @@
 
 public class Bullet : MonoBehaviour {
 
-    Rigidbody mRb;
+    protected Rigidbody mRb;
 
     [SerializeField]
-    float mSpeed;
+    protected float mSpeed;
     float mLifespan;
     [SerializeField]
     float mMaxLifespan;

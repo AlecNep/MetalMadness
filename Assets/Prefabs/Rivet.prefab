@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4797606730315526}
   - component: {fileID: 33448156450011664}
   - component: {fileID: 23664857623537180}
-  - component: {fileID: 136555546634894150}
   m_Layer: 9
   m_Name: Cylinder
   m_TagString: Untagged
@@ -39,7 +38,6 @@ GameObject:
   - component: {fileID: 4018492175954944}
   - component: {fileID: 33262263746242336}
   - component: {fileID: 23341738498325104}
-  - component: {fileID: 136651269537694642}
   m_Layer: 9
   m_Name: Cylinder (1)
   m_TagString: Untagged
@@ -217,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa0fa29f150fbc47b797de83b0feaeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSpeed: 15
+  mSpeed: 17
   mMaxLifespan: 5
 --- !u!122 &122781736629081404
 Halo:
@@ -243,29 +241,3 @@ CapsuleCollider:
   m_Height: 0.15
   m_Direction: 0
   m_Center: {x: -0.01, y: 0, z: 0}
---- !u!136 &136555546634894150
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1030917296535114}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!136 &136651269537694642
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1462610579792406}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}

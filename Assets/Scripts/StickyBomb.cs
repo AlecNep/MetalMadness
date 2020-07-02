@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StickyBomb : Bullet {
 
+    bool mDetonation = false;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -13,4 +15,14 @@ public class StickyBomb : Bullet {
 	void Update () {
 		
 	}
+
+    public new void SetDirection(Vector3 pDir) //didn't fix the problem
+    {
+        mRb.AddForce(pDir * mSpeed, ForceMode.Impulse);
+    }
+
+    /*public new void OnCollisionEnter(Collision col)
+    {
+
+    }*/
 }

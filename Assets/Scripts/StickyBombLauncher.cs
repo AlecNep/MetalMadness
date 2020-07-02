@@ -1,21 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class StickyBombLauncher : Weapon {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Use this for initialization
+    void Start () {
+        mShot = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Sticky bomb.prefab", typeof(GameObject));
+        mShotRB = mShot.GetComponent<Rigidbody>(); //really needs to be safer
+        mFireType = mFireTypes.semi;
+    }
 
     public override void Fire()
     {
+        if (mShotDelayTimer == 0)
+        {
+            mShotDelayTimer = mFireRate;
+            Vector3 lDirection = Vector3.Normalize(mBulletSpawn.position - transform.position);
+            Vector3 lOrientation = Vector3.forward * mPlayer.mShotOrientation;
+            GameObject lBullet = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject; //update soon
 
+            lBullet.GetComponent<StickyBomb>().SetDirection(lDirection);
+
+            /*mShotDelayTimer = mFireRate;
+            Vector3 lDirection = Vector3.Normalize(mBulletSpawn.position - transform.position);
+            Vector3 lOrientation = Vector3.forward * mPlayer.mShotOrientation;
+            GameObject lBullet = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject;*/
+
+
+        }
     }
 }
