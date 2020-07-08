@@ -59,7 +59,7 @@ public class PlayerControls : MonoBehaviour {
 
     public Weapon[] mWeapons; //TEMPORARY; DO NOT KEEP PUBLIC
     public int mWeaponIndex = 0; //TEMPORARY; DO NOT KEEP PUBLIC
-    public int mPreviousWeaponIndex = 1; //TEMPORARY
+    public int mPreviousWeaponIndex = 0; //TEMPORARY
     public int mWeaponCount; //TEMPORARY; DO NOT KEEP PUBLIC
 
     public GameObject mWeaponWheelCursor; //consider changing this into a RectTransform

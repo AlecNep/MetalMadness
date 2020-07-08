@@ -7,6 +7,7 @@ public class StickyBomb : Bullet {
     //bool mDetonation = false;
     private IEnumerator mDetonation;
     private GameObject mLight;
+    public GameObject mExplosion;
 
 	// Use this for initialization
 	void Start () {
@@ -48,6 +49,7 @@ public class StickyBomb : Bullet {
         yield return new WaitForSeconds(0.1f);
 
         //TODO: Explosion
+        Instantiate(mExplosion, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }

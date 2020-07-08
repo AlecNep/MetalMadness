@@ -61,8 +61,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\PorglezompPyroclastics\ExplosionMat.cs" />
     <Compile Include="Assets\Scripts\Bullet.cs" />
     <Compile Include="Assets\Scripts\CommandPattern.cs" />
+    <Compile Include="Assets\Scripts\Explosion.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\InputManager.cs" />
     <Compile Include="Assets\Scripts\PlayerControls.cs" />
@@ -74,7 +76,20 @@
     <Compile Include="Assets\Scripts\Weapon.cs" />
     <Compile Include="Assets\Scripts\WeaponSelector.cs" />
     <Compile Include="Assets\Scripts\WheelIcon.cs" />
+    <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\ExploderComponent.cs" />
+    <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\LightComponent.cs" />
+    <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\ParticleComponent.cs" />
+    <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\PseudoVolumetricComponent.cs" />
+    <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent.cs" />
+    <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent2D.cs" />
+    <Compile Include="Assets\True Explosions\System\Scripts\effects\PseudoVolumetricExplosion.cs" />
+    <Compile Include="Assets\True Explosions\System\Scripts\exploders\Exploder.cs" />
+    <Compile Include="Assets\True Explosions\System\Scripts\exploders\Exploder2D.cs" />
+    <Compile Include="Assets\True Explosions\System\Scripts\exploders\SphereExploder.cs" />
+    <None Include="Assets\PorglezompPyroclastics\Explosion.shader" />
     <None Include="Assets\Metal Mayhem Music Pack\1 - Info.txt" />
+    <None Include="Assets\PorglezompPyroclastics\README.txt" />
+    <None Include="Assets\True Explosions\System\Shaders\SphereVolumetricExplosion.shader" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/anepu/Documents/GitHub/Metal Madness/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
