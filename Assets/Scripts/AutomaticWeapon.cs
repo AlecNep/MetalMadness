@@ -22,6 +22,7 @@ public abstract class AutomaticWeapon : Weapon {
             
         if (mFiring == true && mShotDelayTimer == 0)
         {
+            print("firing: " + mFiring + ", Delay timer: " + mShotDelayTimer);
             Firing();
         }
     }
@@ -36,5 +37,6 @@ public abstract class AutomaticWeapon : Weapon {
     public override void StopFiring()
     {
         mFiring = false;
+        print(mFiring);
     }
 }
