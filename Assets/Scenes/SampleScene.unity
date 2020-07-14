@@ -270,11 +270,21 @@ Prefab:
       propertyPath: m_Name
       value: ThermiteThrower
       objectReference: {fileID: 0}
+    - target: {fileID: 1240241895143302, guid: 56981ab5b8e0799449f79ca896b724f5, type: 2}
+      propertyPath: m_Name
+      value: SpikeGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 1124485556914752, guid: 56981ab5b8e0799449f79ca896b724f5, type: 2}
+      propertyPath: m_Name
+      value: SpikeGun
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114441552521871882, guid: 56981ab5b8e0799449f79ca896b724f5, type: 2}
     - {fileID: 114655796679745268, guid: 56981ab5b8e0799449f79ca896b724f5, type: 2}
     - {fileID: 114470756421414752, guid: 56981ab5b8e0799449f79ca896b724f5, type: 2}
     - {fileID: 114237280646087740, guid: 56981ab5b8e0799449f79ca896b724f5, type: 2}
+    - {fileID: 114766631438418682, guid: 56981ab5b8e0799449f79ca896b724f5, type: 2}
+    - {fileID: 114384776537543004, guid: 56981ab5b8e0799449f79ca896b724f5, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 56981ab5b8e0799449f79ca896b724f5, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &91504495
@@ -645,6 +655,25 @@ MonoBehaviour:
   mShot: {fileID: 1181087778743924, guid: 99844b48838f6e046ad9e511b6ed7941, type: 2}
   mFiring: 0
   mFireRate: 2
+--- !u!1 &487686727 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1124485556914752, guid: 56981ab5b8e0799449f79ca896b724f5,
+    type: 2}
+  m_PrefabInternal: {fileID: 87323371}
+--- !u!114 &487686729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 487686727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0371bab640473b47a391cf6205534f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mShot: {fileID: 0}
+  mFiring: 0
+  mFireRate: 0
 --- !u!1 &491657686
 GameObject:
   m_ObjectHideFlags: 0
@@ -1803,6 +1832,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1631267903 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1240241895143302, guid: 56981ab5b8e0799449f79ca896b724f5,
+    type: 2}
+  m_PrefabInternal: {fileID: 87323371}
+--- !u!114 &1631267905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1631267903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0371bab640473b47a391cf6205534f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mShot: {fileID: 0}
+  mFiring: 0
+  mFireRate: 0
 --- !u!1 &1637648969
 GameObject:
   m_ObjectHideFlags: 0

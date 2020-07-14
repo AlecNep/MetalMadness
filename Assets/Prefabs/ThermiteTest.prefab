@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 135725334646288734}
   - component: {fileID: 114458302914005564}
   - component: {fileID: 54307804964508436}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ThermiteTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}

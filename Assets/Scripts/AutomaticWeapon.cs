@@ -4,11 +4,6 @@ using UnityEngine;
 
 public abstract class AutomaticWeapon : Weapon {
 
-	// Use this for initialization
-	/*new void Start () {
-        mFireType = mFireTypes.auto;
-	}*/
-
     public new void Update()
     {
         if (mShotDelayTimer > 0)

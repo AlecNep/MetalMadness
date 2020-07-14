@@ -30,8 +30,8 @@ public class StickyBomb : Bullet {
     {
         if (col.rigidbody)
         {
-            gameObject.AddComponent<HingeJoint>();
-            GetComponent<HingeJoint>().connectedBody = col.rigidbody;
+            gameObject.AddComponent<FixedJoint>();
+            GetComponent<FixedJoint>().connectedBody = col.rigidbody;
             StartCoroutine(mDetonation);
         }
     }
@@ -48,7 +48,6 @@ public class StickyBomb : Bullet {
         }
         yield return new WaitForSeconds(0.1f);
 
-        //TODO: Explosion
         Instantiate(mExplosion, transform.position, transform.rotation);
         Destroy(gameObject);
     }

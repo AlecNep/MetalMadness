@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spike : MonoBehaviour {
+public class Spike : Weapon {
 
 	// Use this for initialization
-	void Start () {
-		
+	new void Start () {
+        mFireType = mFireTypes.spike;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    public override void Fire()
+    {
+        throw new System.NotImplementedException();
+    }
 }

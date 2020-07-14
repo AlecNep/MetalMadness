@@ -33,9 +33,6 @@ public class Shotgun : Weapon {
                 lShrapnel.transform.rotation = Quaternion.RotateTowards(lShrapnel.transform.rotation, mPieces[i], mConeSpreadMax);
                 lShrapnel.GetComponent<Bullet>().SetDirection(lShrapnel.transform.right); //?
             }
-            /*GameObject lBullet1 = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject; //update soon
-
-            lBullet1.GetComponent<Bullet>().SetDirection(lDirection);*/
         }
     }
 }
