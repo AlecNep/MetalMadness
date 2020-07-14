@@ -5,9 +5,9 @@ using UnityEngine;
 public abstract class AutomaticWeapon : Weapon {
 
 	// Use this for initialization
-	void Start () {
+	/*new void Start () {
         mFireType = mFireTypes.auto;
-	}
+	}*/
 
     public new void Update()
     {
@@ -20,7 +20,7 @@ public abstract class AutomaticWeapon : Weapon {
             mShotDelayTimer = 0;
         }
             
-        if (mFiring)
+        if (mFiring == true && mShotDelayTimer == 0)
         {
             Firing();
         }

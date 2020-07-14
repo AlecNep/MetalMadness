@@ -84,6 +84,7 @@ namespace CommandPattern
         {
             if ((int)mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex].mFireType == 1)
             {
+                print("supposedly stopping now");
                 mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex].StopFiring(); //might bog things down. Come back to this
             }
         }
