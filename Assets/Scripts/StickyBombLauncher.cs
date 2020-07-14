@@ -6,9 +6,8 @@ using UnityEditor;
 public class StickyBombLauncher : Weapon {
 
     // Use this for initialization
-    void Start () {
+    new void Start () {
         mShot = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Sticky bomb.prefab", typeof(GameObject));
-        mShotRB = mShot.GetComponent<Rigidbody>(); //really needs to be safer
         mFireType = mFireTypes.semi;
     }
 

@@ -82,13 +82,15 @@ namespace CommandPattern
 
         public override void Release()
         {
-            
+            if ((int)mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex].mFireType == 1)
+            {
+                mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex].StopFiring(); //might bog things down. Come back to this
+            }
         }
 
         public Attack() : base()
         {
             //Whole thing will need to be changed once new weapons are added
-            //mCurrentWeapon = new Weapon[mPlayer.transform.childCount]; //will find the weapon even if the component or object itself is disabled
             
         }
     }
@@ -96,15 +98,10 @@ namespace CommandPattern
     public class SwapWeapon : Command
     {
         public override void Press()
-        {
-            //IMPORTANT: this is only temporary code
-            //mPlayerControls.mWeaponIndex = 2 / (mPlayerControls.mWeaponIndex + 2);
-            
+        {            
             int lTemp = mPlayerControls.mWeaponIndex;
-            //print("Before: cur=" + mPlayerControls.mWeaponIndex + ", prev=" + mPlayerControls.mPreviousWeaponIndex + ", temp=" + lTemp);
             mPlayerControls.mWeaponIndex = mPlayerControls.mPreviousWeaponIndex;
             mPlayerControls.mPreviousWeaponIndex = lTemp;
-            //print("Before: cur=" + mPlayerControls.mWeaponIndex + ", prev=" + mPlayerControls.mPreviousWeaponIndex + ", temp=" + lTemp);
             mPlayerControls.ClearWeapons();
         }
 

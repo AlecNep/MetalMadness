@@ -12,7 +12,6 @@ public class WeaponSelector : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //Need to figure out when and how to determine the weapon amount
-        //mWeapons = new List<WheelIcon>(mWeaponCount);\
         mWeapons = new List<WheelIcon>(GetComponentsInChildren<WheelIcon>());
         mPlayerRef = GameObject.Find("Player").GetComponent<PlayerControls>();
         mHighlighted = -1;
@@ -27,21 +26,15 @@ public class WeaponSelector : MonoBehaviour {
     {
         float lSlotSize = 360f / mWeaponCount;
         float lAngle = Vector2.Angle(Vector2.up, pAngle);
-        //int lHighlighted = 0;
         int lSelected;
 
         Vector3 cross = Vector3.Cross(Vector2.up, pAngle);
 
         if (cross.z > 0)
         {
-            //lAngle = -lAngle;
             lAngle = 360f - lAngle;
         }
-        //print("angle after: " + lAngle);
-        //lSelected = lAngle >= 0 ? (int)(lAngle / lSlotSize) : mWeaponCount + (int)(lAngle / lSlotSize) - 1;
         lSelected = (int)(lAngle / lSlotSize);
-        //OR have a "cyclic" index by combnining it wit the max. e.g. if current < 0, current = count + current
-        //print("Angle = " + lAngle + ", Current slot = " + lSelected + ", highlighted = " + lHighlighted);
         if (mHighlighted == -1) //fresh start; nothing has been highlighted since the wheel was opened
         {
             mWeapons[lSelected].Toggle();

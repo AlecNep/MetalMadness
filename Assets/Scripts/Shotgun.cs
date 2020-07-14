@@ -10,9 +10,9 @@ public class Shotgun : Weapon {
     List<Quaternion> mPieces;
 
 	// Use this for initialization
-	void Start () {
+	new void Start () {
         mShot = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Shrapnel.prefab", typeof(GameObject));
-        mShotRB = mShot.GetComponent<Rigidbody>(); //really needs to be safer
+        //mShotRB = mShot.GetComponent<Rigidbody>(); //really needs to be safer
         mFireType = mFireTypes.semi;
 
         mPieces = new List<Quaternion>(mPieceCount);

@@ -31,6 +31,11 @@ public abstract class Weapon : MonoBehaviour {
         mPlayer = mArmsParent.parent.GetComponent<PlayerControls>();
     }
 
+    public void Start()
+    {
+        mShotRB = mShot.GetComponent<Rigidbody>(); //really needs to be safer
+    }
+
     public void Update()
     {
         if (mShotDelayTimer > 0)
@@ -42,4 +47,5 @@ public abstract class Weapon : MonoBehaviour {
     }
 
     public abstract void Fire();
+    public virtual void StopFiring() { }
 }
