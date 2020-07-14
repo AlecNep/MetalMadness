@@ -9,7 +9,6 @@ public class ThermiteThrower : AutomaticWeapon {
 
 	// Use this for initialization
 	new void Start () {
-        //mShot = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Thermite.prefab", typeof(GameObject));
         mFireType = mFireTypes.auto;
         mOrientation = Quaternion.identity;
 	}

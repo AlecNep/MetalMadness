@@ -26,7 +26,8 @@ public abstract class Weapon : MonoBehaviour {
     {
         mBulletSpawn = transform.Find("BulletSpawn");
         mFiringLocation = mBulletSpawn.position;
-        
+
+        mFireType = mFireTypes.semi; //default
         mArmsParent = transform.parent.parent;
         mPlayer = mArmsParent.parent.GetComponent<PlayerControls>();
     }

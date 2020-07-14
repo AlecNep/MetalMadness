@@ -5,14 +5,6 @@ using UnityEditor;
 
 public class RivetGun : Weapon {
 
-    
-
-	// Use this for initialization
-	new void Start () {
-        mShot = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Rivet.prefab", typeof(GameObject));
-        mFireType = mFireTypes.semi;
-	}
-
     public override void Fire()
     {
         if (mShotDelayTimer == 0)

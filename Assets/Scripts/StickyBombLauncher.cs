@@ -5,12 +5,6 @@ using UnityEditor;
 
 public class StickyBombLauncher : Weapon {
 
-    // Use this for initialization
-    new void Start () {
-        mShot = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Sticky bomb.prefab", typeof(GameObject));
-        mFireType = mFireTypes.semi;
-    }
-
     public override void Fire()
     {
         if (mShotDelayTimer == 0)
