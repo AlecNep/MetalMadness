@@ -18,7 +18,7 @@ public class Shotgun : Weapon {
         mPieces = new List<Quaternion>(mPieceCount);
         for (int i = 0; i < mPieceCount; i++)
         {
-            mPieces.Add(Quaternion.Euler(Vector3.zero));
+            mPieces.Add(Quaternion.Euler(Vector3.zero)); //Maybe Quaternion.identity instead
         }
     }
 
@@ -33,9 +33,9 @@ public class Shotgun : Weapon {
             for(int i = 0; i < mPieceCount; i++)
             {
                 mPieces[i] = Random.rotation;
-                GameObject s = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject;
-                s.transform.rotation = Quaternion.RotateTowards(s.transform.rotation, mPieces[i], mConeSpreadMax);
-                s.GetComponent<Bullet>().SetDirection(s.transform.right); //?
+                GameObject lShrapnel = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject;
+                lShrapnel.transform.rotation = Quaternion.RotateTowards(lShrapnel.transform.rotation, mPieces[i], mConeSpreadMax);
+                lShrapnel.GetComponent<Bullet>().SetDirection(lShrapnel.transform.right); //?
             }
             /*GameObject lBullet1 = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject; //update soon
 
