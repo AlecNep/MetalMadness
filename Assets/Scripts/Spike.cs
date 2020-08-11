@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spike : Weapon {
+public class Spike : MonoBehaviour {
+
+    private Transform[] mSpikeSections;
 
 	// Use this for initialization
-	new void Start () {
-        mFireType = mFireTypes.spike;
+	void Start () {
+        print(transform.childCount);
 	}
 
-    public override void Fire()
-    {
-        throw new System.NotImplementedException();
-    }
+    
 }
