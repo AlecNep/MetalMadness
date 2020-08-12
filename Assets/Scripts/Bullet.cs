@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour {
     protected float mSpeed;
     float mLifespan;
     [SerializeField]
-    float mMaxLifespan;
+    protected float mMaxLifespan;
 
 	// Use this for initialization
 	void Awake () {

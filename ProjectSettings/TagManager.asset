@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Fire
+  - Environment
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,8 @@ TagManager:
   - Player
   - PlayerBullet
   - FireLayer
-  - 
-  - 
+  - Environment
+  - Enemy
   - 
   - 
   - 
