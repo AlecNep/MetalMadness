@@ -24,6 +24,11 @@ public class Spike : Bullet {
         print(mSpikeSections[5].name);
     }
 
+    public void Anchor(Rigidbody pRb)
+    {
+
+    }
+
     public new void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "Environment")
