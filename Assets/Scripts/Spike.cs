@@ -4,13 +4,25 @@ using UnityEngine;
 
 public class Spike : Bullet {
 
+    //origins will almost certainly need to be calculated based on the parent, not hard-coded
     private Transform[] mSpikeSections;
+    private float mBaseSpikeStart = 0.644f;
+    private float mBaseSpikeEnd = 0.944f;
+    private float mCylinderStart = 0f;
+    private float mCylinderEnd = -2f; //from 0 to -2
+    private float mConeStart = 1.26f;
+    private float mConeEnd = -0.66f; //will probably need to be adjusted //from 1.26 to -0.66
+
+    private IEnumerator mExpand;
+    private IEnumerator mCollapse;
 
 	// Use this for initialization
 	void Start () {
         mMaxLifespan = Mathf.Infinity;
         Transform lS = transform;
-        mSpikeSections = new Transform[6]; //Hardcoded for now
+        //Hardcoded for now. Maybe make a local list then convert it into an array
+        //Maybe make it one-less than the total amount since mSpikeSections[0] doesn't need to move
+        mSpikeSections = new Transform[6]; 
         int i = 0;
 
         while (lS.childCount > 0)
@@ -21,8 +33,25 @@ public class Spike : Bullet {
 
             i++;
         }
-        print(mSpikeSections[5].name);
+
+        mExpand = ExpandSequence();
+        //mCollapse = CollapseSequence();
     }
+    
+    public IEnumerator ExpandSequence()
+    {
+        while (transform.position.x > mBaseSpikeEnd && mSpikeSections[1].position.y > mCylinderEnd && mSpikeSections[5].position.y > mConeEnd)
+        { //only using the first cylinder section in the condition since they all move the same distance
+
+        }
+        yield return null;
+    }
+
+    /*public IEnumerator CollapseSequence()
+    {
+
+    }*/
+
 
     public void Anchor(Rigidbody pRb)
     {
