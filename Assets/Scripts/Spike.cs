@@ -6,18 +6,19 @@ public class Spike : Bullet {
 
     //origins will almost certainly need to be calculated based on the parent, not hard-coded
     private Transform[] mSpikeSections;
-    private float mBaseSpikeStart = 0.644f;
-    private float mBaseSpikeEnd = 0.944f;
+    private float mBaseSpikeStart = -0.24f;
+    private float mBaseSpikeEnd = -0.8f;
     private float mCylinderStart = 0f;
-    private float mCylinderEnd = -2f; //from 0 to -2
+    private float mCylinderEnd = -2f;
     private float mConeStart = 1.26f;
-    private float mConeEnd = -0.66f; //will probably need to be adjusted //from 1.26 to -0.66
+    private float mConeEnd = -0.75f;
 
     private IEnumerator mExpand;
     private IEnumerator mCollapse;
 
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start () {
         mMaxLifespan = Mathf.Infinity;
         Transform lS = transform;
         //Hardcoded for now. Maybe make a local list then convert it into an array

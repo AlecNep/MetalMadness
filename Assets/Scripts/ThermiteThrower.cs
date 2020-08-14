@@ -7,9 +7,20 @@ public class ThermiteThrower : AutomaticWeapon {
     private readonly float mConeSpreadMax = 6;
     Quaternion mOrientation;
 
+
+    new void Awake()
+    {
+        mBulletSpawn = transform.Find("BulletSpawn");
+        mFiringLocation = mBulletSpawn.position;
+
+        mFireType = mFireTypes.auto;
+        mArmsParent = transform.parent.parent;
+        mPlayer = mArmsParent.parent.GetComponent<PlayerControls>();
+    }
+
 	// Use this for initialization
 	new void Start () {
-        mFireType = mFireTypes.auto;
+        
         mOrientation = Quaternion.identity;
 	}
 

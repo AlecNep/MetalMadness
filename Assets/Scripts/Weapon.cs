@@ -11,7 +11,7 @@ public abstract class Weapon : MonoBehaviour {
     protected GameObject mModel; //really not sure if this is necessary
     protected Vector3 mFiringLocation;
     protected float mShotDelayTimer;
-    public enum mFireTypes { semi = 0, auto = 1, spike = 2 }; //actually might not be necessary; could do the code class-by-class
+    public enum mFireTypes { semi = 0, auto = 1, spike = 2 }; //definitely necessary for the command pattern class
     public mFireTypes mFireType { get; protected set; }
     public bool mFiring = false; //only applicable for automatic
     [SerializeField]
