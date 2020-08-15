@@ -4,13 +4,31 @@ using UnityEngine;
 
 public class SpikeGun : Weapon {
 
-    new void Start()
+    private Spike mSpike;
+
+    public new void Awake()
     {
         mFireType = mFireTypes.spike;
+        mArmsParent = transform.parent.parent;
+        mPlayer = mArmsParent.parent.GetComponent<PlayerControls>();
+
+        mSpike = GetComponentInChildren<Spike>(); //make this safer!!!!!!
+        if (mSpike != null)
+            print("We good");
+    }
+
+    public new void Start()
+    {
+        //just here to override the original and avoid the shot-based logic
     }
 
     public override void Fire()
     {
-        throw new System.NotImplementedException();
+        mSpike.ExpandSequence();
+    }
+
+    public override void StopFiring()
+    {
+        mSpike.CollapseSequence();
     }
 }

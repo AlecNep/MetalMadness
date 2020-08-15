@@ -82,7 +82,7 @@ namespace CommandPattern
 
         public override void Release()
         {
-            if ((int)mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex].mFireType == 1)
+            if ((int)mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex].mFireType > 0)
             {
                 mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex].StopFiring(); //might bog things down. Come back to this
                 mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex + mPlayerControls.mWeaponCount].StopFiring();
