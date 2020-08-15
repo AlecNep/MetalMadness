@@ -13,8 +13,7 @@ public class SpikeGun : Weapon {
         mPlayer = mArmsParent.parent.GetComponent<PlayerControls>();
 
         mSpike = GetComponentInChildren<Spike>(); //make this safer!!!!!!
-        if (mSpike != null)
-            print("We good");
+        
     }
 
     public new void Start()

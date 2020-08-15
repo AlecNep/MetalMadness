@@ -16,7 +16,7 @@ public class Spike : Bullet {
     //might need these after all
     private float mBaseDistance = -0.56f;
     private float mCylinderDistance = -2f;
-    private float mConeDistance = -2f;
+    private float mConeDistance = -2.01f;
     private Vector3 mBaseGoal;
     private Vector3 mConeGoal;
 
@@ -45,8 +45,11 @@ public class Spike : Bullet {
         mExpand = _ExpandSequence();
         mCollapse = _CollapseSequence();
 
-        mBaseGoal = transform.localPosition + mBaseDistance * Vector3.up;
-        mConeGoal = mSpikeSections[5].localPosition + mConeDistance * Vector3.up;
+        //mBaseGoal = transform.localPosition + mBaseDistance * Vector3.up;
+        //mConeGoal = mSpikeSections[5].localPosition + mConeDistance * Vector3.up;
+
+        //print("initial base goal=" + mBaseGoal);
+        //print("initial cone goal=" + mConeGoal);
     }
     
     public void ExpandSequence()
@@ -56,10 +59,13 @@ public class Spike : Bullet {
 
     private IEnumerator _ExpandSequence()
     {
+        print("base local position=" + transform.localPosition + ", cone local position=" + mSpikeSections[5].localPosition);
         mBaseGoal = transform.localPosition + mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition + mConeDistance * Vector3.up;
 
-        while (transform.localPosition.x > mBaseSpikeEnd && mSpikeSections[1].localPosition.y > mCylinderEnd
+        print("expand: base goal=" + mBaseGoal + ", cone goal=" + mConeGoal);
+
+        while (transform.localPosition.y > mBaseSpikeEnd && mSpikeSections[1].localPosition.y > mCylinderEnd
             && mSpikeSections[5].localPosition.y > mConeEnd)
         { //only using the first cylinder section in the condition since they all move the same distance
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, mBaseGoal, mSpeed);
@@ -85,7 +91,9 @@ public class Spike : Bullet {
         mBaseGoal = transform.localPosition - mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition - mConeDistance * Vector3.up;
 
-        while (transform.localPosition.x < mBaseSpikeStart && mSpikeSections[1].localPosition.y < mCylinderStart
+        print("collapse: base goal=" + mBaseGoal + ", cone goal=" + mConeGoal);
+
+        while (transform.localPosition.y < mBaseSpikeStart && mSpikeSections[1].localPosition.y < mCylinderStart
             && mSpikeSections[5].localPosition.y < mConeStart)
         { //only using the first cylinder section in the condition since they all move the same distance
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, mBaseGoal, mSpeed);
@@ -98,6 +106,9 @@ public class Spike : Bullet {
 
             yield return null;
         }
+
+        //mSpikeSections[1].localPosition = mSpikeSections[2].localPosition = mSpikeSections[3].localPosition =
+          //      mSpikeSections[4].localPosition = 
     }
 
 
