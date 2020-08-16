@@ -74,7 +74,7 @@ public class Spike : Bullet {
             mSpikeSections[1].localPosition = mSpikeSections[2].localPosition = mSpikeSections[3].localPosition = 
                 mSpikeSections[4].localPosition = Vector3.MoveTowards(mSpikeSections[1].localPosition, Vector3.up * mCylinderDistance, mSpeed);
 
-            mSpikeSections[5].localPosition = Vector3.MoveTowards(transform.localPosition, mConeGoal, mSpeed);
+            mSpikeSections[5].localPosition = Vector3.MoveTowards(mSpikeSections[5].localPosition, mConeGoal, mSpeed);
 
             yield return null;
         }
@@ -102,7 +102,7 @@ public class Spike : Bullet {
             mSpikeSections[1].localPosition = mSpikeSections[2].localPosition = mSpikeSections[3].localPosition =
                 mSpikeSections[4].localPosition = Vector3.MoveTowards(mSpikeSections[1].localPosition, Vector3.zero, mSpeed);
 
-            mSpikeSections[5].localPosition = Vector3.MoveTowards(transform.localPosition, mConeGoal, mSpeed);
+            mSpikeSections[5].localPosition = Vector3.MoveTowards(mSpikeSections[5].localPosition, mConeGoal, mSpeed);
 
             yield return null;
         }
