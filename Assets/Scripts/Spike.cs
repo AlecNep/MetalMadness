@@ -65,8 +65,8 @@ public class Spike : Bullet {
 
         print("expand: base goal=" + mBaseGoal + ", cone goal=" + mConeGoal);
 
-        while (transform.localPosition.y > mBaseSpikeEnd && mSpikeSections[1].localPosition.y > mCylinderEnd
-            && mSpikeSections[5].localPosition.y > mConeEnd)
+        while (transform.localPosition.y > mBaseSpikeEnd || mSpikeSections[1].localPosition.y > mCylinderEnd
+            || mSpikeSections[5].localPosition.y > mConeEnd)
         { //only using the first cylinder section in the condition since they all move the same distance
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, mBaseGoal, mSpeed);
 
@@ -93,8 +93,8 @@ public class Spike : Bullet {
 
         print("collapse: base goal=" + mBaseGoal + ", cone goal=" + mConeGoal);
 
-        while (transform.localPosition.y < mBaseSpikeStart && mSpikeSections[1].localPosition.y < mCylinderStart
-            && mSpikeSections[5].localPosition.y < mConeStart)
+        while (transform.localPosition.y < mBaseSpikeStart || mSpikeSections[1].localPosition.y < mCylinderStart
+            || mSpikeSections[5].localPosition.y < mConeStart)
         { //only using the first cylinder section in the condition since they all move the same distance
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, mBaseGoal, mSpeed);
 
