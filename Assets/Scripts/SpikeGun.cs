@@ -23,11 +23,15 @@ public class SpikeGun : Weapon {
 
     public override void Fire()
     {
-        mSpike.ExpandSequence();
+        if (mShotDelayTimer == 0)
+        {
+            mSpike.ExpandSequence();
+        }
     }
 
     public override void StopFiring()
     {
+        mShotDelayTimer = mFireRate;
         mSpike.CollapseSequence();
     }
 }

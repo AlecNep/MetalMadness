@@ -59,15 +59,16 @@ public class Spike : Bullet {
 
     private IEnumerator _ExpandSequence()
     {
-        print("base local position=" + transform.localPosition + ", cone local position=" + mSpikeSections[5].localPosition);
+        //print("base local position=" + transform.localPosition + ", cone local position=" + mSpikeSections[5].localPosition);
         mBaseGoal = transform.localPosition + mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition + mConeDistance * Vector3.up;
 
-        print("expand: base goal=" + mBaseGoal + ", cone goal=" + mConeGoal);
+        //print("expand: base goal=" + mBaseGoal + ", cone goal=" + mConeGoal);
 
         while (transform.localPosition.y > mBaseSpikeEnd || mSpikeSections[1].localPosition.y > mCylinderEnd
             || mSpikeSections[5].localPosition.y > mConeEnd)
         { //only using the first cylinder section in the condition since they all move the same distance
+            print("firing spike");
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, mBaseGoal, mSpeed);
 
             //This is a fukkn hail-mary of a line haha let's hope this works
@@ -91,11 +92,12 @@ public class Spike : Bullet {
         mBaseGoal = transform.localPosition - mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition - mConeDistance * Vector3.up;
 
-        print("collapse: base goal=" + mBaseGoal + ", cone goal=" + mConeGoal);
+        //print("collapse: base goal=" + mBaseGoal + ", cone goal=" + mConeGoal);
 
         while (transform.localPosition.y < mBaseSpikeStart || mSpikeSections[1].localPosition.y < mCylinderStart
             || mSpikeSections[5].localPosition.y < mConeStart)
         { //only using the first cylinder section in the condition since they all move the same distance
+            print("collapsing spike");
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, mBaseGoal, mSpeed);
 
             //This is also a fukkn hail-mary of a line. Fingers crossed
