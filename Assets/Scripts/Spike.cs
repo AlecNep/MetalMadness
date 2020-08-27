@@ -62,13 +62,13 @@ public class Spike : Bullet {
         //print("base local position=" + transform.localPosition + ", cone local position=" + mSpikeSections[5].localPosition);
         mBaseGoal = transform.localPosition + mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition + mConeDistance * Vector3.up;
-
+        print("firing spike");
         //print("expand: base goal=" + mBaseGoal + ", cone goal=" + mConeGoal);
 
         while (transform.localPosition.y > mBaseSpikeEnd || mSpikeSections[1].localPosition.y > mCylinderEnd
             || mSpikeSections[5].localPosition.y > mConeEnd)
         { //only using the first cylinder section in the condition since they all move the same distance
-            print("firing spike");
+            
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, mBaseGoal, mSpeed);
 
             //This is a fukkn hail-mary of a line haha let's hope this works
@@ -92,25 +92,28 @@ public class Spike : Bullet {
         mBaseGoal = transform.localPosition - mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition - mConeDistance * Vector3.up;
 
-        //print("collapse: base goal=" + mBaseGoal + ", cone goal=" + mConeGoal);
-
         while (transform.localPosition.y < mBaseSpikeStart || mSpikeSections[1].localPosition.y < mCylinderStart
             || mSpikeSections[5].localPosition.y < mConeStart)
         { //only using the first cylinder section in the condition since they all move the same distance
-            print("collapsing spike");
+
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, mBaseGoal, mSpeed);
 
-            //This is also a fukkn hail-mary of a line. Fingers crossed
             mSpikeSections[1].localPosition = mSpikeSections[2].localPosition = mSpikeSections[3].localPosition =
                 mSpikeSections[4].localPosition = Vector3.MoveTowards(mSpikeSections[1].localPosition, Vector3.zero, mSpeed);
 
             mSpikeSections[5].localPosition = Vector3.MoveTowards(mSpikeSections[5].localPosition, mConeGoal, mSpeed);
 
+            if (Mathf.Approximately(transform.localPosition.y, mBaseSpikeStart) && 
+                Mathf.Approximately(mSpikeSections[1].localPosition.y, mCylinderStart) && 
+                Mathf.Approximately(mSpikeSections[5].localPosition.y, mConeStart))
+            {
+                //print("fixing");
+                transform.localPosition = mBaseGoal;
+                break; //putting this here stops it from looping, but it still won't fire a second time
+            }
+
             yield return null;
         }
-
-        //mSpikeSections[1].localPosition = mSpikeSections[2].localPosition = mSpikeSections[3].localPosition =
-          //      mSpikeSections[4].localPosition = 
     }
 
 
@@ -128,7 +131,7 @@ public class Spike : Bullet {
         }
         else
         {
-
+            //might not be necessary
         }
     }
 }
