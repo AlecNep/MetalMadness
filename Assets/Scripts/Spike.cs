@@ -69,7 +69,7 @@ public class Spike : Bullet {
 
         if (!mExpanding)
         {
-            print("call count=" + TCallCount++);
+            print("expanding: call count=" + TCallCount++);
             StartCoroutine(mExpand);
         }
             
@@ -105,7 +105,7 @@ public class Spike : Bullet {
 
         if (!mCollapsing)
         {
-            print("call count=" + TCallCount++);
+            print("collapsing: call count=" + TCallCount++);
             StartCoroutine(mCollapse);
         }
     }

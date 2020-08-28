@@ -690,7 +690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mShot: {fileID: 0}
   mFiring: 0
-  mFireRate: 2
+  mFireRate: 1
 --- !u!1 &491657686
 GameObject:
   m_ObjectHideFlags: 0
@@ -1930,7 +1930,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mShot: {fileID: 0}
   mFiring: 0
-  mFireRate: 2
+  mFireRate: 1
 --- !u!1 &1637648969
 GameObject:
   m_ObjectHideFlags: 0
