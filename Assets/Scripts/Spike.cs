@@ -23,6 +23,11 @@ public class Spike : Bullet {
     private IEnumerator mExpand;
     private IEnumerator mCollapse;
 
+    private bool mExpanding = false;
+    private bool mCollapsing = false;
+
+    private int TCallCount = 0; //delete later; exclusively here for testing
+
 
     // Use this for initialization
     void Start () {
@@ -54,16 +59,27 @@ public class Spike : Bullet {
     
     public void ExpandSequence()
     {
-        StartCoroutine(mExpand);
+        /*
+         * This is the source of the problem
+         * This helper function is being processed each time, but the actual coroutine isn't
+         */
+        TCallCount++;
+        if (TCallCount > 1)
+            TCallCount = 0; //literally just here to stop the debugger
+
+        if (!mExpanding)
+        {
+            print("call count=" + TCallCount++);
+            StartCoroutine(mExpand);
+        }
+            
     }
 
     private IEnumerator _ExpandSequence()
     {
-        //print("base local position=" + transform.localPosition + ", cone local position=" + mSpikeSections[5].localPosition);
+        mExpanding = true;
         mBaseGoal = transform.localPosition + mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition + mConeDistance * Vector3.up;
-        print("firing spike");
-        //print("expand: base goal=" + mBaseGoal + ", cone goal=" + mConeGoal);
 
         while (transform.localPosition.y > mBaseSpikeEnd || mSpikeSections[1].localPosition.y > mCylinderEnd
             || mSpikeSections[5].localPosition.y > mConeEnd)
@@ -71,7 +87,6 @@ public class Spike : Bullet {
             
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, mBaseGoal, mSpeed);
 
-            //This is a fukkn hail-mary of a line haha let's hope this works
             mSpikeSections[1].localPosition = mSpikeSections[2].localPosition = mSpikeSections[3].localPosition = 
                 mSpikeSections[4].localPosition = Vector3.MoveTowards(mSpikeSections[1].localPosition, Vector3.up * mCylinderDistance, mSpeed);
 
@@ -79,16 +94,25 @@ public class Spike : Bullet {
 
             yield return null;
         }
-        
+        mExpanding = false;
     }
 
     public void CollapseSequence()
     {
-        StartCoroutine(mCollapse);
+        TCallCount++;
+        if (TCallCount > 1)
+            TCallCount = 0; //literally just here to stop the debugger
+
+        if (!mCollapsing)
+        {
+            print("call count=" + TCallCount++);
+            StartCoroutine(mCollapse);
+        }
     }
 
     private IEnumerator _CollapseSequence()
     {
+        mCollapsing = true;
         mBaseGoal = transform.localPosition - mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition - mConeDistance * Vector3.up;
 
@@ -109,11 +133,12 @@ public class Spike : Bullet {
             {
                 //print("fixing");
                 transform.localPosition = mBaseGoal;
-                break; //putting this here stops it from looping, but it still won't fire a second time
+                yield break; //putting this here stops it from looping, but it still won't fire a second time
             }
 
             yield return null;
         }
+        mCollapsing = false;
     }
 
 
