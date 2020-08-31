@@ -25,7 +25,18 @@ public class Spike : Bullet {
 
     public bool mExpanding { get; private set; }
     public bool mCollapsing { get; private set; }
-    public bool mExtended { get; private set; }
+    private bool _Extended = false;
+    public bool mExtended {
+        get
+        {
+            return _Extended;
+        }
+        set
+        {
+            _Extended = value;
+            print("Extended: " + _Extended);
+        }
+    }
 
     public bool mIsBusy
     {
@@ -35,7 +46,7 @@ public class Spike : Bullet {
         }
     }
 
-private int TCallCount = 0; //delete later; exclusively here for testing
+    private int TCallCount = 0; //delete later; exclusively here for testing
 
 
     // Use this for initialization
@@ -56,26 +67,15 @@ private int TCallCount = 0; //delete later; exclusively here for testing
             i++;
         }
 
-        mExpanding = mCollapsing = mExtended = false;
+        mExpanding = mCollapsing = false;// = mExtended = false;
 
         //These lines are probably unnecessary now
         mExpand = _ExpandSequence();
         mCollapse = _CollapseSequence();
-
-        //mBaseGoal = transform.localPosition + mBaseDistance * Vector3.up;
-        //mConeGoal = mSpikeSections[5].localPosition + mConeDistance * Vector3.up;
-
-        //print("initial base goal=" + mBaseGoal);
-        //print("initial cone goal=" + mConeGoal);
     }
     
     public void ExpandSequence()
     {
-        /*if (!mExpanding)
-        {
-            //Calling this by mExpand only runs it once, but this works every time for some reason
-            StartCoroutine(_ExpandSequence());
-        }*/
         StartCoroutine(_ExpandSequence());
     }
 
@@ -86,7 +86,6 @@ private int TCallCount = 0; //delete later; exclusively here for testing
         {
             yield return new WaitUntil(() => !mCollapsing);
         }
-        //mExpanding = true; //changing the order doesn't seem to change much
 
         mBaseGoal = transform.localPosition + mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition + mConeDistance * Vector3.up;
@@ -106,11 +105,9 @@ private int TCallCount = 0; //delete later; exclusively here for testing
                 Mathf.Approximately(mSpikeSections[1].localPosition.y, mCylinderEnd) &&
                 Mathf.Approximately(mSpikeSections[5].localPosition.y, mConeEnd))
             {
-                mExpanding = false; //probably unnecessary
                 transform.localPosition = mBaseGoal;
                 mSpikeSections[5].localPosition = mConeGoal;
-
-                yield break; //putting this here stops it from looping, but it still won't fire a second time
+                break;
             }
 
             yield return null;
@@ -121,11 +118,6 @@ private int TCallCount = 0; //delete later; exclusively here for testing
 
     public void CollapseSequence()
     {
-        /*if (!mCollapsing)
-        {
-            //Calling this by mExpand only runs it once, but this works every time for some reason
-            StartCoroutine(_CollapseSequence());
-        }*/
         StartCoroutine(_CollapseSequence());
     }
 
@@ -136,7 +128,6 @@ private int TCallCount = 0; //delete later; exclusively here for testing
         {
             yield return new WaitUntil(() => !mExpanding);
         }
-        //mCollapsing = true; //changing the order doesn't seem to matter
 
         mBaseGoal = transform.localPosition - mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition - mConeDistance * Vector3.up;
@@ -158,13 +149,13 @@ private int TCallCount = 0; //delete later; exclusively here for testing
             {
                 transform.localPosition = mBaseGoal;
                 mSpikeSections[5].localPosition = mConeGoal;
-                mCollapsing = false; //probably unnecessary
-                yield break; //putting this here stops it from looping, but it still won't fire a second time
+                break;
             }
 
             yield return null;
         }
         mCollapsing = mExtended = false;
+        print("done collapsing");
     }
 
 
