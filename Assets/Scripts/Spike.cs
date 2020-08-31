@@ -23,10 +23,19 @@ public class Spike : Bullet {
     private IEnumerator mExpand;
     private IEnumerator mCollapse;
 
-    private bool mExpanding = false;
-    private bool mCollapsing = false;
+    public bool mExpanding { get; private set; }
+    public bool mCollapsing { get; private set; }
+    public bool mExtended { get; private set; }
 
-    private int TCallCount = 0; //delete later; exclusively here for testing
+    public bool mIsBusy
+    {
+        get
+        {
+            return mExpanding || mCollapsing;
+        }
+    }
+
+private int TCallCount = 0; //delete later; exclusively here for testing
 
 
     // Use this for initialization
@@ -47,6 +56,9 @@ public class Spike : Bullet {
             i++;
         }
 
+        mExpanding = mCollapsing = mExtended = false;
+
+        //These lines are probably unnecessary now
         mExpand = _ExpandSequence();
         mCollapse = _CollapseSequence();
 
@@ -59,22 +71,23 @@ public class Spike : Bullet {
     
     public void ExpandSequence()
     {
-        if (!mExpanding)
+        /*if (!mExpanding)
         {
             //Calling this by mExpand only runs it once, but this works every time for some reason
             StartCoroutine(_ExpandSequence());
-        }
-            
+        }*/
+        StartCoroutine(_ExpandSequence());
     }
 
     private IEnumerator _ExpandSequence()
     {
+        mExpanding = true;
         if (mCollapsing)
         {
             yield return new WaitUntil(() => !mCollapsing);
         }
+        //mExpanding = true; //changing the order doesn't seem to change much
 
-        mExpanding = true;
         mBaseGoal = transform.localPosition + mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition + mConeDistance * Vector3.up;
 
@@ -103,24 +116,28 @@ public class Spike : Bullet {
             yield return null;
         }
         mExpanding = false;
+        mExtended = true;
     }
 
     public void CollapseSequence()
     {
-        if (!mCollapsing)
+        /*if (!mCollapsing)
         {
             //Calling this by mExpand only runs it once, but this works every time for some reason
             StartCoroutine(_CollapseSequence());
-        }
+        }*/
+        StartCoroutine(_CollapseSequence());
     }
 
     private IEnumerator _CollapseSequence()
     {
+        mCollapsing = true;
         if (mExpanding)
         {
             yield return new WaitUntil(() => !mExpanding);
         }
-        mCollapsing = true;
+        //mCollapsing = true; //changing the order doesn't seem to matter
+
         mBaseGoal = transform.localPosition - mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition - mConeDistance * Vector3.up;
 
@@ -147,7 +164,7 @@ public class Spike : Bullet {
 
             yield return null;
         }
-        mCollapsing = false;
+        mCollapsing = mExtended = false;
     }
 
 

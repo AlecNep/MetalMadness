@@ -23,7 +23,13 @@ public class SpikeGun : Weapon {
 
     public override void Fire()
     {
-        if (mShotDelayTimer == 0)
+        /*
+         * Only initiate the expand sequence if:
+         * 1) enough time has passed
+         * 2) it's not already epanding
+         * 3) it's back at its start
+         */
+        if (mShotDelayTimer == 0 && !mSpike.mExpanding)// && !mSpike.mExtended) //why does this totally break it?
         {
             mSpike.ExpandSequence();
         }
@@ -31,7 +37,17 @@ public class SpikeGun : Weapon {
 
     public override void StopFiring()
     {
-        mShotDelayTimer = mFireRate;
-        mSpike.CollapseSequence();
+        /*
+         * Only initiate the collapse sequence if:
+         * 1) enough time has passed
+         * 2) it's not already collapsing
+         * 3) it's fully extended
+         */
+        if (mShotDelayTimer == 0 && !mSpike.mCollapsing)// && mSpike.mExtended) //why does this totally break it?
+        {
+            mShotDelayTimer = mFireRate;
+            mSpike.CollapseSequence();
+        }
+        
     }
 }
