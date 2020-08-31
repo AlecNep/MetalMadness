@@ -69,6 +69,11 @@ public class Spike : Bullet {
 
     private IEnumerator _ExpandSequence()
     {
+        if (mCollapsing)
+        {
+            yield return new WaitUntil(() => !mCollapsing);
+        }
+
         mExpanding = true;
         mBaseGoal = transform.localPosition + mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition + mConeDistance * Vector3.up;
@@ -111,6 +116,10 @@ public class Spike : Bullet {
 
     private IEnumerator _CollapseSequence()
     {
+        if (mExpanding)
+        {
+            yield return new WaitUntil(() => !mExpanding);
+        }
         mCollapsing = true;
         mBaseGoal = transform.localPosition - mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition - mConeDistance * Vector3.up;
