@@ -59,18 +59,10 @@ public class Spike : Bullet {
     
     public void ExpandSequence()
     {
-        /*
-         * This is the source of the problem
-         * This helper function is being processed each time, but the actual coroutine isn't
-         */
-        TCallCount++;
-        if (TCallCount > 1)
-            TCallCount = 0; //literally just here to stop the debugger
-
         if (!mExpanding)
         {
-            print("expanding: call count=" + TCallCount++);
-            StartCoroutine(mExpand);
+            //Calling this by mExpand only runs it once, but this works every time for some reason
+            StartCoroutine(_ExpandSequence());
         }
             
     }
@@ -92,6 +84,17 @@ public class Spike : Bullet {
 
             mSpikeSections[5].localPosition = Vector3.MoveTowards(mSpikeSections[5].localPosition, mConeGoal, mSpeed);
 
+            if (Mathf.Approximately(transform.localPosition.y, mBaseSpikeEnd) &&
+                Mathf.Approximately(mSpikeSections[1].localPosition.y, mCylinderEnd) &&
+                Mathf.Approximately(mSpikeSections[5].localPosition.y, mConeEnd))
+            {
+                mExpanding = false; //probably unnecessary
+                transform.localPosition = mBaseGoal;
+                mSpikeSections[5].localPosition = mConeGoal;
+
+                yield break; //putting this here stops it from looping, but it still won't fire a second time
+            }
+
             yield return null;
         }
         mExpanding = false;
@@ -99,14 +102,10 @@ public class Spike : Bullet {
 
     public void CollapseSequence()
     {
-        TCallCount++;
-        if (TCallCount > 1)
-            TCallCount = 0; //literally just here to stop the debugger
-
         if (!mCollapsing)
         {
-            print("collapsing: call count=" + TCallCount++);
-            StartCoroutine(mCollapse);
+            //Calling this by mExpand only runs it once, but this works every time for some reason
+            StartCoroutine(_CollapseSequence());
         }
     }
 
@@ -131,8 +130,9 @@ public class Spike : Bullet {
                 Mathf.Approximately(mSpikeSections[1].localPosition.y, mCylinderStart) && 
                 Mathf.Approximately(mSpikeSections[5].localPosition.y, mConeStart))
             {
-                //print("fixing");
                 transform.localPosition = mBaseGoal;
+                mSpikeSections[5].localPosition = mConeGoal;
+                mCollapsing = false; //probably unnecessary
                 yield break; //putting this here stops it from looping, but it still won't fire a second time
             }
 
