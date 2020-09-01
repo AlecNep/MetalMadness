@@ -29,7 +29,7 @@ public class SpikeGun : Weapon {
          * 2) it's not already epanding
          * 3) it's back at its start
          */
-        if (mShotDelayTimer == 0 && !mSpike.mExpanding && !mSpike.mExtended) //why does this totally break it?
+        if (mShotDelayTimer == 0 && !mSpike.mExpanding && !mSpike.mExtended)
         {
             mSpike.ExpandSequence();
         }
@@ -43,7 +43,7 @@ public class SpikeGun : Weapon {
          * 2) it's not already collapsing
          * 3) it's fully extended
          */
-        if (mShotDelayTimer == 0 && !mSpike.mCollapsing && mSpike.mExtended) //why does this totally break it?
+        if (mShotDelayTimer == 0 && !mSpike.mCollapsing && mSpike.mExtended)
         {
             mShotDelayTimer = mFireRate;
             mSpike.CollapseSequence();

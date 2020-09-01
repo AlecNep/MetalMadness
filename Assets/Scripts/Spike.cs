@@ -25,28 +25,7 @@ public class Spike : Bullet {
 
     public bool mExpanding { get; private set; }
     public bool mCollapsing { get; private set; }
-    private bool _Extended = false;
-    public bool mExtended {
-        get
-        {
-            return _Extended;
-        }
-        set
-        {
-            _Extended = value;
-            print("Extended: " + _Extended);
-        }
-    }
-
-    public bool mIsBusy
-    {
-        get
-        {
-            return mExpanding || mCollapsing;
-        }
-    }
-
-    private int TCallCount = 0; //delete later; exclusively here for testing
+    public bool mExtended { get; private set; }
 
 
     // Use this for initialization
@@ -67,7 +46,7 @@ public class Spike : Bullet {
             i++;
         }
 
-        mExpanding = mCollapsing = false;// = mExtended = false;
+        mExpanding = mCollapsing = mExtended = false;
 
         //These lines are probably unnecessary now
         mExpand = _ExpandSequence();
@@ -155,7 +134,6 @@ public class Spike : Bullet {
             yield return null;
         }
         mCollapsing = mExtended = false;
-        print("done collapsing");
     }
 
 
