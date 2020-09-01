@@ -1715,6 +1715,11 @@ Prefab:
       propertyPath: m_Name
       value: Spike
       objectReference: {fileID: 0}
+    - target: {fileID: 114254586257353594, guid: 97e2db17c1129514eb2b536fe5db23f7,
+        type: 2}
+      propertyPath: mSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97e2db17c1129514eb2b536fe5db23f7, type: 2}
   m_IsPrefabAsset: 0
@@ -2050,6 +2055,11 @@ Prefab:
     - target: {fileID: 4909945681633162, guid: 97e2db17c1129514eb2b536fe5db23f7, type: 2}
       propertyPath: m_LocalScale.z
       value: 3.3333328
+      objectReference: {fileID: 0}
+    - target: {fileID: 114254586257353594, guid: 97e2db17c1129514eb2b536fe5db23f7,
+        type: 2}
+      propertyPath: mSpeed
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97e2db17c1129514eb2b536fe5db23f7, type: 2}

@@ -52,6 +52,11 @@ public class Spike : Bullet {
         mExpand = _ExpandSequence();
         mCollapse = _CollapseSequence();
     }
+
+    public void Update()
+    {
+
+    }
     
     public void ExpandSequence()
     {
@@ -152,6 +157,7 @@ public class Spike : Bullet {
         else
         {
             //might not be necessary
+            print("hitting " + col.gameObject.name);
         }
     }
 }
