@@ -55,7 +55,7 @@ public class Spike : Bullet {
 
     public void Update()
     {
-
+        //Here for testing purposes; sometimes the wonky collisions send the player out of the z-axis bounds, deleting the spikes
     }
     
     public void ExpandSequence()
@@ -149,6 +149,7 @@ public class Spike : Bullet {
 
     public new void OnCollisionEnter(Collision col)
     {
+        //All of this might not be necessary since the tip of the spike is in charge of the main mechanics
         if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "Environment")
         {
             //Anchor
