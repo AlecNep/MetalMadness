@@ -19,7 +19,7 @@ public class PlayerControls : MonoBehaviour {
     private float mTargetShiftAngle = 0f;
     private float mTargetTurnAngle = 90f; //Not sure why it's backwards from what I expected, but this is functionally correct
     private float mCurRotation = 0f;
-    private float mShiftRotatationSpeed = 20f;
+    private float mShiftRotatationSpeed = 20f; //Seems to be in charge of shifting and turning
     private float mTurnRotationSpeed = 20f; //Currently seems useless; consider removing
     private float mArmRotationSpeed = 20f;
 
