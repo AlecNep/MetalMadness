@@ -27,7 +27,7 @@ public class SpikeGun : Weapon {
          * Only initiate the expand sequence if:
          * 1) enough time has passed
          * 2) it's not already epanding
-         * 3) it's back at its start
+         * 3) it's fully collapsed
          */
         if (mShotDelayTimer == 0 && !mSpike.mExpanding && !mSpike.mExtended)
         {

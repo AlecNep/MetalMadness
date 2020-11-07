@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpikeTip : MonoBehaviour {
 
+    //FixedJoint mFj;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -14,7 +16,7 @@ public class SpikeTip : MonoBehaviour {
 		
 	}
 
-    private void OnCollisionEnter(Collision col)
+    /*private void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "Environment")
         {
@@ -25,6 +27,16 @@ public class SpikeTip : MonoBehaviour {
         {
             //might not be necessary
             print("hitting " + col.gameObject.name);
+        }
+    }*/
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Rigidbody lRb = other.GetComponent<Rigidbody>();
+        if (lRb)
+        {
+            gameObject.AddComponent<FixedJoint>();
+            GetComponent<FixedJoint>().connectedBody = lRb;
         }
     }
 }
