@@ -44,6 +44,7 @@ public class PlayerControls : MonoBehaviour {
     public Vector3 mGravNormal { get; private set; }
     private Vector3 mMovementVector;
     public readonly float mJumpforce = 6f;
+    private bool mOnMovingObject; //used for when the player is on top of another moving object
 
     public bool mShifting = false;
     public enum Gravity {South = 0, East = 1, North = 2, West = 3}; //Swapping east and west didn't seem to change a damn thing
@@ -260,6 +261,11 @@ public class PlayerControls : MonoBehaviour {
             {
                 mCanShift = false;
 
+                if (mOnMovingObject)
+                {
+                    DetachFromMovingObject();
+                }
+
                 lGravAngle = Vector2.Angle(Vector2.up, lGravInput);
                 Vector3 cross = Vector3.Cross(Vector2.up, lGravInput);
 
@@ -327,5 +333,31 @@ public class PlayerControls : MonoBehaviour {
         int j = (int)(mCurGravity + mNew) % 4;
         
         return arr[j];
+    }
+
+    private void DetachFromMovingObject()
+    {
+        transform.localScale = Vector3.one; //only a band-aid, not an actual fix
+        mOnMovingObject = false;
+        transform.SetParent(null, true);
+    }
+
+    private void OnCollisionEnter(Collision col)
+    {
+        GameObject lGO = col.gameObject;
+        if (lGO.tag == "MovingPlatform")
+        {
+            mOnMovingObject = true;
+            transform.SetParent(lGO.transform, true);
+        }
+    }
+
+    private void OnCollisionExit(Collision col)
+    {
+        GameObject lGO = col.gameObject;
+        if (lGO.tag == "MovingPlatform")
+        {
+            DetachFromMovingObject();
+        }
     }
 }

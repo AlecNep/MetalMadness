@@ -12,6 +12,7 @@ public class Oscillator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        gameObject.tag = "MovingPlatform";
         mStartingPoint = transform.position.x;
         transform.localScale = new Vector3(mLength, 0.2f, 3);
 	}
