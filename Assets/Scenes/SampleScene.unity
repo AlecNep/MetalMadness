@@ -1495,6 +1495,7 @@ GameObject:
   - component: {fileID: 1329618046}
   - component: {fileID: 1329618045}
   - component: {fileID: 1329618049}
+  - component: {fileID: 1329618050}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1581,8 +1582,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mMovementSpeed: 1
-  mMovementDistance: 1
+  mMovementDistance: 2.5
   mLength: 3
+--- !u!54 &1329618050
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1329618044}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1361799127
 GameObject:
   m_ObjectHideFlags: 0

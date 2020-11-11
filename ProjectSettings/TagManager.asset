@@ -7,6 +7,7 @@ TagManager:
   - Fire
   - Environment
   - Enemy
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX

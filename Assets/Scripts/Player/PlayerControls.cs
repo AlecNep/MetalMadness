@@ -256,12 +256,11 @@ public class PlayerControls : MonoBehaviour {
                 mCanShift = true;
             }
 
-
             if (lGravInput.magnitude > 0.1f && mCanShift)
             {
                 mCanShift = false;
 
-                if (mOnMovingObject)
+                if (mOnMovingObject) //doesn't seem to matter if it's here of in the ShiftGravity function
                 {
                     DetachFromMovingObject();
                 }
@@ -337,7 +336,7 @@ public class PlayerControls : MonoBehaviour {
 
     private void DetachFromMovingObject()
     {
-        transform.localScale = Vector3.one; //only a band-aid, not an actual fix
+        transform.localScale = Vector3.one; //only a band-aid, not an actual fix // leaving to make testing easier
         mOnMovingObject = false;
         transform.SetParent(null, true);
     }
