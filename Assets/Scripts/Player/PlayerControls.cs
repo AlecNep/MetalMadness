@@ -162,10 +162,10 @@ public class PlayerControls : MonoBehaviour {
                     switch ((int)mCurGravity)
                     {
                         case 0: //south
-                            mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0); //
+                            mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0);
                             break;
                         case 1: //West
-                            mDesiredAgnles = new Vector3(mTargetTurnAngle, 0, 90); //
+                            mDesiredAgnles = new Vector3(mTargetTurnAngle, 0, 90);
                             break;
                         case 2: //North
                             mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180);
@@ -260,7 +260,7 @@ public class PlayerControls : MonoBehaviour {
             {
                 mCanShift = false;
 
-                if (mOnMovingObject) //doesn't seem to matter if it's here of in the ShiftGravity function
+                if (mOnMovingObject) //doesn't seem to matter if it's here or in the ShiftGravity function
                 {
                     DetachFromMovingObject();
                 }
@@ -290,9 +290,6 @@ public class PlayerControls : MonoBehaviour {
         }
         else if ((int)mCurControls == 1) //Weapon wheel mode
         {
-            //using .position sets its starting point to the bottom of the screen
-            //but using .localPosition sets its starting point to the top-right corner of the weapon wheel
-            //mWeaponWheelCursor.transform.position = new Vector3(lRx, lRy)*mWheelWidth;
             Vector3 lUpRight = Vector3.right + Vector3.up;
             Vector3 lRStick = new Vector3(lRx, lRy);
             mWeaponWheelCursor.transform.localPosition = lUpRight * (-mWheelWidth / 2) + lRStick * (mWheelWidth / 3f);
@@ -313,7 +310,7 @@ public class PlayerControls : MonoBehaviour {
     {
         for (int i = 0; i < mWeaponCount * 2; i++)
         {
-            if (i != mWeaponIndex && i != mWeaponIndex + mWeaponCount) //originally 2 instead of weapon count
+            if (i != mWeaponIndex && i != mWeaponIndex + mWeaponCount)
             {
                 mWeapons[i].gameObject.SetActive(false);
             }
@@ -336,7 +333,6 @@ public class PlayerControls : MonoBehaviour {
 
     private void DetachFromMovingObject()
     {
-        transform.localScale = Vector3.one; //only a band-aid, not an actual fix // leaving to make testing easier
         mOnMovingObject = false;
         transform.SetParent(null, true);
     }
@@ -346,6 +342,11 @@ public class PlayerControls : MonoBehaviour {
         GameObject lGO = col.gameObject;
         if (lGO.tag == "MovingPlatform")
         {
+            print(Vector3.Angle(transform.position, col.transform.position));
+            /*if (Vector3.Angle(transform.position, col.transform.position) > 175)
+            {
+
+            }*/
             mOnMovingObject = true;
             transform.SetParent(lGO.transform, true);
         }
