@@ -260,11 +260,6 @@ public class PlayerControls : MonoBehaviour {
             {
                 mCanShift = false;
 
-                if (mOnMovingObject) //doesn't seem to matter if it's here or in the ShiftGravity function
-                {
-                    DetachFromMovingObject();
-                }
-
                 lGravAngle = Vector2.Angle(Vector2.up, lGravInput);
                 Vector3 cross = Vector3.Cross(Vector2.up, lGravInput);
 
@@ -325,6 +320,11 @@ public class PlayerControls : MonoBehaviour {
 
     public T ShiftGravity<T>(int mNew) where T: struct
     {
+        /*if (mOnMovingObject) //doesn't seem to matter if it's here or in the ShiftGravity function
+        {
+            DetachFromMovingObject();
+        }*/
+
         T[] arr = (T[])System.Enum.GetValues(typeof(Gravity));
         int j = (int)(mCurGravity + mNew) % 4;
         
@@ -333,8 +333,12 @@ public class PlayerControls : MonoBehaviour {
 
     private void DetachFromMovingObject()
     {
-        mOnMovingObject = false;
-        transform.SetParent(null, true);
+        if (mOnMovingObject)
+        {
+            mOnMovingObject = false;
+            transform.SetParent(null, true);
+        }
+        
     }
 
     private void OnCollisionEnter(Collision col)
@@ -342,13 +346,11 @@ public class PlayerControls : MonoBehaviour {
         GameObject lGO = col.gameObject;
         if (lGO.tag == "MovingPlatform")
         {
-            print(Vector3.Angle(transform.position, col.transform.position));
-            /*if (Vector3.Angle(transform.position, col.transform.position) > 175)
+            if (!mOnMovingObject)
             {
-
-            }*/
-            mOnMovingObject = true;
-            transform.SetParent(lGO.transform, true);
+                mOnMovingObject = true;
+                transform.SetParent(lGO.transform, true);
+            }
         }
     }
 

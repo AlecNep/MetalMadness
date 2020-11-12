@@ -7,14 +7,13 @@ public class Oscillator : MonoBehaviour {
     public float mMovementSpeed;
     public float mMovementDistance;
     private float mStartingPoint; 
-    public float mLength;
+    //public float mLength;
     private float mCounter;
 
 	// Use this for initialization
 	void Start () {
         gameObject.tag = "MovingPlatform";
         mStartingPoint = transform.position.x;
-        transform.localScale = new Vector3(mLength, 0.2f, 3);
 	}
 	
 	// Update is called once per frame
