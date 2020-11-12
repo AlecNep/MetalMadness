@@ -7,13 +7,18 @@ public class Oscillator : MonoBehaviour {
     public float mMovementSpeed;
     public float mMovementDistance;
     private float mStartingPoint; 
-    //public float mLength;
+    public float mLength;
     private float mCounter;
+    private BoxCollider mCol;
+    private Transform mCube;
 
 	// Use this for initialization
 	void Start () {
         gameObject.tag = "MovingPlatform";
+        mCol = GetComponent<BoxCollider>();
+        mCube = transform.GetChild(0);
         mStartingPoint = transform.position.x;
+        mCol.size = mCube.localScale = new Vector3(mLength, 0.2f, 3f);
 	}
 	
 	// Update is called once per frame
