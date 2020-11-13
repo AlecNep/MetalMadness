@@ -15,7 +15,8 @@ namespace CommandPattern
         public enum GameModes { Gameplay = 0, Menu = 1, Map = 2};
         public GameModes mGameMode = GameModes.Gameplay;
         //Controls on a basic Xbox 360 controller
-        private Command mAButton, mBButton, mXButton, mYButton, mRBumper, mLBumper, mUp, mDown, mLeft, mRight, mRTrigger, mLTrigger, mRClick, mLClick, mStart, mBack;
+        private Command mAButton, mBButton, mXButton, mYButton, mRBumper, mLBumper, mUp, mDown, mLeft, mRight, mRTrigger,
+            mLTrigger, mRClick, mLClick, mStart, mBack;
 
 
         // Use this for initialization
@@ -28,9 +29,8 @@ namespace CommandPattern
             mXButton = new Attack();
             mYButton = new SwapWeapon();
             mRBumper = new WeaponWheel();
-            mLBumper = new OpenMap();
+            mLBumper = new DoNothing();
             mStart = new Pause();
-
             mUp = new DoNothing();
             mDown = new DoNothing();
             mLeft = new DoNothing();
@@ -39,7 +39,7 @@ namespace CommandPattern
             mLTrigger = new DoNothing();
             mRClick = new DoNothing();
             mLClick = new DoNothing();
-            mBack = new DoNothing();
+            mBack = new OpenMap();
         }
 
         // Update is called once per frame

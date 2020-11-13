@@ -11,8 +11,8 @@ public class PlayerControls : MonoBehaviour {
     private Quaternion mTargetRotation;
     public Transform mArms { get; private set; }
     private readonly float DEFAULT_ARM_ROTATION = 90f;
-    private readonly float DEFAULT_ARM_UP = 180f;
-    private readonly float DEFAULT_ARM_DOWN = 0f;
+    //private readonly float DEFAULT_ARM_UP = 180f;
+    //private readonly float DEFAULT_ARM_DOWN = 0f;
     private readonly float ARM_SHIFTING_THRESHOLD = 0.25f;
 
 
@@ -38,7 +38,6 @@ public class PlayerControls : MonoBehaviour {
     private const float mGravShiftDelay = 1.5f; //potentially allow the player to increase this later
     private float mTimer = 0f;
     private bool mCanShift = true;
-    private bool mIsGrounded = true;
     private bool mCanDoubleJump = false;
     private float mGravityFactor = 10f;
     public Vector3 mGravNormal { get; private set; }
@@ -176,7 +175,9 @@ public class PlayerControls : MonoBehaviour {
                     }
                 }
 
+                //The ticket to the dash mechanic is probably based on this next line's math
                 transform.position += mMovementVector * (lLx * mMovementSpeed);
+                print(lLx);
                 transform.position = new Vector3(transform.position.x, transform.position.y, 0);
             }
             mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
@@ -294,7 +295,7 @@ public class PlayerControls : MonoBehaviour {
             }
             
         }
-    }
+    } //~~~~~~end Update~~~~~~
 
     public void ChangeControlMode(int mMode)
     {
@@ -320,11 +321,6 @@ public class PlayerControls : MonoBehaviour {
 
     public T ShiftGravity<T>(int mNew) where T: struct
     {
-        /*if (mOnMovingObject) //doesn't seem to matter if it's here or in the ShiftGravity function
-        {
-            DetachFromMovingObject();
-        }*/
-
         T[] arr = (T[])System.Enum.GetValues(typeof(Gravity));
         int j = (int)(mCurGravity + mNew) % 4;
         
