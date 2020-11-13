@@ -18,14 +18,17 @@ public class PlayerControls : MonoBehaviour {
 
     private float mTargetShiftAngle = 0f;
     private float mTargetTurnAngle = 90f; //Not sure why it's backwards from what I expected, but this is functionally correct
-    private float mCurRotation = 0f;
+    //private float mCurRotation = 0f;
     private float mShiftRotatationSpeed = 20f; //Seems to be in charge of shifting and turning
     private float mTurnRotationSpeed = 20f; //Currently seems useless; consider removing
     private float mArmRotationSpeed = 20f;
 
     //private int mGravityVariable; //leaving this here in case you want to make the mistake again, BUT it's the same as (int)mCurGravity
+
+    //both of these seem useless; investigate when you can
     public int mArmVariable;
     public int mTurnVariable; //probably won't be used, BUT exists to set arm variable back when not holding up or down
+
     public int mShotOrientation
     {
         get
@@ -34,14 +37,25 @@ public class PlayerControls : MonoBehaviour {
         }
     }
 
+    //Movement and speed
     private float mMovementSpeed = 1.5f;
+    public float mDashSpeed;
+    public float mChargedDashSpeed;
+    public float mDashTime;
+    public float mDashDelay;
+
+    //Overcharge
+    private bool mChargeActive = false;
+    private float mChargeEnergy;
+
     private const float mGravShiftDelay = 1.5f; //potentially allow the player to increase this later
     private float mTimer = 0f;
     private bool mCanShift = true;
-    private bool mCanDoubleJump = false;
+    private bool mCanDoubleJump = false; //might be useless if overcharged jump is implemented
     private float mGravityFactor = 10f;
     public Vector3 mGravNormal { get; private set; }
     private Vector3 mMovementVector;
+    private float mIntendedDirection = 0.1f; //should only be 0.1 if right or -0.1 if left; 1/10th because of stick sensitivity
     public readonly float mJumpforce = 6f;
     private bool mOnMovingObject; //used for when the player is on top of another moving object
 
@@ -132,6 +146,7 @@ public class PlayerControls : MonoBehaviour {
             {
                 if (lLx < 0)
                 {   //turn to the relative left
+                    mIntendedDirection = -0.1f;
                     mArmVariable = mTurnVariable = 2;
                     mTargetTurnAngle = -90f;
 
@@ -154,6 +169,7 @@ public class PlayerControls : MonoBehaviour {
                 }
                 else
                 { //turn to the relative right
+                    mIntendedDirection = 0.1f;
                     mArmVariable = mTurnVariable = 0;
                     mTargetTurnAngle = 90f;
 
@@ -173,14 +189,29 @@ public class PlayerControls : MonoBehaviour {
                             mDesiredAgnles = new Vector3(-mTargetTurnAngle, 0, -90);
                             break;
                     }
-                }
-
-                //The ticket to the dash mechanic is probably based on this next line's math
-                transform.position += mMovementVector * (lLx * mMovementSpeed);
-                print(lLx);
-                transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                }                
             }
             mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
+
+            //Main movement section
+            if (IsDashing())
+            {
+                if (mChargeActive)// && mChargeEnergy > amountNeeded)
+                {
+                    transform.position += mIntendedDirection * mMovementVector * mChargedDashSpeed;
+                }
+                else
+                {
+                    transform.position += mIntendedDirection * mMovementVector * mDashSpeed;
+                }
+                mDashTime -= Time.deltaTime;
+            }
+            else
+            {
+                transform.position += mMovementVector * (lLx * mMovementSpeed);
+                transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+            }
+            //End main movement section
 
             //Arm movement section
             if (Mathf.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
@@ -312,6 +343,11 @@ public class PlayerControls : MonoBehaviour {
             }
             else mWeapons[i].gameObject.SetActive(true);
         }
+    }
+
+    public bool IsDashing()
+    {
+        return mDashTime > 0;
     }
 
     public bool IsGrounded()

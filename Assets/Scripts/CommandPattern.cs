@@ -153,7 +153,10 @@ namespace CommandPattern
     {
         public override void Press()
         {
-            
+            if (!mPlayerControls.IsDashing())
+            {
+                mPlayerControls.mDashTime = mPlayerControls.mDashDelay; //probably should be waaaay more secure than this
+            }
         }
 
         public override void Release()
