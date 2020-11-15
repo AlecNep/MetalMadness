@@ -33,6 +33,8 @@ public class Oscillator : MonoBehaviour {
             mStartingPoint = transform.position.x;
             lRot = 0;
         }
+        if (mReversed)
+            mMovementSpeed *= -1;
 
         transform.rotation = Quaternion.Euler(0, 0, 90 * lRot);
 	}
@@ -42,7 +44,6 @@ public class Oscillator : MonoBehaviour {
         mCounter += Time.deltaTime;
 
         mMovementVar = mStartingPoint + mMovementDistance * Mathf.Sin(mCounter * mMovementSpeed);
-        mMovementVar = mReversed ? -mMovementVar : mMovementVar; //maybe not the best way, but it's low priority
 
         Vector3 lPos = mVertical ? new Vector3(transform.position.x, mMovementVar, transform.position.z) : 
             new Vector3(mMovementVar, transform.position.y, transform.position.z);
