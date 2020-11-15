@@ -12,6 +12,9 @@ public class Oscillator : MonoBehaviour {
     private BoxCollider mCol;
     private Transform mCube;
 
+    public bool mVertical = false;
+    private float mMovementVar;
+
 	// Use this for initialization
 	void Start () {
         gameObject.tag = "MovingPlatform";
@@ -24,6 +27,9 @@ public class Oscillator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         mCounter += Time.deltaTime;
+
+        mMovementVar = mStartingPoint + mMovementDistance * Mathf.Sin(mCounter * mMovementSpeed);
+
         transform.position = new Vector3(mStartingPoint + mMovementDistance * Mathf.Sin(mCounter * mMovementSpeed),
             transform.position.y, transform.position.z);
 	}

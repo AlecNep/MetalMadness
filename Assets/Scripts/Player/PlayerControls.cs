@@ -41,8 +41,16 @@ public class PlayerControls : MonoBehaviour {
     private float mMovementSpeed = 1.5f;
     public float mDashSpeed;
     public float mChargedDashSpeed;
-    public float mDashTime;
-    public float mDashDelay;
+    public float mDashTimer = 0;
+    public float mDashDuration;
+    public float mDashDelayBuffer;
+    public float mDashDelay
+    {
+        get
+        {
+            return mDashDuration + mDashDelayBuffer;
+        }
+    }
 
     //Overcharge
     private bool mChargeActive = false;
@@ -204,12 +212,20 @@ public class PlayerControls : MonoBehaviour {
                 {
                     transform.position += mIntendedDirection * mMovementVector * mDashSpeed;
                 }
-                mDashTime -= Time.deltaTime;
             }
             else
             {
                 transform.position += mMovementVector * (lLx * mMovementSpeed);
                 transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+            }
+
+            if (mDashTimer > 0)
+            {
+                mDashTimer -= Time.deltaTime;
+                if (mDashTimer < 0)
+                {
+                    mDashTimer = 0;
+                }
             }
             //End main movement section
 
@@ -345,9 +361,14 @@ public class PlayerControls : MonoBehaviour {
         }
     }
 
+    public bool CanDash()
+    {
+        return mDashTimer == 0;
+    }
+
     public bool IsDashing()
     {
-        return mDashTime > 0;
+        return mDashDelay - mDashTimer <= mDashDuration;
     }
 
     public bool IsGrounded()

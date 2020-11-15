@@ -153,9 +153,9 @@ namespace CommandPattern
     {
         public override void Press()
         {
-            if (!mPlayerControls.IsDashing())
+            if (mPlayerControls.CanDash())
             {
-                mPlayerControls.mDashTime = mPlayerControls.mDashDelay; //probably should be waaaay more secure than this
+                mPlayerControls.mDashTimer = mPlayerControls.mDashDelay; //probably should be waaaay more secure than this
             }
         }
 

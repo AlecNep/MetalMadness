@@ -187,7 +187,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 429c17d033656ec449132988c94aa5e8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -865,6 +865,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114675910271434614, guid: 56981ab5b8e0799449f79ca896b724f5,
+        type: 2}
+      propertyPath: mDashDuration
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114675910271434614, guid: 56981ab5b8e0799449f79ca896b724f5,
+        type: 2}
+      propertyPath: mDashDelayBuffer
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56981ab5b8e0799449f79ca896b724f5, type: 2}
   m_IsPrefabAsset: 0
@@ -1399,7 +1409,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2e17383c4a32b6046ab49f6620ea815d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
