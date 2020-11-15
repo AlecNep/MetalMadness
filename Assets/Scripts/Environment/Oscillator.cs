@@ -12,7 +12,8 @@ public class Oscillator : MonoBehaviour {
     private BoxCollider mCol;
     private Transform mCube;
 
-    public bool mVertical = false;
+    public bool mVertical;
+    public bool mReversed;
     private float mMovementVar;
 
 	// Use this for initialization
@@ -20,8 +21,20 @@ public class Oscillator : MonoBehaviour {
         gameObject.tag = "MovingPlatform";
         mCol = GetComponent<BoxCollider>();
         mCube = transform.GetChild(0);
-        mStartingPoint = transform.position.x;
         mCol.size = mCube.localScale = new Vector3(mLength, 0.2f, 3f);
+        int lRot;
+        if (mVertical)
+        {
+            mStartingPoint = transform.position.y;
+            lRot = 1;
+        }
+        else
+        {
+            mStartingPoint = transform.position.x;
+            lRot = 0;
+        }
+
+        transform.rotation = Quaternion.Euler(0, 0, 90 * lRot);
 	}
 	
 	// Update is called once per frame
@@ -29,8 +42,10 @@ public class Oscillator : MonoBehaviour {
         mCounter += Time.deltaTime;
 
         mMovementVar = mStartingPoint + mMovementDistance * Mathf.Sin(mCounter * mMovementSpeed);
+        mMovementVar = mReversed ? -mMovementVar : mMovementVar; //maybe not the best way, but it's low priority
 
-        transform.position = new Vector3(mStartingPoint + mMovementDistance * Mathf.Sin(mCounter * mMovementSpeed),
-            transform.position.y, transform.position.z);
+        Vector3 lPos = mVertical ? new Vector3(transform.position.x, mMovementVar, transform.position.z) : 
+            new Vector3(mMovementVar, transform.position.y, transform.position.z);
+        transform.position = lPos;
 	}
 }
