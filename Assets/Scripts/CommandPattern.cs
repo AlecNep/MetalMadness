@@ -57,7 +57,6 @@ namespace CommandPattern
             {
                 if (OverCharge.mCharged)
                 {
-                    print("super jump");
                     mPlayerRb.AddForce(mPlayerControls.mChargedJumpForce * (-mPlayerControls.mGravNormal), ForceMode.Impulse);
                 }
                 else
