@@ -12,6 +12,7 @@ namespace CommandPattern
         public PlayerControls mPlayerControls;
         public enum mType { press = 0, hold = 1, pAndR = 2 }
         public mType mButtonType = 0;
+        public bool mInUse;
         //Idea: if the button type calls for it, start a timer once the button is pressed and stop it once it's released
         //could also create a toggle for things where the duration doesn't matter
         //essentially writing button code from scratch!
@@ -54,7 +55,15 @@ namespace CommandPattern
             
             if (mPlayerControls.IsGrounded())// || mPlayerControls.mCanDoubleJump)
             {
-                mPlayerRb.AddForce(mPlayerControls.mJumpforce * (-mPlayerControls.mGravNormal), ForceMode.Impulse);
+                if (OverCharge.mCharged)
+                {
+                    print("super jump");
+                    mPlayerRb.AddForce(mPlayerControls.mChargedJumpForce * (-mPlayerControls.mGravNormal), ForceMode.Impulse);
+                }
+                else
+                {
+                    mPlayerRb.AddForce(mPlayerControls.mJumpforce * (-mPlayerControls.mGravNormal), ForceMode.Impulse);
+                }
             }
         }
 
@@ -172,14 +181,16 @@ namespace CommandPattern
 
     public class OverCharge : Command
     {
+        public static bool mCharged { get; private set; }
+
         public override void Press()
         {
-
+            mCharged = true;
         }
         
         public override void Release()
         {
-            
+            mCharged = false;
         }
 
         public OverCharge() : base()

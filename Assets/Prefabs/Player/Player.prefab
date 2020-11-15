@@ -2628,8 +2628,9 @@ MonoBehaviour:
   mTurnVariable: 0
   mDashSpeed: 3
   mChargedDashSpeed: 4
-  mDashTime: 0
-  mDashDelay: 0.25
+  mDashTimer: 0
+  mDashDuration: 0.25
+  mDashDelayBuffer: 1
   mShifting: 0
   mCurGravity: 0
   mWeapons: []

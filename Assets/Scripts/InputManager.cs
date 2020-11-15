@@ -163,12 +163,15 @@ namespace CommandPattern
 
             //Triggers
             //Not sure how to "holdify" these either
-            if (Input.GetButtonDown("RTrigger"))
+            if (Input.GetAxis("RTrigger") >= 0.6f)
             {
+                mRTrigger.mInUse = true;
                 mRTrigger.Press();
             }
-            if (Input.GetButtonUp("RTrigger"))
+            if (Input.GetAxis("RTrigger") < 0.6f && mRTrigger.mInUse)
             {
+                //Only call this section if JUST released, hence the mInUse
+                mRTrigger.mInUse = false;
                 mRTrigger.Release();
             }
 

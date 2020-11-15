@@ -53,7 +53,7 @@ public class PlayerControls : MonoBehaviour {
     }
 
     //Overcharge
-    private bool mChargeActive = false;
+    private bool mChargeActive = false; //might not be neccessary, already in CommandPattern
     private float mChargeEnergy;
 
     private const float mGravShiftDelay = 1.5f; //potentially allow the player to increase this later
@@ -65,6 +65,7 @@ public class PlayerControls : MonoBehaviour {
     private Vector3 mMovementVector;
     private float mIntendedDirection = 0.1f; //should only be 0.1 if right or -0.1 if left; 1/10th because of stick sensitivity
     public readonly float mJumpforce = 6f;
+    public readonly float mChargedJumpForce = 10f;
     private bool mOnMovingObject; //used for when the player is on top of another moving object
 
     public bool mShifting = false;
@@ -109,7 +110,6 @@ public class PlayerControls : MonoBehaviour {
         mWeaponWheelRef = GameObject.Find("Weapon Wheel").GetComponent<WeaponSelector>();
         mWheelWidth = mWeaponWheelRef.GetComponent<RectTransform>().sizeDelta.x;
         mWeaponWheelCursor = mWeaponWheelRef.transform.Find("Cursor").gameObject;
-
     }
 
 
@@ -204,7 +204,7 @@ public class PlayerControls : MonoBehaviour {
             //Main movement section
             if (IsDashing())
             {
-                if (mChargeActive)// && mChargeEnergy > amountNeeded)
+                if (CommandPattern.OverCharge.mCharged)// && mChargeEnergy > amountNeeded)
                 {
                     transform.position += mIntendedDirection * mMovementVector * mChargedDashSpeed;
                 }
