@@ -87,8 +87,9 @@
     <Compile Include="Assets\Scripts\Player\Thermite.cs" />
     <Compile Include="Assets\Scripts\Player\ThermiteThrower.cs" />
     <Compile Include="Assets\Scripts\Player\Weapon.cs" />
-    <Compile Include="Assets\Scripts\Player\WeaponSelector.cs" />
-    <Compile Include="Assets\Scripts\Player\WheelIcon.cs" />
+    <Compile Include="Assets\Scripts\UI\Compass.cs" />
+    <Compile Include="Assets\Scripts\UI\WeaponSelector.cs" />
+    <Compile Include="Assets\Scripts\UI\WheelIcon.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\ExploderComponent.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\LightComponent.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\ParticleComponent.cs" />
