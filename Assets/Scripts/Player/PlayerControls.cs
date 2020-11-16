@@ -378,6 +378,7 @@ public class PlayerControls : MonoBehaviour {
 
     public T ShiftGravity<T>(int mNew) where T: struct
     {
+        mRb.velocity = Vector3.zero;
         T[] arr = (T[])System.Enum.GetValues(typeof(Gravity));
         int j = (int)(mCurGravity + mNew) % 4;
         
