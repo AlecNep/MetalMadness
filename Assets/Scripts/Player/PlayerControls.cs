@@ -16,7 +16,7 @@ public class PlayerControls : MonoBehaviour {
     private readonly float ARM_SHIFTING_THRESHOLD = 0.25f;
 
 
-    private float mTargetShiftAngle = 0f;
+    private float mTargetShiftAngle = 0f; //Only here until the camera gets its own script
     private float mTargetTurnAngle = 90f; //Not sure why it's backwards from what I expected, but this is functionally correct
     //private float mCurRotation = 0f;
     private float mShiftRotatationSpeed = 20f; //Seems to be in charge of shifting and turning
@@ -131,7 +131,7 @@ public class PlayerControls : MonoBehaviour {
             case 1: //West
                 mGravNormal = Vector3.right;
                 mMovementVector = Vector3.up;
-                mTargetShiftAngle = 90f; //doesn't seem to make a difference
+                mTargetShiftAngle = 90f;
                 break;
             case 2: //North
                 mGravNormal = Vector3.up;
@@ -141,7 +141,7 @@ public class PlayerControls : MonoBehaviour {
             case 3: //East
                 mGravNormal = Vector3.left;
                 mMovementVector = Vector3.down;
-                mTargetShiftAngle = -90f; //doesn't seem to make a difference
+                mTargetShiftAngle = -90f;
                 break;
             default:
                 break;
@@ -156,47 +156,11 @@ public class PlayerControls : MonoBehaviour {
                 {   //turn to the relative left
                     mIntendedDirection = -1;
                     mArmVariable = mTurnVariable = 2;
-                    mTargetTurnAngle = -90f;
-
-                    //This is going to be some awful code, but I'm at a loss and need it to at least "work" for now
-                    switch ((int)mCurGravity)
-                    {
-                        case 0: //south
-                            mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0);
-                            break;
-                        case 1: //West
-                            mDesiredAgnles = new Vector3(-mTargetTurnAngle, 0, -90); //should be (90, 0, -90)
-                            break;
-                        case 2: //North
-                            mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180);
-                            break;
-                        case 3: //East
-                            mDesiredAgnles = new Vector3(mTargetTurnAngle, 0, 90); //should be (-90, 0, 90)
-                            break;
-                    }
                 }
                 else
                 { //turn to the relative right
                     mIntendedDirection = 1;
                     mArmVariable = mTurnVariable = 0;
-                    mTargetTurnAngle = 90f;
-
-                    //This is going to be some awful code, but I'm at a loss and need it to at least "work" for now
-                    switch ((int)mCurGravity)
-                    {
-                        case 0: //south
-                            mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0);
-                            break;
-                        case 1: //West
-                            mDesiredAgnles = new Vector3(-mTargetTurnAngle, 0, 90); //should be (-90, 0, -90)
-                            break;
-                        case 2: //North
-                            mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180);
-                            break;
-                        case 3: //East
-                            mDesiredAgnles = new Vector3(mTargetTurnAngle, 0, 90); //should be (90, 0, 90)
-                            break;
-                    }
                 }                
             }
             mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
@@ -253,40 +217,14 @@ public class PlayerControls : MonoBehaviour {
             }
         }
 
-
-        //The problem was definitely below! ~Probably~ with the condition, not the execution
-
         mTargetRotation = Quaternion.LookRotation(mMovementVector * -mIntendedDirection, -mGravNormal);
 
-
-        //Temporary, ugly code
-        if ((int)mCurGravity % 2 == 1) //East or West
+        if (transform.rotation != mTargetRotation)
         {
-            //if (mTargetShiftAngle != transform.rotation.eulerAngles.y || transform.rotation.eulerAngles.x != mTargetTurnAngle)
-            if (transform.rotation != mTargetRotation)
-            {
-                //Leaving this here so you don't make the same mistakes when you eventually try to optimize this
-                //mTargetRotation = Quaternion.Euler(mTargetShiftAngle, mTargetTurnAngle, 0f); //rotates around world-y
-                //mTargetRotation = Quaternion.Euler(mTargetTurnAngle, mTargetShiftAngle, 0f); //rotates around world-z
-                //mTargetRotation = Quaternion.Euler(0f, mTargetTurnAngle, mTargetShiftAngle); //rotates around world-y but is sideways
-                //mTargetRotation = Quaternion.Euler(0f, mTargetShiftAngle, mTargetTurnAngle); //rotates around the right axis, but it sideways
-                //mTargetRotation = Quaternion.Euler(mTargetTurnAngle, mTargetShiftAngle, mDesiredAgnles.z);
-                //mTargetRotation = Quaternion.Euler(mDesiredAgnles); //rotates perfectly when moving, but doesn't automatically switch like north and south
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mShiftRotatationSpeed);
-            }
-        }
-        else //North or South
-        {
-            if (mTargetShiftAngle != transform.rotation.eulerAngles.x || transform.rotation.eulerAngles.y != mTargetTurnAngle)
-            {
-                //Not sure why targetTurnAngle needed to be negative, but it works now
-                mTargetRotation = Quaternion.Euler(mTargetShiftAngle, -mTargetTurnAngle, 0f);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mShiftRotatationSpeed);
-            }
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mShiftRotatationSpeed);
         }
 
         mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
-        Vector3 lTemp = transform.rotation.eulerAngles;
 
         //Ideally it would look the best if the camera turned with the player, but for now it just needs to work
         mCamera.transform.rotation = Quaternion.Euler(0, 0, mTargetShiftAngle);
