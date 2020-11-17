@@ -11,29 +11,20 @@ public class PlayerControls : MonoBehaviour {
     private Quaternion mTargetRotation;
     public Transform mArms { get; private set; }
     private readonly float DEFAULT_ARM_ROTATION = 90f;
-    //private readonly float DEFAULT_ARM_UP = 180f;
-    //private readonly float DEFAULT_ARM_DOWN = 0f;
     private readonly float ARM_SHIFTING_THRESHOLD = 0.25f;
 
-
     private float mTargetShiftAngle = 0f; //Only here until the camera gets its own script
-    private float mTargetTurnAngle = 90f; //Not sure why it's backwards from what I expected, but this is functionally correct
-    //private float mCurRotation = 0f;
     private float mShiftRotatationSpeed = 20f; //Seems to be in charge of shifting and turning
-    private float mTurnRotationSpeed = 20f; //Currently seems useless; consider removing
     private float mArmRotationSpeed = 20f;
 
-    //private int mGravityVariable; //leaving this here in case you want to make the mistake again, BUT it's the same as (int)mCurGravity
-
-    //both of these seem useless; investigate when you can
     public int mArmVariable;
-    public int mTurnVariable; //probably won't be used, BUT exists to set arm variable back when not holding up or down
+    public int mTurnVariable;
 
     public int mShotOrientation
     {
         get
         {
-            return 90 * (((int)mCurGravity + mArmVariable) % 4); //adding +2 just made the opposite true for S+W and E+W
+            return 90 * (((int)mCurGravity + mArmVariable) % 4);
         }
     }
 
@@ -56,7 +47,7 @@ public class PlayerControls : MonoBehaviour {
     private bool mChargeActive = false; //might not be neccessary, already in CommandPattern
     private float mChargeEnergy;
 
-    private const float mGravShiftDelay = 1.5f; //potentially allow the player to increase this later
+    private const float mGravShiftDelay = 1.5f; //potentially allow the player to reduce this later
     private float mTimer = 0f;
     private bool mCanShift = true;
     private bool mCanDoubleJump = false; //might be useless if overcharged jump is implemented
@@ -69,13 +60,10 @@ public class PlayerControls : MonoBehaviour {
     private bool mOnMovingObject; //used for when the player is on top of another moving object
 
     public bool mShifting = false;
-    public enum Gravity {South = 0, East = 1, North = 2, West = 3}; //Swapping east and west didn't seem to change a damn thing
-    //but for fuck's sake don't swap north and south
+    public enum Gravity {South = 0, East = 1, North = 2, West = 3};
     public Gravity mCurGravity = Gravity.South;
 
     private float mDistToGround;
-
-    private Vector3 mDesiredAgnles = Vector3.up * -90;
 
     //Actual player stats
     private float mHealth = 100f;
