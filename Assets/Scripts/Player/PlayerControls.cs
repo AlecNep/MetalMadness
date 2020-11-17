@@ -63,7 +63,7 @@ public class PlayerControls : MonoBehaviour {
     private float mGravityFactor = 10f;
     public Vector3 mGravNormal { get; private set; }
     private Vector3 mMovementVector;
-    private float mIntendedDirection = 0.1f; //should only be 0.1 if right or -0.1 if left; 1/10th because of stick sensitivity
+    private int mIntendedDirection = 1; 
     public readonly float mJumpforce = 6f;
     public readonly float mChargedJumpForce = 10f;
     private bool mOnMovingObject; //used for when the player is on top of another moving object
@@ -154,7 +154,7 @@ public class PlayerControls : MonoBehaviour {
             {
                 if (lLx < 0)
                 {   //turn to the relative left
-                    mIntendedDirection = -0.1f;
+                    mIntendedDirection = -1;
                     mArmVariable = mTurnVariable = 2;
                     mTargetTurnAngle = -90f;
 
@@ -165,19 +165,19 @@ public class PlayerControls : MonoBehaviour {
                             mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0);
                             break;
                         case 1: //West
-                            mDesiredAgnles = new Vector3(mTargetTurnAngle, 0, 90);
+                            mDesiredAgnles = new Vector3(-mTargetTurnAngle, 0, -90); //should be (90, 0, -90)
                             break;
                         case 2: //North
-                            mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180); //
+                            mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180);
                             break;
                         case 3: //East
-                            mDesiredAgnles = new Vector3(-mTargetTurnAngle, 0, -90); //
+                            mDesiredAgnles = new Vector3(mTargetTurnAngle, 0, 90); //should be (-90, 0, 90)
                             break;
                     }
                 }
                 else
                 { //turn to the relative right
-                    mIntendedDirection = 0.1f;
+                    mIntendedDirection = 1;
                     mArmVariable = mTurnVariable = 0;
                     mTargetTurnAngle = 90f;
 
@@ -188,13 +188,13 @@ public class PlayerControls : MonoBehaviour {
                             mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 0);
                             break;
                         case 1: //West
-                            mDesiredAgnles = new Vector3(mTargetTurnAngle, 0, 90);
+                            mDesiredAgnles = new Vector3(-mTargetTurnAngle, 0, 90); //should be (-90, 0, -90)
                             break;
                         case 2: //North
                             mDesiredAgnles = new Vector3(0, mTargetTurnAngle, 180);
                             break;
                         case 3: //East
-                            mDesiredAgnles = new Vector3(-mTargetTurnAngle, 0, -90);
+                            mDesiredAgnles = new Vector3(mTargetTurnAngle, 0, 90); //should be (90, 0, 90)
                             break;
                     }
                 }                
@@ -204,13 +204,14 @@ public class PlayerControls : MonoBehaviour {
             //Main movement section
             if (IsDashing())
             {
+                //following lines are reduced by 1/10th because of the left stick sensitivity
                 if (CommandPattern.OverCharge.mCharged)// && mChargeEnergy > amountNeeded)
                 {
-                    transform.position += mIntendedDirection * mMovementVector * mChargedDashSpeed;
+                    transform.position += 0.1f * mIntendedDirection * mMovementVector * mChargedDashSpeed;
                 }
                 else
                 {
-                    transform.position += mIntendedDirection * mMovementVector * mDashSpeed;
+                    transform.position += 0.1f * mIntendedDirection * mMovementVector * mDashSpeed;
                 }
             }
             else
@@ -253,12 +254,16 @@ public class PlayerControls : MonoBehaviour {
         }
 
 
-        //The problem was definitely below! Still not perfect, but it works for now!
+        //The problem was definitely below! ~Probably~ with the condition, not the execution
+
+        mTargetRotation = Quaternion.LookRotation(mMovementVector * -mIntendedDirection, -mGravNormal);
+
 
         //Temporary, ugly code
-        if ((int)mCurGravity % 2 == 1)
+        if ((int)mCurGravity % 2 == 1) //East or West
         {
-            if (mTargetShiftAngle != transform.rotation.eulerAngles.y || transform.rotation.eulerAngles.x != mTargetTurnAngle)
+            //if (mTargetShiftAngle != transform.rotation.eulerAngles.y || transform.rotation.eulerAngles.x != mTargetTurnAngle)
+            if (transform.rotation != mTargetRotation)
             {
                 //Leaving this here so you don't make the same mistakes when you eventually try to optimize this
                 //mTargetRotation = Quaternion.Euler(mTargetShiftAngle, mTargetTurnAngle, 0f); //rotates around world-y
@@ -266,11 +271,11 @@ public class PlayerControls : MonoBehaviour {
                 //mTargetRotation = Quaternion.Euler(0f, mTargetTurnAngle, mTargetShiftAngle); //rotates around world-y but is sideways
                 //mTargetRotation = Quaternion.Euler(0f, mTargetShiftAngle, mTargetTurnAngle); //rotates around the right axis, but it sideways
                 //mTargetRotation = Quaternion.Euler(mTargetTurnAngle, mTargetShiftAngle, mDesiredAgnles.z);
-                mTargetRotation = Quaternion.Euler(mDesiredAgnles); //rotates perfectly when moving, but doesn't automatically switch like north and south
+                //mTargetRotation = Quaternion.Euler(mDesiredAgnles); //rotates perfectly when moving, but doesn't automatically switch like north and south
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mShiftRotatationSpeed);
             }
         }
-        else
+        else //North or South
         {
             if (mTargetShiftAngle != transform.rotation.eulerAngles.x || transform.rotation.eulerAngles.y != mTargetTurnAngle)
             {
