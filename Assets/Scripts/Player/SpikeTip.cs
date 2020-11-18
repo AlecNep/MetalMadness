@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class SpikeTip : MonoBehaviour {
 
-    //FixedJoint mFj;
+    private FixedJoint mFj;
 
 	// Use this for initialization
 	void Start () {
-		
+        mFj = GetComponent<FixedJoint>();
 	}
 	
 	// Update is called once per frame
@@ -16,27 +16,41 @@ public class SpikeTip : MonoBehaviour {
 		
 	}
 
-    /*private void OnCollisionEnter(Collision col)
+    public void ClearAnchors()
+    {
+        //FixedJoint lAnchor = gameObject.GetComponent<FixedJoint>();
+        if (mFj != null)
+        {
+            //Destroy(mFj);  
+            mFj.connectedBody = null;
+        }
+    }
+
+    private void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "Environment")
         {
             //Anchor
-
+            print("OnCollisionEnter: Attempting to anchor");
+            //gameObject.AddComponent<FixedJoint>();
+            mFj.connectedBody = col.rigidbody;
         }
         else
         {
             //might not be necessary
-            print("hitting " + col.gameObject.name);
+            //print("hitting " + col.gameObject.name);
         }
-    }*/
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         Rigidbody lRb = other.GetComponent<Rigidbody>();
         if (lRb)
         {
-            gameObject.AddComponent<FixedJoint>();
-            GetComponent<FixedJoint>().connectedBody = lRb;
+            print("OnTriggerEnter: Attempting to anchor");
+            //gameObject.AddComponent<FixedJoint>();
+            mFj.connectedBody = lRb;
+            //mFj.enableCollision = true;
         }
     }
 }

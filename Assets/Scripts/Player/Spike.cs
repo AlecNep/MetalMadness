@@ -27,6 +27,8 @@ public class Spike : Bullet {
     public bool mCollapsing { get; private set; }
     public bool mExtended { get; private set; }
 
+    private SpikeTip mTip;
+
 
     // Use this for initialization
     void Start () {
@@ -47,6 +49,12 @@ public class Spike : Bullet {
         }
 
         mExpanding = mCollapsing = mExtended = false;
+
+        mTip = gameObject.GetComponentInChildren<SpikeTip>();
+        if (mTip == null)
+        {
+            print("ERROR: could not find tip");
+        }
 
         //These lines are probably unnecessary now
         mExpand = _ExpandSequence();
@@ -112,6 +120,7 @@ public class Spike : Bullet {
         {
             yield return new WaitUntil(() => !mExpanding);
         }
+        mTip.ClearAnchors();
 
         mBaseGoal = transform.localPosition - mBaseDistance * Vector3.up;
         mConeGoal = mSpikeSections[5].localPosition - mConeDistance * Vector3.up;
