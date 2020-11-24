@@ -28,7 +28,7 @@ public class Spike : Bullet {
     public bool mExtended { get; private set; }
 
     private SpikeTip mTip;
-
+    private CapsuleCollider mTipCol;
 
     // Use this for initialization
     void Start () {
@@ -55,6 +55,7 @@ public class Spike : Bullet {
         {
             print("ERROR: could not find tip");
         }
+        mTipCol = mTip.GetComponent<CapsuleCollider>();
 
         //These lines are probably unnecessary now
         mExpand = _ExpandSequence();

@@ -5,11 +5,13 @@ using UnityEngine;
 public class SpikeTip : MonoBehaviour {
 
     private FixedJoint mFj;
+    private Transform mPlayer;
 
 	// Use this for initialization
 	void Start () {
         mFj = GetComponent<FixedJoint>();
-	}
+        //mPlayer = transform.root;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -23,6 +25,7 @@ public class SpikeTip : MonoBehaviour {
         {
             //Destroy(mFj);  
             mFj.connectedBody = null;
+            //mPlayer.SetParent(null, true);
         }
     }
 
@@ -30,9 +33,7 @@ public class SpikeTip : MonoBehaviour {
     {
         if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "Environment")
         {
-            //Anchor
-            print("OnCollisionEnter: Attempting to anchor");
-            //gameObject.AddComponent<FixedJoint>();
+            //Anchor            
             mFj.connectedBody = col.rigidbody;
         }
         else
@@ -47,9 +48,8 @@ public class SpikeTip : MonoBehaviour {
         Rigidbody lRb = other.GetComponent<Rigidbody>();
         if (lRb)
         {
-            print("OnTriggerEnter: Attempting to anchor");
             //gameObject.AddComponent<FixedJoint>();
-            mFj.connectedBody = lRb;
+            //mFj.connectedBody = lRb;
             //mFj.enableCollision = true;
         }
     }
