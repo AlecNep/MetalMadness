@@ -34,7 +34,7 @@ public abstract class Weapon : MonoBehaviour {
 
     public void Start()
     {
-        mShotRB = mShot.GetComponent<Rigidbody>(); //really needs to be safer
+        mShotRB = mShot.GetComponent<Rigidbody>(); //really needs to be safer; also might not be necessary
     }
 
     public void Update()

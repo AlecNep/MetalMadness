@@ -10,18 +10,17 @@ public class ThermiteThrower : Weapon {
 
     new void Awake()
     {
-        mBulletSpawn = transform.Find("BulletSpawn");
-        mFiringLocation = mBulletSpawn.position;
-
+        base.Awake();
+        
         mFireType = mFireTypes.auto;
-        mArmsParent = transform.parent.parent;
-        mPlayer = mArmsParent.parent.GetComponent<PlayerControls>();
     }
 
 	// Use this for initialization
 	new void Start () {
         
         mOrientation = Quaternion.identity;
+
+        print("Thermite shot RB? " + (mShotRB != null));
 	}
 
     public override void Firing()
