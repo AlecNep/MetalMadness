@@ -45,8 +45,26 @@ public abstract class Weapon : MonoBehaviour {
         }
         if (mShotDelayTimer < 0)
             mShotDelayTimer = 0;
+
+        if ((int)mFireType == 1)
+        {
+            if (mFiring == true && mShotDelayTimer == 0)
+            {
+                Firing();
+            }
+        }
     }
 
-    public abstract void Fire();
-    public virtual void StopFiring() { }
+    public virtual void Fire()
+    {
+        if ((int)mFireType == 1)
+        {
+            mFiring = true;
+        }
+    }
+    public virtual void Firing() {}
+    public virtual void StopFiring()
+    {
+        mFiring = false;
+    }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThermiteThrower : AutomaticWeapon {
+public class ThermiteThrower : Weapon {
 
     private readonly float mConeSpreadMax = 6;
     Quaternion mOrientation;

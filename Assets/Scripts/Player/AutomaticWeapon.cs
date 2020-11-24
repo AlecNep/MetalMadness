@@ -26,7 +26,7 @@ public abstract class AutomaticWeapon : Weapon {
         mFiring = true;
     }
 
-    public abstract void Firing();
+    //public abstract void Firing();
 
     public override void StopFiring()
     {
