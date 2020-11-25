@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpikeTip : MonoBehaviour {
 
     //private FixedJoint mFj;
-    //private Transform mPlayer;
+    private PlayerControls mPlayer;
 
     [SerializeField] FixedJoint mFixedJointTarget; // 1st fixed joint on tip
     [SerializeField] FixedJoint mFixedJointPlayer; // 2nd fixed joint on tip
@@ -15,10 +15,24 @@ public class SpikeTip : MonoBehaviour {
 
     [SerializeField] Collider mColl;
 
+    /*private Spike mSpikeBase;
+    private Vector3 mStartPos;
+    private Vector3 mEndPos;*/
+
+    
+
     // Use this for initialization
     void Start () {
-        //mFj = GetComponent<FixedJoint>();
-        //mPlayer = transform.root;
+        mPlayer = transform.root.GetComponent<PlayerControls>();
+        /*mSpikeBase = GetComponentInParent<Spike>();
+        if (mSpikeBase == null)
+        {
+            print("Shit, couldn't find the spike base");
+        }
+
+        mStartPos = transform.localPosition;
+        mEndPos = mStartPos + Vector3.up * mSpikeBase.mConeEnd;*/
+
     }
 	
 	// Update is called once per frame
@@ -28,23 +42,21 @@ public class SpikeTip : MonoBehaviour {
 
     private void StartAnchor(Rigidbody pTargetRB)
     {
-        mRB.isKinematic = false;
+        /*if (!mSpikeBase.mExtended)
+        {
+            yield return new WaitUntil(() => mSpikeBase.mExtended);
+        }*/
 
+        //mRB.isKinematic = false;
+        mPlayer.SpikeAttached(true);
         mFixedJointTarget.connectedBody = pTargetRB;
         mFixedJointPlayer.connectedBody = mPlayerRB;
     }
 
     public void ClearAnchors()
     {
-        //FixedJoint lAnchor = gameObject.GetComponent<FixedJoint>();
-        /*if (mFj != null)
-        {
-            //Destroy(mFj);  
-            mFj.connectedBody = null;
-            //mPlayer.SetParent(null, true);
-        }*/
-
-        mRB.isKinematic = true;
+        //mRB.isKinematic = true;
+        mPlayer.SpikeAttached(false);
         mFixedJointTarget.connectedBody = null;
         mFixedJointPlayer.connectedBody = null;
 
@@ -57,15 +69,9 @@ public class SpikeTip : MonoBehaviour {
     {
         if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "Environment")
         {
-            //Anchor            
-            //mFj.connectedBody = col.rigidbody;
+            //StartCoroutine(StartAnchor(col.rigidbody));
             StartAnchor(col.rigidbody);
         }
-        /*else
-        {
-            //might not be necessary
-            //print("hitting " + col.gameObject.name);
-        }*/
     }
 
     private void OnCollisionExit(Collision col)

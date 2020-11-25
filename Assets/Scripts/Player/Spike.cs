@@ -55,7 +55,7 @@ public class Spike : Bullet {
         {
             print("ERROR: could not find tip");
         }
-        mTipCol = mTip.GetComponent<CapsuleCollider>();
+        //mTipCol = mTip.GetComponent<CapsuleCollider>();
 
         //These lines are probably unnecessary now
         mExpand = _ExpandSequence();

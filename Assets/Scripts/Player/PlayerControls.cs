@@ -42,6 +42,7 @@ public class PlayerControls : MonoBehaviour {
             return mDashDuration + mDashDelayBuffer;
         }
     }
+    private bool mAttached = false;
 
     //Overcharge
     private bool mChargeActive = false; //might not be neccessary, already in CommandPattern
@@ -138,7 +139,7 @@ public class PlayerControls : MonoBehaviour {
         //Left stick controls
         if((int)mCurControls < 2) //Can move with the "Gameplay" and "WeaponWheel" modes
         {
-            if (lLx != 0)
+            /*if (lLx != 0)
             {
                 if (lLx < 0)
                 {   //turn to the relative left
@@ -150,27 +151,66 @@ public class PlayerControls : MonoBehaviour {
                     mIntendedDirection = 1;
                     mArmVariable = mTurnVariable = 0;
                 }                
-            }
+            }*/
             mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
 
             //Main movement section
-            if (IsDashing())
+            if (!mAttached)
             {
-                //following lines are reduced by 1/10th because of the left stick sensitivity
-                if (CommandPattern.OverCharge.mCharged)// && mChargeEnergy > amountNeeded)
+                if (lLx != 0)
                 {
-                    transform.position += 0.1f * mIntendedDirection * mMovementVector * mChargedDashSpeed;
+                    if (lLx < 0)
+                    {   //turn to the relative left
+                        mIntendedDirection = -1;
+                        mArmVariable = mTurnVariable = 2;
+                    }
+                    else
+                    { //turn to the relative right
+                        mIntendedDirection = 1;
+                        mArmVariable = mTurnVariable = 0;
+                    }
+                }
+
+                if (IsDashing())
+                {
+                    //following lines are reduced by 1/10th because of the left stick sensitivity
+                    if (CommandPattern.OverCharge.mCharged)// && mChargeEnergy > amountNeeded)
+                    {
+                        transform.position += 0.1f * mIntendedDirection * mMovementVector * mChargedDashSpeed;
+                    }
+                    else
+                    {
+                        transform.position += 0.1f * mIntendedDirection * mMovementVector * mDashSpeed;
+                    }
                 }
                 else
                 {
-                    transform.position += 0.1f * mIntendedDirection * mMovementVector * mDashSpeed;
+                    transform.position += mMovementVector * (lLx * mMovementSpeed);
+                    transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                }
+
+                if (Mathf.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
+                {
+                    Vector3 lArmRot;
+                    if (lLy > 0) //Aiming to the relative up
+                    {
+                        lArmRot = 180 * Vector3.right;
+                        mArmVariable = 1;
+                    }
+                    else //Aiming to the relative down
+                    {
+                        lArmRot = Vector3.zero;
+                        mArmVariable = 3;
+                    }
+                    mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(lArmRot), mArmRotationSpeed);
+                }
+                else
+                {
+                    mArmVariable = mTurnVariable;
+                    mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(Vector3.right * 90), mArmRotationSpeed);
                 }
             }
-            else
-            {
-                transform.position += mMovementVector * (lLx * mMovementSpeed);
-                transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-            }
+            
 
             if (mDashTimer > 0)
             {
@@ -183,7 +223,7 @@ public class PlayerControls : MonoBehaviour {
             //End main movement section
 
             //Arm movement section
-            if (Mathf.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
+            /*if (Mathf.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
             {
                 Vector3 lArmRot;
                 if (lLy > 0) //Aiming to the relative up
@@ -202,7 +242,7 @@ public class PlayerControls : MonoBehaviour {
             {
                 mArmVariable = mTurnVariable;
                 mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(Vector3.right * 90), mArmRotationSpeed);
-            }
+            }*/
         }
 
         mTargetRotation = Quaternion.LookRotation(mMovementVector * -mIntendedDirection, -mGravNormal);
@@ -219,7 +259,7 @@ public class PlayerControls : MonoBehaviour {
 
 
         //Right stick controls
-        if (mCurControls == 0) //can only shift gravity in gameplay mode
+        if (mCurControls == 0 && !mAttached) //can only shift gravity in gameplay mode
         {
             Vector2 lGravInput = new Vector2(lRx, lRy);
             float lGravAngle = 0f;
@@ -324,6 +364,11 @@ public class PlayerControls : MonoBehaviour {
             transform.SetParent(null, true);
         }
         
+    }
+
+    public void SpikeAttached(bool pAttached)
+    {
+        mAttached = pAttached;
     }
 
     private void OnCollisionEnter(Collision col)
