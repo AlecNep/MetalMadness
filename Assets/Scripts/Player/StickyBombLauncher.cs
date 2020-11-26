@@ -5,16 +5,34 @@ using UnityEditor;
 
 public class StickyBombLauncher : Weapon {
 
+    [SerializeField]
+    public GameObject mChargedShot;
+
     public override void Fire()
     {
-        if (mShotDelayTimer == 0)
+        if (mOvercharged)
         {
-            mShotDelayTimer = mFireRate;
-            Vector3 lDirection = Vector3.Normalize(mBulletSpawn.position - transform.position);
-            Vector3 lOrientation = Vector3.forward * mPlayer.mShotOrientation;
-            GameObject lBullet = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject; //update soon
+            if (mChargedDelayTimer == 0)
+            {
+                mChargedDelayTimer = mChargedFireRate;
+                Vector3 lDirection = Vector3.Normalize(mBulletSpawn.position - transform.position);
+                Vector3 lOrientation = Vector3.forward * mPlayer.mShotOrientation;
+                GameObject lBullet = Instantiate(mChargedShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject; //update soon
 
-            lBullet.GetComponent<StickyBomb>().SetDirection(lDirection);
+                lBullet.GetComponent<Bullet>().SetDirection(lDirection);
+            }
+        }
+        else
+        {
+            if (mShotDelayTimer == 0)
+            {
+                mShotDelayTimer = mFireRate;
+                Vector3 lDirection = Vector3.Normalize(mBulletSpawn.position - transform.position);
+                Vector3 lOrientation = Vector3.forward * mPlayer.mShotOrientation;
+                GameObject lBullet = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject; //update soon
+
+                lBullet.GetComponent<StickyBomb>().SetDirection(lDirection);
+            }
         }
     }
 }
