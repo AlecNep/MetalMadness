@@ -11,11 +11,6 @@ public class Thermite : Bullet {
     void Start () {
         mSticking = StickingSequence();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     private new void OnCollisionEnter(Collision col)
     {
