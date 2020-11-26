@@ -11,11 +11,14 @@ public abstract class Weapon : MonoBehaviour {
     protected GameObject mModel; //really not sure if this is necessary
     protected Vector3 mFiringLocation;
     protected float mShotDelayTimer;
+    protected float mChargedDelayTimer;
     public enum mFireTypes { semi = 0, auto = 1, spike = 2 }; //definitely necessary for the command pattern class
     public mFireTypes mFireType { get; protected set; }
     public bool mFiring = false; //only applicable for automatic
     [SerializeField]
     protected float mFireRate;
+    [SerializeField]
+    protected float mChargedFireRate;
 
     protected Transform mArmsParent;
     protected PlayerControls mPlayer;
@@ -45,7 +48,18 @@ public abstract class Weapon : MonoBehaviour {
             mShotDelayTimer -= Time.deltaTime;
         }
         if (mShotDelayTimer < 0)
+        {
             mShotDelayTimer = 0;
+        }
+
+        if (mChargedDelayTimer > 0)
+        {
+            mChargedDelayTimer -= Time.deltaTime;
+        }
+        if (mChargedDelayTimer < 0)
+        {
+            mChargedDelayTimer = 0;
+        }
 
         if ((int)mFireType == 1)
         {

@@ -37,9 +37,9 @@ public class ThermiteThrower : Weapon {
         }
         else
         {
-            if (mShotDelayTimer == 0)
+            if (mChargedDelayTimer == 0)
             {
-                mShotDelayTimer = mFireRate;
+                mChargedDelayTimer = mChargedFireRate;
                 Vector3 lDirection = Vector3.Normalize(mBulletSpawn.position - transform.position);
                 Vector3 lOrientation = Vector3.forward * mPlayer.mShotOrientation;
                 GameObject lBullet = Instantiate(mChargedShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject; //update soon
