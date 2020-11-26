@@ -139,20 +139,7 @@ public class PlayerControls : MonoBehaviour {
         //Left stick controls
         if((int)mCurControls < 2) //Can move with the "Gameplay" and "WeaponWheel" modes
         {
-            /*if (lLx != 0)
-            {
-                if (lLx < 0)
-                {   //turn to the relative left
-                    mIntendedDirection = -1;
-                    mArmVariable = mTurnVariable = 2;
-                }
-                else
-                { //turn to the relative right
-                    mIntendedDirection = 1;
-                    mArmVariable = mTurnVariable = 0;
-                }                
-            }*/
-            mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
+            mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal); //maybe move somewhere else
 
             //Main movement section
             if (!mAttached)
@@ -188,7 +175,9 @@ public class PlayerControls : MonoBehaviour {
                     transform.position += mMovementVector * (lLx * mMovementSpeed);
                     transform.position = new Vector3(transform.position.x, transform.position.y, 0);
                 }
+                //End main movement section
 
+                //Arm movement section
                 if (Mathf.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
                 {
                     Vector3 lArmRot;
@@ -209,6 +198,7 @@ public class PlayerControls : MonoBehaviour {
                     mArmVariable = mTurnVariable;
                     mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(Vector3.right * 90), mArmRotationSpeed);
                 }
+                //end arm movement section
             }
             
 
@@ -220,29 +210,6 @@ public class PlayerControls : MonoBehaviour {
                     mDashTimer = 0;
                 }
             }
-            //End main movement section
-
-            //Arm movement section
-            /*if (Mathf.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
-            {
-                Vector3 lArmRot;
-                if (lLy > 0) //Aiming to the relative up
-                {
-                    lArmRot = 180 * Vector3.right;
-                    mArmVariable = 1;
-                }
-                else //Aiming to the relative down
-                {
-                    lArmRot = Vector3.zero;
-                    mArmVariable = 3;
-                }
-                mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(lArmRot), mArmRotationSpeed);
-            }
-            else
-            {
-                mArmVariable = mTurnVariable;
-                mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(Vector3.right * 90), mArmRotationSpeed);
-            }*/
         }
 
         mTargetRotation = Quaternion.LookRotation(mMovementVector * -mIntendedDirection, -mGravNormal);

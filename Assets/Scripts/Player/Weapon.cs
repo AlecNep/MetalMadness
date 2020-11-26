@@ -21,6 +21,7 @@ public abstract class Weapon : MonoBehaviour {
     protected PlayerControls mPlayer;
     protected Transform mBulletSpawn;
 
+    public bool mOvercharged { get; private set; }
 
     public void Awake()
     {
@@ -53,6 +54,11 @@ public abstract class Weapon : MonoBehaviour {
                 Firing();
             }
         }
+    }
+
+    public virtual void Overcharged(bool pCharged)
+    {
+        mOvercharged = pCharged;
     }
 
     public virtual void Fire()

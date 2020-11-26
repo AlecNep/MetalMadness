@@ -184,12 +184,18 @@ namespace CommandPattern
 
         public override void Press()
         {
+            //probably super redundant
             mCharged = true;
+            mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex].Overcharged(mCharged);
+            mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex + mPlayerControls.mWeaponCount].Overcharged(mCharged);
         }
         
         public override void Release()
         {
+            //probably super redundant
             mCharged = false;
+            mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex].Overcharged(mCharged);
+            mPlayerControls.mWeapons[mPlayerControls.mWeaponIndex + mPlayerControls.mWeaponCount].Overcharged(mCharged);
         }
 
         public OverCharge() : base()
