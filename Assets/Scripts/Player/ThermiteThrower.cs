@@ -14,19 +14,13 @@ public class ThermiteThrower : Weapon {
         base.Awake();
         
         mFireType = mFireTypes.auto;
-    }
-
-	// Use this for initialization
-	new void Start () {
-        
         mOrientation = Quaternion.identity;
-	}
+    }
 
     public override void Overcharged(bool pCharged)
     {
         base.Overcharged(pCharged);
         mFireType = pCharged ? mFireTypes.semi : mFireTypes.auto;
-        //Change ammo type
     }
 
     public override void Fire()

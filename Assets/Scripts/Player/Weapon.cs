@@ -77,6 +77,7 @@ public abstract class Weapon : MonoBehaviour {
 
     public virtual void Fire()
     {
+
         if ((int)mFireType == 1)
         {
             mFiring = true;

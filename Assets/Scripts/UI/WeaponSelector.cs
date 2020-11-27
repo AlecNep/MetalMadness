@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponSelector : MonoBehaviour {
 
     static List<WheelIcon> mWeapons;
-    int mWeaponCount = 5; //NOTE: might not be necessary. Here for placeholder purposes  //hardcoded
+    int mWeaponCount; //NOTE: might not be necessary. Here for placeholder purposes  //hardcoded
     static PlayerControls mPlayerRef;
     public static int mHighlighted { get; private set; }
 
@@ -15,6 +15,7 @@ public class WeaponSelector : MonoBehaviour {
         mWeapons = new List<WheelIcon>(GetComponentsInChildren<WheelIcon>());
         mPlayerRef = GameObject.Find("Player").GetComponent<PlayerControls>();
         mHighlighted = -1;
+        mWeaponCount = mPlayerRef.mWeaponCount;
 	}
 	
 	// Update is called once per frame
