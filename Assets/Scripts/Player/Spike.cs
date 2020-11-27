@@ -6,8 +6,8 @@ public class Spike : Bullet {
 
     //origins will almost certainly need to be calculated based on the parent, not hard-coded
     private Transform[] mSpikeSections;
-    private float mBaseSpikeStart = -0.24f;
-    private float mBaseSpikeEnd = -0.8f;
+    private float mBaseSpikeStart = -0.2f;
+    private float mBaseSpikeEnd = -0.76f;
     private float mCylinderStart = 0f;
     private float mCylinderEnd = -2f;
     private float mConeStart = 1.255f;
