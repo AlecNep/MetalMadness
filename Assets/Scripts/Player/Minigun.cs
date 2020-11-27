@@ -46,4 +46,9 @@ public class Minigun : Weapon {
         lBlob.transform.rotation = Quaternion.RotateTowards(lBlob.transform.rotation, mOrientation, mConeSpreadMax);
         lBlob.GetComponent<Bullet>().SetDirection(lBlob.transform.right); //probably super expensive to call this on a full-auto weapon
     }
+
+    public void OnDisable()
+    {
+        mFiring = false;
+    }
 }

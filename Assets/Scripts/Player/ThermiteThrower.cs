@@ -21,6 +21,8 @@ public class ThermiteThrower : Weapon {
     {
         base.Overcharged(pCharged);
         mFireType = pCharged ? mFireTypes.semi : mFireTypes.auto;
+        if (mFireType == 0)
+            mFiring = false;
     }
 
     public override void Fire()
@@ -53,5 +55,10 @@ public class ThermiteThrower : Weapon {
         GameObject lBlob = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject;
         lBlob.transform.rotation = Quaternion.RotateTowards(lBlob.transform.rotation, mOrientation, mConeSpreadMax);
         lBlob.GetComponent<Bullet>().SetDirection(lBlob.transform.right); //probably super expensive to call this on a full-auto weapon
+    }
+
+    private void OnDisable()
+    {
+        mFiring = false;
     }
 }
