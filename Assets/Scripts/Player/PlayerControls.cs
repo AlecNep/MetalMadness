@@ -14,7 +14,7 @@ public class PlayerControls : MonoBehaviour {
     private readonly float ARM_SHIFTING_THRESHOLD = 0.25f;
 
     private float mTargetShiftAngle = 0f; //Only here until the camera gets its own script
-    private float mShiftRotatationSpeed = 20f; //Seems to be in charge of shifting and turning
+    private float mBodyRotationSpeed = 20f; //Seems to be in charge of shifting and turning
     private float mArmRotationSpeed = 20f;
 
     public int mArmVariable;
@@ -64,6 +64,8 @@ public class PlayerControls : MonoBehaviour {
     public enum Gravity {South = 0, East = 1, North = 2, West = 3};
     public Gravity mCurGravity = Gravity.South;
 
+
+
     private float mDistToGround;
 
     //Actual player stats
@@ -85,7 +87,6 @@ public class PlayerControls : MonoBehaviour {
     void Start() {
         mRb = GetComponent<Rigidbody>();
         mCamera = Camera.main;
-        mRb.constraints = RigidbodyConstraints.FreezeRotationX;
         mGravNormal = Vector3.down;
         mDistToGround = GetComponent<Collider>().bounds.extents.y;
 
@@ -216,7 +217,7 @@ public class PlayerControls : MonoBehaviour {
 
         if (transform.rotation != mTargetRotation)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mShiftRotatationSpeed);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mBodyRotationSpeed);
         }
 
         mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
@@ -321,6 +322,35 @@ public class PlayerControls : MonoBehaviour {
         int j = (int)(mCurGravity + mNew) % 4;
         
         return arr[j];
+    }
+
+    private void SetGravityVariables()
+    {
+        switch ((int)mCurGravity)
+        {
+            case 0: //South (normal gravity)
+                mGravNormal = Vector3.down;
+                mMovementVector = Vector3.right;
+                mTargetShiftAngle = 0f;
+                break;
+            case 1: //West
+                mGravNormal = Vector3.right;
+                mMovementVector = Vector3.up;
+                mTargetShiftAngle = 90f;
+                break;
+            case 2: //North
+                mGravNormal = Vector3.up;
+                mMovementVector = Vector3.left;
+                mTargetShiftAngle = 180f;
+                break;
+            case 3: //East
+                mGravNormal = Vector3.left;
+                mMovementVector = Vector3.down;
+                mTargetShiftAngle = -90f;
+                break;
+            default:
+                break;
+        }
     }
 
     private void DetachFromMovingObject()

@@ -70,6 +70,7 @@
     <Compile Include="Assets\PyroParticles\Prefab\Script\MeteorSwarmScript.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\SingleLineAttribute.cs" />
     <Compile Include="Assets\Scripts\CommandPattern.cs" />
+    <Compile Include="Assets\Scripts\Enemies\MaintenanceBot.cs" />
     <Compile Include="Assets\Scripts\Environment\Oscillator.cs" />
     <Compile Include="Assets\Scripts\Explosion.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
