@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4499127937879296}
   m_Layer: 0
   m_Name: Arms
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 23972817823824748}
   m_Layer: 0
   m_Name: Right Tread
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 54092133840472512}
   m_Layer: 0
   m_Name: Default Maintenance Bot
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 23772281773002714}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 65800087913945748}
   m_Layer: 0
   m_Name: Visor
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 23984374467237452}
   m_Layer: 0
   m_Name: Left Tread
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

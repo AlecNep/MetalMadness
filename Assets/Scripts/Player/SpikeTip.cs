@@ -40,7 +40,7 @@ public class SpikeTip : MonoBehaviour {
 		
 	}
 
-    private void StartAnchor(Rigidbody pTargetRB)
+    private void StartAnchor(Rigidbody pTargetRB, string pTag)
     {
         /*if (!mSpikeBase.mExtended)
         {
@@ -48,7 +48,7 @@ public class SpikeTip : MonoBehaviour {
         }*/
 
         //mRB.isKinematic = false;
-        mPlayer.SpikeAttached(true);
+        mPlayer.SpikeAttached(pTag);
         mFixedJointTarget.connectedBody = pTargetRB;
         mFixedJointPlayer.connectedBody = mPlayerRB;
     }
@@ -56,7 +56,7 @@ public class SpikeTip : MonoBehaviour {
     public void ClearAnchors()
     {
         //mRB.isKinematic = true;
-        mPlayer.SpikeAttached(false);
+        mPlayer.SpikeDetached();
         mFixedJointTarget.connectedBody = null;
         mFixedJointPlayer.connectedBody = null;
 
@@ -70,7 +70,7 @@ public class SpikeTip : MonoBehaviour {
         if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "Environment")
         {
             //StartCoroutine(StartAnchor(col.rigidbody));
-            StartAnchor(col.rigidbody);
+            StartAnchor(col.rigidbody, col.gameObject.tag);
         }
     }
 

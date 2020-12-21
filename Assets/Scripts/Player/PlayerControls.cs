@@ -42,7 +42,15 @@ public class PlayerControls : MonoBehaviour {
             return mDashDuration + mDashDelayBuffer;
         }
     }
-    private bool mAttached = false;
+    private bool mAttachedToWall = false;
+    private bool mAttachedToEnemy = false;
+    public bool mAttached
+    {
+        get
+        {
+            return mAttachedToEnemy || mAttachedToWall;
+        }
+    }
 
     //Overcharge
     private bool mChargeActive = false; //might not be neccessary, already in CommandPattern
@@ -62,8 +70,19 @@ public class PlayerControls : MonoBehaviour {
 
     public bool mShifting = false;
     public enum Gravity {South = 0, East = 1, North = 2, West = 3};
-    public Gravity mCurGravity = Gravity.South;
-
+    private Gravity _mCurGravity = Gravity.South;
+    public Gravity mCurGravity
+    {
+        get
+        {
+            return _mCurGravity;
+        }
+        set
+        {
+            _mCurGravity = value;
+            SetGravityVariables();
+        }
+    }
 
 
     private float mDistToGround;
@@ -89,6 +108,7 @@ public class PlayerControls : MonoBehaviour {
         mCamera = Camera.main;
         mGravNormal = Vector3.down;
         mDistToGround = GetComponent<Collider>().bounds.extents.y;
+        mCurGravity = Gravity.South;
 
         mArms = transform.Find("Arms");
         mArms.localEulerAngles = new Vector3(DEFAULT_ARM_ROTATION, 0, 0);
@@ -111,7 +131,7 @@ public class PlayerControls : MonoBehaviour {
         float lRy = Input.GetAxis("RStickY");
 
         //probably shouldn't be called every cycle
-        switch ((int)mCurGravity)
+        /*switch ((int)mCurGravity)
         {
             case 0: //South (normal gravity)
                 mGravNormal = Vector3.down;
@@ -135,7 +155,7 @@ public class PlayerControls : MonoBehaviour {
                 break;
             default:
                 break;
-        }
+        }*/
 
         //Left stick controls
         if((int)mCurControls < 2) //Can move with the "Gameplay" and "WeaponWheel" modes
@@ -143,7 +163,7 @@ public class PlayerControls : MonoBehaviour {
             mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal); //maybe move somewhere else
 
             //Main movement section
-            if (!mAttached)
+            if (!mAttachedToWall) //cannot move if attached to a wall
             {
                 if (lLx != 0)
                 {
@@ -227,7 +247,7 @@ public class PlayerControls : MonoBehaviour {
 
 
         //Right stick controls
-        if (mCurControls == 0 && !mAttached) //can only shift gravity in gameplay mode
+        if (mCurControls == 0 && !mAttached) //can only shift gravity in gameplay mode; cannot shift if attached to anything
         {
             Vector2 lGravInput = new Vector2(lRx, lRy);
             float lGravAngle = 0f;
@@ -363,9 +383,25 @@ public class PlayerControls : MonoBehaviour {
         
     }
 
-    public void SpikeAttached(bool pAttached)
+    public void SpikeAttached(string pTag)
     {
-        mAttached = pAttached;
+        if (pTag == "Enemy")
+        {
+            mAttachedToEnemy = true;
+        }
+        else if (pTag == "Environment")
+        {
+            mAttachedToWall = true;
+        }
+        else
+        {
+            throw new System.Exception("Player attached to invalid object");
+        }
+    }
+
+    public void SpikeDetached()
+    {
+        mAttachedToWall = mAttachedToEnemy = false;
     }
 
     private void OnCollisionEnter(Collision col)
