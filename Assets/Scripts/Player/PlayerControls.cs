@@ -55,6 +55,8 @@ public class PlayerControls : MonoBehaviour {
     private bool mChargeActive = false; //might not be neccessary, already in CommandPattern
     private float mChargeEnergy;
 
+    //Gravity stuff
+    public GravityShifter mGravShifter;
     private const float mGravShiftDelay = 1.5f; //potentially allow the player to reduce this later
     private float mTimer = 0f;
     private bool mCanShift = true;
@@ -104,10 +106,11 @@ public class PlayerControls : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        mRb = GetComponent<Rigidbody>();
+        mRb = GetComponent<Rigidbody>(); //secure this later
+        mGravShifter = GetComponent<GravityShifter>(); //secure this later
         mCamera = Camera.main;
         mGravNormal = Vector3.down;
-        mDistToGround = GetComponent<Collider>().bounds.extents.y;
+        mDistToGround = GetComponent<Collider>().bounds.extents.y; //secure this later
         mCurGravity = Gravity.South;
 
         mArms = transform.Find("Arms");
@@ -134,7 +137,8 @@ public class PlayerControls : MonoBehaviour {
         //Left stick controls
         if((int)mCurControls < 2) //Can move with the "Gameplay" and "WeaponWheel" modes
         {
-            mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal); //maybe move somewhere else
+            //Find a way to move this code into the gravity shifter script without needing to access the PlayerControls script
+            mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
 
             //Main movement section
             if (!mAttachedToWall) //cannot move if attached to a wall
@@ -173,8 +177,8 @@ public class PlayerControls : MonoBehaviour {
                 mZDistance = transform.position.z;
                 if (mZDistance > 0.05f)
                 {
-                    transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-                    //transform.position -= Vector3.forward * mZDistance;
+                    //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                    transform.position -= Vector3.forward * mZDistance;
                     //mZDistance = 0;
                 }
                 //End main movement section
@@ -228,7 +232,7 @@ public class PlayerControls : MonoBehaviour {
 
 
         //Right stick controls
-        if (mCurControls == 0 && !mAttached) //can only shift gravity in gameplay mode; cannot shift if attached to anything
+        if (mCurControls == 0) //can only shift gravity in gameplay mode; cannot shift if attached to anything
         {
             Vector2 lGravInput = new Vector2(lRx, lRy);
             float lGravAngle = 0f;
@@ -244,7 +248,7 @@ public class PlayerControls : MonoBehaviour {
                 mCanShift = true;
             }
 
-            if (lGravInput.magnitude > 0.1f && mCanShift)
+            if (lGravInput.magnitude > 0.1f && mCanShift && !mAttached)
             {
                 mCanShift = false;
 

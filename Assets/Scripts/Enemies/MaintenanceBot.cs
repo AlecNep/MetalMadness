@@ -40,7 +40,7 @@ public class MaintenanceBot : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal); //maybe move somewhere else
+        mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal); //seems to be necessary to keep this here, even with a continuous type of ForceMode
 
         
     }
