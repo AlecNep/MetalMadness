@@ -49,6 +49,10 @@ public class SpikeTip : MonoBehaviour {
 
         //mRB.isKinematic = false;
         mPlayer.SpikeAttached(pTag);
+        if (pTag == "Enemy")
+        {
+            //TODO: Make the enemy a child of the player if applicable
+        }
         mFixedJointTarget.connectedBody = pTargetRB;
         mFixedJointPlayer.connectedBody = mPlayerRB;
     }
@@ -69,7 +73,6 @@ public class SpikeTip : MonoBehaviour {
     {
         if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "Environment")
         {
-            //StartCoroutine(StartAnchor(col.rigidbody));
             StartAnchor(col.rigidbody, col.gameObject.tag);
         }
     }

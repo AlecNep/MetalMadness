@@ -13,8 +13,10 @@ public class MaintenanceBot : MonoBehaviour {
     private readonly float DEFAULT_ARM_ROTATION = 90f;
 
     //Patrol Variables
-    public float mLength;
+    private Vector3 mStartingPoint;
+    public float mPatrolDistance;
     private float mCounter;
+    private float mDistFromStart;
     public enum State {patrolling = 0, seeking = 1, returning = 2 }
     public State mCurState = State.patrolling;
 
@@ -40,15 +42,35 @@ public class MaintenanceBot : MonoBehaviour {
     void Update () {
         mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal); //maybe move somewhere else
 
-        switch ((int)mCurState)
-        {
-            case 0: //Casually patrolling
+        
+    }
 
+    /*private void SetGravityVariables()
+    {
+        switch ((int)mCurGravity)
+        {
+            case 0: //South (normal gravity)
+                mGravNormal = Vector3.down;
+                mMovementVector = Vector3.right;
+                mTargetShiftAngle = 0f;
                 break;
-            case 1: //Seeking a target
+            case 1: //West
+                mGravNormal = Vector3.right;
+                mMovementVector = Vector3.up;
+                mTargetShiftAngle = 90f;
                 break;
-            case 2: //Returning to patroll path
+            case 2: //North
+                mGravNormal = Vector3.up;
+                mMovementVector = Vector3.left;
+                mTargetShiftAngle = 180f;
+                break;
+            case 3: //East
+                mGravNormal = Vector3.left;
+                mMovementVector = Vector3.down;
+                mTargetShiftAngle = -90f;
+                break;
+            default:
                 break;
         }
-    }
+    }*/
 }

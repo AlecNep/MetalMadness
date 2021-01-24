@@ -67,6 +67,7 @@ public class PlayerControls : MonoBehaviour {
     public readonly float mJumpforce = 6f;
     public readonly float mChargedJumpForce = 10f;
     private bool mOnMovingObject; //used for when the player is on top of another moving object
+    private float mZDistance = 0f;
 
     public bool mShifting = false;
     public enum Gravity {South = 0, East = 1, North = 2, West = 3};
@@ -194,7 +195,13 @@ public class PlayerControls : MonoBehaviour {
                 else
                 {
                     transform.position += mMovementVector * (lLx * mMovementSpeed);
-                    transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                    mZDistance = transform.position.z;
+                    if (mZDistance > 0.05f)
+                    {
+                        //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                        transform.position -= Vector3.forward * mZDistance;
+                        mZDistance = 0;
+                    }
                 }
                 //End main movement section
 
@@ -335,13 +342,13 @@ public class PlayerControls : MonoBehaviour {
         return Physics.Raycast(transform.position, -transform.up, mDistToGround + 0.1f);
     }
 
-    public T ShiftGravity<T>(int mNew) where T: struct
+    public T ShiftGravity<T>(int pNew) where T: struct
     {
         mRb.velocity = Vector3.zero;
-        T[] arr = (T[])System.Enum.GetValues(typeof(Gravity));
-        int j = (int)(mCurGravity + mNew) % 4;
+        T[] lArr = (T[])System.Enum.GetValues(typeof(Gravity));
+        int j = (int)(mCurGravity + pNew) % 4;
         
-        return arr[j];
+        return lArr[j];
     }
 
     private void SetGravityVariables()
@@ -395,7 +402,7 @@ public class PlayerControls : MonoBehaviour {
         }
         else
         {
-            throw new System.Exception("Player attached to invalid object");
+            throw new System.Exception("Error: Player attached to invalid object");
         }
     }
 
