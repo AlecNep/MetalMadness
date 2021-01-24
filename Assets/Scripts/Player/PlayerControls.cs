@@ -1,7 +1,6 @@
 ﻿//using System; //Probably need to get rid of this
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 
 public class PlayerControls : MonoBehaviour {
@@ -131,32 +130,6 @@ public class PlayerControls : MonoBehaviour {
         float lRx = Input.GetAxis("RStickX");
         float lRy = Input.GetAxis("RStickY");
 
-        //probably shouldn't be called every cycle
-        /*switch ((int)mCurGravity)
-        {
-            case 0: //South (normal gravity)
-                mGravNormal = Vector3.down;
-                mMovementVector = Vector3.right;
-                mTargetShiftAngle = 0f;
-                break;
-            case 1: //West
-                mGravNormal = Vector3.right;
-                mMovementVector = Vector3.up;
-                mTargetShiftAngle = 90f;
-                break;
-            case 2: //North
-                mGravNormal = Vector3.up;
-                mMovementVector = Vector3.left;
-                mTargetShiftAngle = 180f;
-                break;
-            case 3: //East
-                mGravNormal = Vector3.left;
-                mMovementVector = Vector3.down;
-                mTargetShiftAngle = -90f;
-                break;
-            default:
-                break;
-        }*/
 
         //Left stick controls
         if((int)mCurControls < 2) //Can move with the "Gameplay" and "WeaponWheel" modes
@@ -195,13 +168,14 @@ public class PlayerControls : MonoBehaviour {
                 else
                 {
                     transform.position += mMovementVector * (lLx * mMovementSpeed);
-                    mZDistance = transform.position.z;
-                    if (mZDistance > 0.05f)
-                    {
-                        //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-                        transform.position -= Vector3.forward * mZDistance;
-                        mZDistance = 0;
-                    }
+                }
+
+                mZDistance = transform.position.z;
+                if (mZDistance > 0.05f)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                    //transform.position -= Vector3.forward * mZDistance;
+                    //mZDistance = 0;
                 }
                 //End main movement section
 

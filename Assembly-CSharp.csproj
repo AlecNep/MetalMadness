@@ -69,6 +69,7 @@
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireProjectileScript.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\MeteorSwarmScript.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\SingleLineAttribute.cs" />
+    <Compile Include="Assets\Scripts\Behaviors\GravityShifter.cs" />
     <Compile Include="Assets\Scripts\CommandPattern.cs" />
     <Compile Include="Assets\Scripts\Enemies\MaintenanceBot.cs" />
     <Compile Include="Assets\Scripts\Environment\Oscillator.cs" />
