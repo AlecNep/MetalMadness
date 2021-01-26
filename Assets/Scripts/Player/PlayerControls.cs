@@ -61,8 +61,19 @@ public class PlayerControls : MonoBehaviour {
     private float mTimer = 0f;
     private bool mCanShift = true;
     private bool mCanDoubleJump = false; //might be useless if overcharged jump is implemented
-    private float mGravityFactor = 10f;
-    public Vector3 mGravNormal { get; private set; }
+    private float mGravityFactor = 10f; //not sure why this is 10; investigate later
+    public Vector3 mGravNormal;
+    /*public Vector3 mGravNormal
+    {
+        get
+        {
+            if (mGravShifter != null)
+            {
+                return mGravShifter.GetGravityNormal();
+            }
+            else return Vector3.down;
+        }
+    }*/
     private Vector3 mMovementVector;
     private int mIntendedDirection = 1; 
     public readonly float mJumpforce = 6f;
@@ -87,6 +98,8 @@ public class PlayerControls : MonoBehaviour {
     }
 
 
+
+
     private float mDistToGround;
 
     //Actual player stats
@@ -103,6 +116,8 @@ public class PlayerControls : MonoBehaviour {
 
     public enum ControlMode {Gameplay = 0, WeaponWheel = 1, Menu = 2, Map = 3 };
     public ControlMode mCurControls = ControlMode.Gameplay;
+
+
 
     // Use this for initialization
     void Start() {
@@ -138,7 +153,7 @@ public class PlayerControls : MonoBehaviour {
         if((int)mCurControls < 2) //Can move with the "Gameplay" and "WeaponWheel" modes
         {
             //Find a way to move this code into the gravity shifter script without needing to access the PlayerControls script
-            mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
+            //mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
 
             //Main movement section
             if (!mAttachedToWall) //cannot move if attached to a wall
@@ -160,18 +175,21 @@ public class PlayerControls : MonoBehaviour {
                 if (IsDashing())
                 {
                     //following lines are reduced by 1/10th because of the left stick sensitivity
-                    if (CommandPattern.OverCharge.mCharged)// && mChargeEnergy > amountNeeded)
+                    /*if (CommandPattern.OverCharge.mCharged)// && mChargeEnergy > amountNeeded)
                     {
                         transform.position += 0.1f * mIntendedDirection * mMovementVector * mChargedDashSpeed;
                     }
                     else
                     {
                         transform.position += 0.1f * mIntendedDirection * mMovementVector * mDashSpeed;
-                    }
+                    }*/
+                    float lDashSpeed = CommandPattern.OverCharge.mCharged ? mChargedDashSpeed : mDashSpeed;
+                    transform.position += 0.1f * mIntendedDirection * mGravShifter.GetMovementVector() * lDashSpeed;
                 }
                 else
                 {
-                    transform.position += mMovementVector * (lLx * mMovementSpeed);
+                    //transform.position += mMovementVector * (lLx * mMovementSpeed);
+                    transform.position += mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
                 }
 
                 mZDistance = transform.position.z;
@@ -218,7 +236,7 @@ public class PlayerControls : MonoBehaviour {
             }
         }
 
-        mTargetRotation = Quaternion.LookRotation(mMovementVector * -mIntendedDirection, -mGravNormal);
+        mTargetRotation = Quaternion.LookRotation(mGravShifter.GetMovementVector() * -mIntendedDirection, -mGravShifter.GetGravityNormal());
 
         if (transform.rotation != mTargetRotation)
         {
@@ -228,7 +246,7 @@ public class PlayerControls : MonoBehaviour {
         mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
 
         //Ideally it would look the best if the camera turned with the player, but for now it just needs to work
-        mCamera.transform.rotation = Quaternion.Euler(0, 0, mTargetShiftAngle);
+        mCamera.transform.rotation = Quaternion.Euler(0, 0, mGravShifter.GetShiftAngle());
 
 
         //Right stick controls
@@ -261,17 +279,20 @@ public class PlayerControls : MonoBehaviour {
                 if (lGravAngle > -45f && lGravAngle <= 45f)
                 {
                     //Shift gravity to the relative "up"
-                    mCurGravity = ShiftGravity<Gravity>(2);
+                    //mCurGravity = ShiftGravity<Gravity>(2);
+                    mGravShifter.ShiftGravity(2);
                 }
                 else if (lGravAngle > 45f && lGravAngle <= 135f)
                 {
                     //Shift gravity to the relative "right"
-                    mCurGravity = ShiftGravity<Gravity>(1);
+                    //mCurGravity = ShiftGravity<Gravity>(1);
+                    mGravShifter.ShiftGravity(1);
                 }
                 else if (lGravAngle <= -45f && lGravAngle >= -135f)
                 {
                     //Shift gravity to the relative "left"
-                    mCurGravity = ShiftGravity<Gravity>(3);
+                    //mCurGravity = ShiftGravity<Gravity>(3);
+                    mGravShifter.ShiftGravity(3);
                 }
             }
         }
@@ -291,6 +312,7 @@ public class PlayerControls : MonoBehaviour {
     public void ChangeControlMode(int mMode)
     {
         mCurControls = (ControlMode)mMode;
+        mGravShifter.GravityIsActive(mCurControls == ControlMode.Gameplay);
     }
 
     public void ClearWeapons()

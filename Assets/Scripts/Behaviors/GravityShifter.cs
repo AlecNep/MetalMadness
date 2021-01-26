@@ -19,10 +19,12 @@ public class GravityShifter : MonoBehaviour {
             SetGravityVariables();
         }
     }
+    private float mGravityFactor = 10f;
     public Vector3 mGravNormal { get; private set; }
     private Vector3 mMovementVector;
     private int mIntendedDirection = 1; //might not be necessary to have in this script
     private float mTargetShiftAngle = 0f; //Only here until the camera gets its own script
+    private bool mGravityActive;
 
 
     // Use this for initialization
@@ -30,12 +32,15 @@ public class GravityShifter : MonoBehaviour {
         mRb = GetComponent<Rigidbody>(); //secure this later
         mGravNormal = Vector3.down;
         mCurGravity = Gravity.South;
-
+        mGravityActive = true;
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (mGravityActive)
+        {
+            mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
+        }
 	}
 
     /*public T ShiftGravity<T>(int pNew) where T : struct
@@ -53,8 +58,29 @@ public class GravityShifter : MonoBehaviour {
         mCurGravity = (Gravity)((int)(mCurGravity + pNew) % 4);
     }
 
+    public void GravityIsActive(bool pActive)
+    {
+        mGravityActive = pActive;
+    }
+
+    public Vector3 GetMovementVector()
+    {
+        return mMovementVector;
+    }
+
+    public Vector3 GetGravityNormal()
+    {
+        return mGravNormal;
+    }
+
+    public float GetShiftAngle()
+    {
+        return mTargetShiftAngle;
+    }
+
     private void SetGravityVariables()
     {
+        print("Gravity shifter setting variables");
         switch ((int)mCurGravity)
         {
             case 0: //South (normal gravity)
