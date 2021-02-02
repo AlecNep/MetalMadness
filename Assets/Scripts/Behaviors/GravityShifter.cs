@@ -43,21 +43,6 @@ public class GravityShifter : MonoBehaviour {
         }
 	}
 
-    /*public T ShiftGravity<T>(int pNew) where T : struct
-    {
-        mRb.velocity = Vector3.zero;
-        T[] lArr = (T[])System.Enum.GetValues(typeof(Gravity));
-        int j = (int)(mCurGravity + pNew) % 4;
-
-        return lArr[j];
-    }*/
-
-    public void ShiftGravity(int pNew)
-    {
-        mRb.velocity = Vector3.zero;
-        mCurGravity = (Gravity)((int)(mCurGravity + pNew) % 4);
-    }
-
     public void GravityIsActive(bool pActive)
     {
         mGravityActive = pActive;
@@ -78,9 +63,14 @@ public class GravityShifter : MonoBehaviour {
         return mTargetShiftAngle;
     }
 
+    public void ShiftGravity(int pNew)
+    {
+        mRb.velocity = Vector3.zero;
+        mCurGravity = (Gravity)((int)(mCurGravity + pNew) % 4);
+    }
+
     private void SetGravityVariables()
     {
-        print("Gravity shifter setting variables");
         switch ((int)mCurGravity)
         {
             case 0: //South (normal gravity)

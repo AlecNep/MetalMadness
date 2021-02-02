@@ -57,11 +57,11 @@ namespace CommandPattern
             {
                 if (OverCharge.mCharged)
                 {
-                    mPlayerRb.AddForce(mPlayerControls.mChargedJumpForce * (-mPlayerControls.mGravNormal), ForceMode.Impulse);
+                    mPlayerRb.AddForce(mPlayerControls.mChargedJumpForce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
                 }
                 else
                 {
-                    mPlayerRb.AddForce(mPlayerControls.mJumpforce * (-mPlayerControls.mGravNormal), ForceMode.Impulse);
+                    mPlayerRb.AddForce(mPlayerControls.mJumpforce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
                 }
             }
         }

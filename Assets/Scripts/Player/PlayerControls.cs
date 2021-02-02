@@ -19,13 +19,6 @@ public class PlayerControls : MonoBehaviour {
     public int mArmVariable;
     public int mTurnVariable;
 
-    public int mShotOrientation
-    {
-        get
-        {
-            return 90 * (((int)mCurGravity + mArmVariable) % 4);
-        }
-    }
 
     //Movement and speed
     private float mMovementSpeed = 1.5f;
@@ -56,24 +49,34 @@ public class PlayerControls : MonoBehaviour {
     private float mChargeEnergy;
 
     //Gravity stuff
-    public GravityShifter mGravShifter;
+    private GravityShifter _mGravShifter;
+    public GravityShifter mGravShifter
+    {
+        get
+        {
+            if (_mGravShifter != null)
+                return _mGravShifter;
+            else
+                return null;
+        }
+    }
+
+    public int mShotOrientation
+    {
+        get
+        {
+            return 90 * (((int)_mGravShifter.mCurGravity + mArmVariable) % 4);
+        }
+    }
+
     private const float mGravShiftDelay = 1.5f; //potentially allow the player to reduce this later
     private float mTimer = 0f;
     private bool mCanShift = true;
     private bool mCanDoubleJump = false; //might be useless if overcharged jump is implemented
     private float mGravityFactor = 10f; //not sure why this is 10; investigate later
     public Vector3 mGravNormal;
-    /*public Vector3 mGravNormal
-    {
-        get
-        {
-            if (mGravShifter != null)
-            {
-                return mGravShifter.GetGravityNormal();
-            }
-            else return Vector3.down;
-        }
-    }*/
+    
+
     private Vector3 mMovementVector;
     private int mIntendedDirection = 1; 
     public readonly float mJumpforce = 6f;
@@ -84,7 +87,7 @@ public class PlayerControls : MonoBehaviour {
     public bool mShifting = false;
     public enum Gravity {South = 0, East = 1, North = 2, West = 3};
     private Gravity _mCurGravity = Gravity.South;
-    public Gravity mCurGravity
+    /*public Gravity mCurGravity
     {
         get
         {
@@ -95,9 +98,9 @@ public class PlayerControls : MonoBehaviour {
             _mCurGravity = value;
             SetGravityVariables();
         }
-    }
+    }*/
 
-
+    
 
 
     private float mDistToGround;
@@ -122,11 +125,11 @@ public class PlayerControls : MonoBehaviour {
     // Use this for initialization
     void Start() {
         mRb = GetComponent<Rigidbody>(); //secure this later
-        mGravShifter = GetComponent<GravityShifter>(); //secure this later
+        _mGravShifter = GetComponent<GravityShifter>(); //secure this later
         mCamera = Camera.main;
         mGravNormal = Vector3.down;
         mDistToGround = GetComponent<Collider>().bounds.extents.y; //secure this later
-        mCurGravity = Gravity.South;
+        //mCurGravity = Gravity.South;
 
         mArms = transform.Find("Arms");
         mArms.localEulerAngles = new Vector3(DEFAULT_ARM_ROTATION, 0, 0);
@@ -184,12 +187,12 @@ public class PlayerControls : MonoBehaviour {
                         transform.position += 0.1f * mIntendedDirection * mMovementVector * mDashSpeed;
                     }*/
                     float lDashSpeed = CommandPattern.OverCharge.mCharged ? mChargedDashSpeed : mDashSpeed;
-                    transform.position += 0.1f * mIntendedDirection * mGravShifter.GetMovementVector() * lDashSpeed;
+                    transform.position += 0.1f * mIntendedDirection * _mGravShifter.GetMovementVector() * lDashSpeed;
                 }
                 else
                 {
                     //transform.position += mMovementVector * (lLx * mMovementSpeed);
-                    transform.position += mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
+                    transform.position += _mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
                 }
 
                 mZDistance = transform.position.z;
@@ -236,7 +239,7 @@ public class PlayerControls : MonoBehaviour {
             }
         }
 
-        mTargetRotation = Quaternion.LookRotation(mGravShifter.GetMovementVector() * -mIntendedDirection, -mGravShifter.GetGravityNormal());
+        mTargetRotation = Quaternion.LookRotation(_mGravShifter.GetMovementVector() * -mIntendedDirection, -_mGravShifter.GetGravityNormal());
 
         if (transform.rotation != mTargetRotation)
         {
@@ -246,7 +249,7 @@ public class PlayerControls : MonoBehaviour {
         mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
 
         //Ideally it would look the best if the camera turned with the player, but for now it just needs to work
-        mCamera.transform.rotation = Quaternion.Euler(0, 0, mGravShifter.GetShiftAngle());
+        mCamera.transform.rotation = Quaternion.Euler(0, 0, _mGravShifter.GetShiftAngle());
 
 
         //Right stick controls
@@ -280,19 +283,19 @@ public class PlayerControls : MonoBehaviour {
                 {
                     //Shift gravity to the relative "up"
                     //mCurGravity = ShiftGravity<Gravity>(2);
-                    mGravShifter.ShiftGravity(2);
+                    _mGravShifter.ShiftGravity(2);
                 }
                 else if (lGravAngle > 45f && lGravAngle <= 135f)
                 {
                     //Shift gravity to the relative "right"
                     //mCurGravity = ShiftGravity<Gravity>(1);
-                    mGravShifter.ShiftGravity(1);
+                    _mGravShifter.ShiftGravity(1);
                 }
                 else if (lGravAngle <= -45f && lGravAngle >= -135f)
                 {
                     //Shift gravity to the relative "left"
                     //mCurGravity = ShiftGravity<Gravity>(3);
-                    mGravShifter.ShiftGravity(3);
+                    _mGravShifter.ShiftGravity(3);
                 }
             }
         }
@@ -342,7 +345,7 @@ public class PlayerControls : MonoBehaviour {
         return Physics.Raycast(transform.position, -transform.up, mDistToGround + 0.1f);
     }
 
-    public T ShiftGravity<T>(int pNew) where T: struct
+    /*public T ShiftGravity<T>(int pNew) where T: struct
     {
         mRb.velocity = Vector3.zero;
         T[] lArr = (T[])System.Enum.GetValues(typeof(Gravity));
@@ -378,7 +381,7 @@ public class PlayerControls : MonoBehaviour {
             default:
                 break;
         }
-    }
+    }*/
 
     private void DetachFromMovingObject()
     {

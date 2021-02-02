@@ -15,7 +15,7 @@ public class Compass : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        mArrow.rotation = Quaternion.Euler(Vector3.forward * -90 * (int)mPlayer.mCurGravity);
+        mArrow.rotation = Quaternion.Euler(Vector3.forward * -90 * (int)mPlayer.mGravShifter.mCurGravity);
         //negative because the rotation for the rect transform is backwards
         //why in the ever-loving Christ is it backwards?????
 	}
