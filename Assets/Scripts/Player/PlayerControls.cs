@@ -74,10 +74,8 @@ public class PlayerControls : MonoBehaviour {
     private bool mCanShift = true;
     private bool mCanDoubleJump = false; //might be useless if overcharged jump is implemented
     private float mGravityFactor = 10f; //not sure why this is 10; investigate later
-    public Vector3 mGravNormal;
     
 
-    private Vector3 mMovementVector;
     private int mIntendedDirection = 1; 
     public readonly float mJumpforce = 6f;
     public readonly float mChargedJumpForce = 10f;
@@ -85,8 +83,6 @@ public class PlayerControls : MonoBehaviour {
     private float mZDistance = 0f;
 
     public bool mShifting = false;
-    public enum Gravity {South = 0, East = 1, North = 2, West = 3};
-    private Gravity _mCurGravity = Gravity.South;
     /*public Gravity mCurGravity
     {
         get
@@ -127,7 +123,7 @@ public class PlayerControls : MonoBehaviour {
         mRb = GetComponent<Rigidbody>(); //secure this later
         _mGravShifter = GetComponent<GravityShifter>(); //secure this later
         mCamera = Camera.main;
-        mGravNormal = Vector3.down;
+        //mGravNormal = Vector3.down;
         mDistToGround = GetComponent<Collider>().bounds.extents.y; //secure this later
         //mCurGravity = Gravity.South;
 
@@ -155,9 +151,6 @@ public class PlayerControls : MonoBehaviour {
         //Left stick controls
         if((int)mCurControls < 2) //Can move with the "Gameplay" and "WeaponWheel" modes
         {
-            //Find a way to move this code into the gravity shifter script without needing to access the PlayerControls script
-            //mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
-
             //Main movement section
             if (!mAttachedToWall) //cannot move if attached to a wall
             {
@@ -178,14 +171,6 @@ public class PlayerControls : MonoBehaviour {
                 if (IsDashing())
                 {
                     //following lines are reduced by 1/10th because of the left stick sensitivity
-                    /*if (CommandPattern.OverCharge.mCharged)// && mChargeEnergy > amountNeeded)
-                    {
-                        transform.position += 0.1f * mIntendedDirection * mMovementVector * mChargedDashSpeed;
-                    }
-                    else
-                    {
-                        transform.position += 0.1f * mIntendedDirection * mMovementVector * mDashSpeed;
-                    }*/
                     float lDashSpeed = CommandPattern.OverCharge.mCharged ? mChargedDashSpeed : mDashSpeed;
                     transform.position += 0.1f * mIntendedDirection * _mGravShifter.GetMovementVector() * lDashSpeed;
                 }
@@ -196,7 +181,7 @@ public class PlayerControls : MonoBehaviour {
                 }
 
                 mZDistance = transform.position.z;
-                if (mZDistance > 0.05f)
+                if (Mathf.Abs(mZDistance) > 0.05f)
                 {
                     //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
                     transform.position -= Vector3.forward * mZDistance;
@@ -282,19 +267,16 @@ public class PlayerControls : MonoBehaviour {
                 if (lGravAngle > -45f && lGravAngle <= 45f)
                 {
                     //Shift gravity to the relative "up"
-                    //mCurGravity = ShiftGravity<Gravity>(2);
                     _mGravShifter.ShiftGravity(2);
                 }
                 else if (lGravAngle > 45f && lGravAngle <= 135f)
                 {
                     //Shift gravity to the relative "right"
-                    //mCurGravity = ShiftGravity<Gravity>(1);
                     _mGravShifter.ShiftGravity(1);
                 }
                 else if (lGravAngle <= -45f && lGravAngle >= -135f)
                 {
                     //Shift gravity to the relative "left"
-                    //mCurGravity = ShiftGravity<Gravity>(3);
                     _mGravShifter.ShiftGravity(3);
                 }
             }
@@ -344,44 +326,6 @@ public class PlayerControls : MonoBehaviour {
     {
         return Physics.Raycast(transform.position, -transform.up, mDistToGround + 0.1f);
     }
-
-    /*public T ShiftGravity<T>(int pNew) where T: struct
-    {
-        mRb.velocity = Vector3.zero;
-        T[] lArr = (T[])System.Enum.GetValues(typeof(Gravity));
-        int j = (int)(mCurGravity + pNew) % 4;
-        
-        return lArr[j];
-    }
-
-    private void SetGravityVariables()
-    {
-        switch ((int)mCurGravity)
-        {
-            case 0: //South (normal gravity)
-                mGravNormal = Vector3.down;
-                mMovementVector = Vector3.right;
-                mTargetShiftAngle = 0f;
-                break;
-            case 1: //West
-                mGravNormal = Vector3.right;
-                mMovementVector = Vector3.up;
-                mTargetShiftAngle = 90f;
-                break;
-            case 2: //North
-                mGravNormal = Vector3.up;
-                mMovementVector = Vector3.left;
-                mTargetShiftAngle = 180f;
-                break;
-            case 3: //East
-                mGravNormal = Vector3.left;
-                mMovementVector = Vector3.down;
-                mTargetShiftAngle = -90f;
-                break;
-            default:
-                break;
-        }
-    }*/
 
     private void DetachFromMovingObject()
     {

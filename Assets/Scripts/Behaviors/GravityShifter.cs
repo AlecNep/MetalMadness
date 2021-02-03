@@ -6,9 +6,9 @@ public class GravityShifter : MonoBehaviour {
 
     private Rigidbody mRb;
     public enum Gravity { South = 0, East = 1, North = 2, West = 3 };
-    private Gravity _mCurGravity = Gravity.South;
-    public Gravity mCurGravity
-    {
+    //private Gravity _mCurGravity = Gravity.South;
+    public Gravity mCurGravity; //temporary; can't set in editor if it's the other way around
+    /*{
         get
         {
             return _mCurGravity;
@@ -18,11 +18,10 @@ public class GravityShifter : MonoBehaviour {
             _mCurGravity = value;
             SetGravityVariables();
         }
-    }
+    }*/
     private float mGravityFactor = 10f;
     public Vector3 mGravNormal { get; private set; }
     private Vector3 mMovementVector;
-    private int mIntendedDirection = 1; //might not be necessary to have in this script
     private float mTargetShiftAngle = 0f; //Only here until the camera gets its own script
     private bool mGravityActive;
 
@@ -30,9 +29,10 @@ public class GravityShifter : MonoBehaviour {
     // Use this for initialization
     void Start () {
         mRb = GetComponent<Rigidbody>(); //secure this later
-        mGravNormal = Vector3.down;
-        mCurGravity = Gravity.South;
+        //mGravNormal = Vector3.down;
+        //mCurGravity = Gravity.South;
         mGravityActive = true;
+        SetGravityVariables();
     }
 	
 	// Update is called once per frame
@@ -67,6 +67,7 @@ public class GravityShifter : MonoBehaviour {
     {
         mRb.velocity = Vector3.zero;
         mCurGravity = (Gravity)((int)(mCurGravity + pNew) % 4);
+        SetGravityVariables();
     }
 
     private void SetGravityVariables()
