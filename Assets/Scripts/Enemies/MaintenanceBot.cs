@@ -17,12 +17,16 @@ public class MaintenanceBot : MonoBehaviour {
     public float mPatrolDistance;
     private float mCounter;
     private float mDistFromStart;
-    public enum State {patrolling = 0, seeking = 1, returning = 2 }
+    public enum State {patrolling = 0, seeking = 1, attacking = 2, returning = 3 }
     public State mCurState = State.patrolling;
+    private float mPreviousDist = 0;
 
     //References
-    public Transform mArms { get; private set; }
+    public Transform mArms { get; private set; } //maybe should just be private
+    private Transform mTarget;
+    private float mMaxTrackingDistance;
 
+    //Gravity shifting functionality
     private GravityShifter _mGravShifter;
     public GravityShifter mGravShifter
     {
@@ -39,6 +43,10 @@ public class MaintenanceBot : MonoBehaviour {
     // Use this for initialization
     void Start () {
         _mGravShifter = GetComponent<GravityShifter>();
+        if (_mGravShifter == null)
+        {
+            System.Console.Error.WriteLine("Maintenance bot " + name + "Was not given a GravityShifter component!");
+        }
         mStartingPoint = transform.position;
 
         mArms = transform.Find("Arms");
@@ -51,20 +59,22 @@ public class MaintenanceBot : MonoBehaviour {
         {
             mCounter += Time.deltaTime;
             float lSineResult = Mathf.Sin(mCounter * mMovementSpeed);
-            mIntendedDirection = (int)Mathf.Sign(lSineResult);
+            mIntendedDirection = (int)Mathf.Sign(lSineResult - mPreviousDist);
+            mPreviousDist = lSineResult;
             mDistFromStart = mPatrolDistance * lSineResult;
-            
 
+            transform.position = mStartingPoint + _mGravShifter.GetMovementVector() * mDistFromStart;
 
-            Vector3 lTemp = mStartingPoint + _mGravShifter.GetMovementVector() * mDistFromStart;
-
-            transform.position = lTemp;
             if (Mathf.Abs(transform.position.z) > 0.05f)
             {
                 transform.position -= Vector3.forward * transform.position.z;
             }
         }
-        else if ((int)mCurState == 1) //seeking
+        else if ((int)mCurState == 1) //Seeking
+        {
+
+        }
+        else if ((int)mCurState == 2) //About to attack a target
         {
 
         }
@@ -78,5 +88,10 @@ public class MaintenanceBot : MonoBehaviour {
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mBodyRotationSpeed);
         }
+    }
+
+    public void SetPatrolPoint(Vector3 pCenter)
+    {
+        mStartingPoint = pCenter;
     }
 }
