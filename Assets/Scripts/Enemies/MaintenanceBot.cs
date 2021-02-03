@@ -10,6 +10,7 @@ public class MaintenanceBot : MonoBehaviour {
     private float mMovementSpeed;
     private readonly float DEFAULT_ARM_ROTATION = 90f;
     private float mBodyRotationSpeed = 15f;
+    private Quaternion mTargetRotation;
 
     //Patrol Variables
     private Vector3 mStartingPoint;
@@ -41,7 +42,7 @@ public class MaintenanceBot : MonoBehaviour {
         mStartingPoint = transform.position;
 
         mArms = transform.Find("Arms");
-        mArms.localEulerAngles = new Vector3(0, 0, DEFAULT_ARM_ROTATION);
+        mArms.localEulerAngles = new Vector3(DEFAULT_ARM_ROTATION, 0, 0);
     }
 
     // Update is called once per frame
@@ -49,9 +50,12 @@ public class MaintenanceBot : MonoBehaviour {
         if (mCurState == 0) //Patrolling
         {
             mCounter += Time.deltaTime;
-            mDistFromStart = mPatrolDistance * Mathf.Sin(mCounter * mMovementSpeed);
+            float lSineResult = Mathf.Sin(mCounter * mMovementSpeed);
+            mIntendedDirection = (int)Mathf.Sign(lSineResult);
+            mDistFromStart = mPatrolDistance * lSineResult;
+            
 
-            mIntendedDirection = (int)Mathf.Sign(mDistFromStart);
+
             Vector3 lTemp = mStartingPoint + _mGravShifter.GetMovementVector() * mDistFromStart;
 
             transform.position = lTemp;
@@ -67,6 +71,12 @@ public class MaintenanceBot : MonoBehaviour {
         else
         {
 
+        }
+
+        mTargetRotation = Quaternion.LookRotation(_mGravShifter.GetMovementVector() * -mIntendedDirection, -_mGravShifter.GetGravityNormal());
+        if (transform.rotation != mTargetRotation)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mBodyRotationSpeed);
         }
     }
 }

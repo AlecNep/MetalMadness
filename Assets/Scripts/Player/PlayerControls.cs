@@ -83,22 +83,6 @@ public class PlayerControls : MonoBehaviour {
     private float mZDistance = 0f;
 
     public bool mShifting = false;
-    /*public Gravity mCurGravity
-    {
-        get
-        {
-            return _mCurGravity;
-        }
-        set
-        {
-            _mCurGravity = value;
-            SetGravityVariables();
-        }
-    }*/
-
-    
-
-
     private float mDistToGround;
 
     //Actual player stats
@@ -123,9 +107,7 @@ public class PlayerControls : MonoBehaviour {
         mRb = GetComponent<Rigidbody>(); //secure this later
         _mGravShifter = GetComponent<GravityShifter>(); //secure this later
         mCamera = Camera.main;
-        //mGravNormal = Vector3.down;
         mDistToGround = GetComponent<Collider>().bounds.extents.y; //secure this later
-        //mCurGravity = Gravity.South;
 
         mArms = transform.Find("Arms");
         mArms.localEulerAngles = new Vector3(DEFAULT_ARM_ROTATION, 0, 0);
@@ -176,7 +158,6 @@ public class PlayerControls : MonoBehaviour {
                 }
                 else
                 {
-                    //transform.position += mMovementVector * (lLx * mMovementSpeed);
                     transform.position += _mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
                 }
 
