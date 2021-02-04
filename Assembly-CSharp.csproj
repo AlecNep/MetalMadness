@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\Behaviors\GravityShifter.cs" />
     <Compile Include="Assets\Scripts\CommandPattern.cs" />
     <Compile Include="Assets\Scripts\Enemies\MaintenanceBot.cs" />
+    <Compile Include="Assets\Scripts\Enemies\RivetBot.cs" />
     <Compile Include="Assets\Scripts\Environment\Oscillator.cs" />
     <Compile Include="Assets\Scripts\Explosion.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />

@@ -275,7 +275,7 @@ public class PlayerControls : MonoBehaviour {
         }
     } //~~~~~~end Update~~~~~~
 
-    public void ChangeControlMode(int mMode)
+    public void ChangeControlMode(int mMode) //consider overridding this method for more than just int input
     {
         mCurControls = (ControlMode)mMode;
         mGravShifter.GravityIsActive(mCurControls == ControlMode.Gameplay);

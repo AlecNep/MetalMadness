@@ -5,29 +5,33 @@ using UnityEngine;
 public class MaintenanceBot : MonoBehaviour {
 
     //Personal variables
-    private int mIntendedDirection = 1;
+    protected int mIntendedDirection = 1;
     [SerializeField]
-    private float mMovementSpeed;
-    private readonly float DEFAULT_ARM_ROTATION = 90f;
-    private float mBodyRotationSpeed = 15f;
-    private Quaternion mTargetRotation;
+    protected float mMovementSpeed;
+    protected readonly float DEFAULT_ARM_ROTATION = 90f;
+    protected float mBodyRotationSpeed = 15f;
+    protected Quaternion mTargetRotation;
 
     //Patrol Variables
-    private Vector3 mStartingPoint;
+    protected Vector3 mStartingPoint;
     public float mPatrolDistance;
-    private float mCounter;
-    private float mDistFromStart;
+    protected float mCounter;
+    protected float mDistFromStart;
     public enum State {patrolling = 0, seeking = 1, attacking = 2, returning = 3 }
     public State mCurState = State.patrolling;
-    private float mPreviousDist = 0;
+    protected float mPreviousDist = 0;
 
     //References
     public Transform mArms { get; private set; } //maybe should just be private
-    private Transform mTarget;
-    private float mMaxTrackingDistance;
+
+    //Tracking variables
+    protected GameObject mTarget; //not sure just yet if this should be a Gameobject or Transform
+    protected float mTargetDistance;
+    protected float mMaxTrackingDistance;
+    protected float mAttackDistance;
 
     //Gravity shifting functionality
-    private GravityShifter _mGravShifter;
+    protected GravityShifter _mGravShifter;
     public GravityShifter mGravShifter
     {
         get
@@ -38,7 +42,6 @@ public class MaintenanceBot : MonoBehaviour {
                 return null;
         }
     }
-
 
     // Use this for initialization
     void Start () {
@@ -72,11 +75,11 @@ public class MaintenanceBot : MonoBehaviour {
         }
         else if ((int)mCurState == 1) //Seeking
         {
-
+            //perhaps should be in a child class
         }
         else if ((int)mCurState == 2) //About to attack a target
         {
-
+            //perhaps should be in a child class
         }
         else
         {
@@ -88,10 +91,19 @@ public class MaintenanceBot : MonoBehaviour {
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mBodyRotationSpeed);
         }
+
+        if (mTargetDistance > mMaxTrackingDistance)
+        {
+            mTarget = null;
+            mTargetDistance = 0;
+            mCurState = State.returning;
+        }
     }
 
     public void SetPatrolPoint(Vector3 pCenter)
     {
         mStartingPoint = pCenter;
     }
+
+    protected virtual void Attack() { }
 }
