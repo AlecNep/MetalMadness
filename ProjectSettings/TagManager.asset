@@ -8,6 +8,8 @@ TagManager:
   - Environment
   - Enemy
   - MovingPlatform
+  - Torchable
+  - Rivetable
   layers:
   - Default
   - TransparentFX

@@ -21,7 +21,7 @@ public class PlayerControls : MonoBehaviour {
 
 
     //Movement and speed
-    private float mMovementSpeed = 1.5f;
+    private float mMovementSpeed = 2f;
     public float mDashSpeed;
     public float mChargedDashSpeed;
     public float mDashTimer = 0;
@@ -77,7 +77,7 @@ public class PlayerControls : MonoBehaviour {
     
 
     private int mIntendedDirection = 1; 
-    public readonly float mJumpforce = 6f;
+    public readonly float mJumpforce = 7f;
     public readonly float mChargedJumpForce = 10f;
     private bool mOnMovingObject; //used for when the player is on top of another moving object
     private float mZDistance = 0f;

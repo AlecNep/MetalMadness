@@ -71,8 +71,13 @@
     <Compile Include="Assets\PyroParticles\Prefab\Script\SingleLineAttribute.cs" />
     <Compile Include="Assets\Scripts\Behaviors\GravityShifter.cs" />
     <Compile Include="Assets\Scripts\CommandPattern.cs" />
+    <Compile Include="Assets\Scripts\Enemies\ActionNode.cs" />
     <Compile Include="Assets\Scripts\Enemies\MaintenanceBot.cs" />
-    <Compile Include="Assets\Scripts\Enemies\RivetBot.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Node.cs" />
+    <Compile Include="Assets\Scripts\Enemies\NodeStates.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Selector.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Sequence.cs" />
+    <Compile Include="Assets\Scripts\Enemies\TorchBot.cs" />
     <Compile Include="Assets\Scripts\Environment\Oscillator.cs" />
     <Compile Include="Assets\Scripts\Explosion.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
