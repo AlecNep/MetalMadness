@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class MaintenanceBot : MonoBehaviour {
 
@@ -182,13 +183,14 @@ public class MaintenanceBot : MonoBehaviour {
         int lRoundedAngle = (int)lAngle; //should be a more accurate rounding operations
         lRoundedAngle = (lRoundedAngle + 360) % 360;
 
-        if (((lRoundedAngle / 30) % 2) == 1) //within 30 degrees of a cardinal direction
+        if (((lRoundedAngle / 30) % 3) % 2 == 0) //within 30 degrees of a cardinal direction
         {
             int lRoundedDiv = (int)lAngle / 90;
 
             lScanDirections ^= (byte)~(1 << lRoundedDiv);
 
-            mGravShifter.ShiftGravity((int)Mathf.Log(2, lScanDirections));
+            if (lScanDirections != 1) //This really should never happen since this whole function depends on line of sight with a target
+                mGravShifter.ShiftGravity((int)Mathf.Log(2, lScanDirections));
             return NodeStates.SUCCESS;
         }
         else
@@ -204,8 +206,48 @@ public class MaintenanceBot : MonoBehaviour {
             else //down to some extent
                 lScanDirections ^= (byte)RelativeDirections.up;
 
-            Collider[] lScans = new Collider[2];
+            //TODO
 
+            /**
+             * Scan directions follow LURD - Left, Up, Right, Down
+             * For combinations, only 0011, 0110, 1001, and 1100 are possible
+             */
+
+            Vector3[] lScans = new Vector3[2];
+            //Maybe make a lambda function for this
+            lScans[0] = mGravShifter.GetGravityNormal();
+            lScans[1] = mGravShifter.GetMovementVector();
+
+            if ((lScanDirections & 6) == 6) //Up, opposite of grav vector
+                lScans[0] *= -1;
+            if ((lScanDirections & 8) == 8) //Left, opposite of moement vector
+                lScans[1] *= -1;
+
+            RaycastHit[] lScannedSurfaces = new RaycastHit[2];
+            for (int i=0; i<2; ++i)
+            {
+                Physics.Raycast(transform.position, lScans[i], out lScannedSurfaces[i], mMaxTrackingDistance, 11);
+            }
+
+            int lValidSurfaces = 0;
+            for(int i=0; i < 2; ++i)
+            {
+               if (lSurfaces.Contains(lScannedSurfaces[i].collider))
+                {
+                    lValidSurfaces += (i + 1);
+                }
+            }
+            switch (lValidSurfaces)
+            {
+                case 0:
+                    return NodeStates.FAILURE;
+                case 1: //only the first one
+                    break;
+                case 2: //only the second
+                    break;
+                case 3: //both
+                    break;
+            }
         }
 
         return NodeStates.FAILURE; //Here for default
