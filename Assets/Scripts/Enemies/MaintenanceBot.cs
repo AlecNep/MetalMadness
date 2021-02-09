@@ -170,7 +170,7 @@ public class MaintenanceBot : MonoBehaviour {
         return ReferenceEquals(lSight.collider.gameObject, mMainTarget) ? NodeStates.SUCCESS : NodeStates.FAILURE;
     }
 
-    public NodeStates SurfaceInSight()
+    public NodeStates EvaluateShift() //Possibly rename
     {
         Collider[] lSurfaces = Physics.OverlapSphere(mMainTarget.transform.position, mAttackDistance, 11); //11 = environment layer
         byte lScanDirections = 15;
@@ -182,13 +182,15 @@ public class MaintenanceBot : MonoBehaviour {
         int lRoundedAngle = (int)lAngle; //should be a more accurate rounding operations
         lRoundedAngle = (lRoundedAngle + 360) % 360;
 
-        if (lRoundedAngle % 90 == 0) //basically in direct sight of a cardinal direction
+        if (((lRoundedAngle / 30) % 2) == 1) //within 30 degrees of a cardinal direction
         {
             int lRoundedDiv = (int)lAngle / 90;
 
             lScanDirections ^= (byte)~(1 << lRoundedDiv);
 
-        } //~~~~This whole section might be unnecessary
+            mGravShifter.ShiftGravity((int)Mathf.Log(2, lScanDirections));
+            return NodeStates.SUCCESS;
+        }
         else
         {
             //rule out directions to scan
@@ -197,22 +199,14 @@ public class MaintenanceBot : MonoBehaviour {
             else //to the left, to some extent
                 lScanDirections ^= (byte)RelativeDirections.right;
 
-            if (Mathf.Abs(lAngle) > 90) //down to some extent
-                lScanDirections ^= (byte)RelativeDirections.up;
-            else //up, to some extent
+            if (Mathf.Abs(lAngle) > 90) //up to some extent
                 lScanDirections ^= (byte)RelativeDirections.down;
-        }
+            else //down to some extent
+                lScanDirections ^= (byte)RelativeDirections.up;
 
-        if (QuickFunctions.CountBits(lScanDirections) > 1)
-        {//
+            Collider[] lScans = new Collider[2];
 
         }
-        else
-        {
-            mGravShifter.ShiftGravity((int)Mathf.Log(2, lScanDirections));
-            return NodeStates.SUCCESS;
-        }
-
 
         return NodeStates.FAILURE; //Here for default
     }
