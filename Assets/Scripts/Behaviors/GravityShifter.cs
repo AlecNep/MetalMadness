@@ -72,6 +72,7 @@ public class GravityShifter : MonoBehaviour {
 
     private void SetGravityVariables()
     {
+        print(mCurGravity);
         switch ((int)mCurGravity)
         {
             case 0: //South (normal gravity)
@@ -79,7 +80,7 @@ public class GravityShifter : MonoBehaviour {
                 mMovementVector = Vector3.right;
                 mTargetShiftAngle = 0f;
                 break;
-            case 1: //West
+            case 1: //East
                 mGravNormal = Vector3.right;
                 mMovementVector = Vector3.up;
                 mTargetShiftAngle = 90f;
@@ -89,7 +90,7 @@ public class GravityShifter : MonoBehaviour {
                 mMovementVector = Vector3.left;
                 mTargetShiftAngle = 180f;
                 break;
-            case 3: //East
+            case 3: //West
                 mGravNormal = Vector3.left;
                 mMovementVector = Vector3.down;
                 mTargetShiftAngle = -90f;

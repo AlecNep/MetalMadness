@@ -32,7 +32,7 @@ public class MaintenanceBot : MonoBehaviour {
     protected float mAttackDistance;
 
     [System.Flags]
-    public enum RelativeDirections {up = 1, right = 2, down = 4, left = 8 };
+    public enum RelativeDirections {down = 1, right = 2, up = 4, left = 8 };
 
 
     //Gravity shifting functionality
@@ -61,6 +61,7 @@ public class MaintenanceBot : MonoBehaviour {
         mArms.localEulerAngles = new Vector3(DEFAULT_ARM_ROTATION, 0, 0);
 
         mTargets = new List<GameObject>();
+        mMainTarget = GameObject.Find("Player"); //For testing purposes
     }
 
     // Update is called once per frame
@@ -79,6 +80,8 @@ public class MaintenanceBot : MonoBehaviour {
             {
                 transform.position -= Vector3.forward * transform.position.z;
             }
+
+            //TODO
         }
         else if ((int)mCurState == 1) //Seeking
         {
@@ -172,26 +175,44 @@ public class MaintenanceBot : MonoBehaviour {
         Collider[] lSurfaces = Physics.OverlapSphere(mMainTarget.transform.position, mAttackDistance, 11); //11 = environment layer
         byte lScanDirections = 15;
 
-        //float lAngle = Vector3.Angle(transform.up, mMainTarget.transform.position);
-        float lAngle = Vector3.SignedAngle(transform.up, mMainTarget.transform.position, Vector3.forward); //might need Vector3.back
-        float lUAngle = Mathf.Abs(lAngle); //Useful for some calculations
+        //Scan for suitable surfaces to shift to
+        Vector3 lDir = (mMainTarget.transform.position - transform.position).normalized; //TEMP: for testing
+        float lAngle = Vector3.SignedAngle(-transform.up, lDir, Vector3.forward);
 
         int lRoundedAngle = (int)lAngle; //should be a more accurate rounding operations
+        lRoundedAngle = (lRoundedAngle + 360) % 360;
+
         if (lRoundedAngle % 90 == 0) //basically in direct sight of a cardinal direction
         {
             int lRoundedDiv = (int)lAngle / 90;
+
+            lScanDirections ^= (byte)~(1 << lRoundedDiv);
+
+        } //~~~~This whole section might be unnecessary
+        else
+        {
+            //rule out directions to scan
+            if (lAngle > 0) //to the right, to some extent
+                lScanDirections ^= (byte)RelativeDirections.left;
+            else //to the left, to some extent
+                lScanDirections ^= (byte)RelativeDirections.right;
+
+            if (Mathf.Abs(lAngle) > 90) //down to some extent
+                lScanDirections ^= (byte)RelativeDirections.up;
+            else //up, to some extent
+                lScanDirections ^= (byte)RelativeDirections.down;
         }
 
-        //rule out directions to scan
-        if (lAngle > 0) //to the right, to some extent
-            lScanDirections ^= (byte)RelativeDirections.left;
-        else //to the left, to some extent
-            lScanDirections ^= (byte)RelativeDirections.right;
+        if (QuickFunctions.CountBits(lScanDirections) > 1)
+        {//
 
-        if (Mathf.Abs(lAngle) > 90) //down to some extent
-            lScanDirections ^= (byte)RelativeDirections.up;
-        else //up, to some extent
-            lScanDirections ^= (byte)RelativeDirections.down;
+        }
+        else
+        {
+            mGravShifter.ShiftGravity((int)Mathf.Log(2, lScanDirections));
+            return NodeStates.SUCCESS;
+        }
+
 
         return NodeStates.FAILURE; //Here for default
     }
