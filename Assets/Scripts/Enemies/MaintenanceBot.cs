@@ -162,7 +162,7 @@ public class MaintenanceBot : MonoBehaviour {
         }
     }
 
-    public virtual NodeStates TargetInSight()
+    public virtual NodeStates IsTargetInSight()
     {
         RaycastHit lSight;
         LayerMask lMask = ~(1 << 9 | 1 << 12);
@@ -171,7 +171,7 @@ public class MaintenanceBot : MonoBehaviour {
         return ReferenceEquals(lSight.collider.gameObject, mMainTarget) ? NodeStates.SUCCESS : NodeStates.FAILURE;
     }
 
-    public NodeStates EvaluateShift() //Possibly rename
+    public NodeStates TargetVisibleShift() //Possibly rename
     {
         Collider[] lSurfaces = Physics.OverlapSphere(mMainTarget.transform.position, mAttackDistance, 11); //11 = environment layer
         byte lScanDirections = 15;
@@ -213,20 +213,23 @@ public class MaintenanceBot : MonoBehaviour {
              * For combinations, only 0011, 0110, 1001, and 1100 are possible
              */
 
-            Vector3[] lScans = new Vector3[2];
-            //Maybe make a lambda function for this
-            lScans[0] = mGravShifter.GetGravityNormal();
-            lScans[1] = mGravShifter.GetMovementVector();
+            Vector3[] lPossibleVectors = new Vector3[2];
 
-            if ((lScanDirections & 6) == 6) //Up, opposite of grav vector
-                lScans[0] *= -1;
+            //Since all viable combinations use both vectors to some extent, we only need to find which directions of each are being used
+            lPossibleVectors[0] = mGravShifter.GetGravityNormal();
+            lPossibleVectors[1] = mGravShifter.GetMovementVector();
+
+            if ((lScanDirections & 4) == 4) //Up, opposite of grav vector
+                lPossibleVectors[0] *= -1;
+            else
+                Debug.LogError("Warning: " + name + " at " + transform.position + " is trying to shift gravity downwards");
             if ((lScanDirections & 8) == 8) //Left, opposite of moement vector
-                lScans[1] *= -1;
+                lPossibleVectors[1] *= -1;
 
             RaycastHit[] lScannedSurfaces = new RaycastHit[2];
             for (int i=0; i<2; ++i)
             {
-                Physics.Raycast(transform.position, lScans[i], out lScannedSurfaces[i], mMaxTrackingDistance, 11);
+                Physics.Raycast(transform.position, lPossibleVectors[i], out lScannedSurfaces[i], mMaxTrackingDistance, 11);
             }
 
             int lValidSurfaces = 0;
@@ -237,19 +240,29 @@ public class MaintenanceBot : MonoBehaviour {
                     lValidSurfaces += (i + 1);
                 }
             }
+            int lVertical = 2 * ((lScanDirections & 4) / 4);
+            int lHorizontal = 1 + 2 * ((lScanDirections & 8) / 8);
             switch (lValidSurfaces)
             {
                 case 0:
                     return NodeStates.FAILURE;
                 case 1: //only the first one
-                    break;
+                    mGravShifter.ShiftGravity(lVertical); //Will return 0 if down, or 2 if up
+                    return NodeStates.SUCCESS;
                 case 2: //only the second
-                    break;
+                    mGravShifter.ShiftGravity(lHorizontal); //Will return 1 if right, or 3 if left
+                    return NodeStates.SUCCESS;
                 case 3: //both
-                    break;
+                    if (Vector3.Distance(transform.position, lScannedSurfaces[0].collider.transform.position) 
+                        < Vector3.Distance(transform.position, lScannedSurfaces[1].collider.transform.position))
+                        mGravShifter.ShiftGravity(lVertical);
+                    else
+                        mGravShifter.ShiftGravity(lHorizontal);
+                    return NodeStates.SUCCESS;
             }
         }
 
+        Debug.LogError("Warning: The \"TargetVisibleShift\" function completed without any viable options");
         return NodeStates.FAILURE; //Here for default
     }
 

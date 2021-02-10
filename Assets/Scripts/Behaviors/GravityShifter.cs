@@ -72,7 +72,6 @@ public class GravityShifter : MonoBehaviour {
 
     private void SetGravityVariables()
     {
-        print(mCurGravity);
         switch ((int)mCurGravity)
         {
             case 0: //South (normal gravity)
