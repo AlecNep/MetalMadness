@@ -122,7 +122,11 @@ public class PlayerControls : MonoBehaviour {
     }
 
 
-    // Update is called once per frame
+    /**
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~IMPORTANT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     * Movement physics should not be frame-dependent
+     * Change the behavior here so that it performs the same way in FixedUpdate
+     */
     void Update () {
         float lLx = Input.GetAxis("LStickX");
         float lLy = Input.GetAxis("LStickY");

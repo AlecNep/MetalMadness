@@ -8,7 +8,7 @@ public class ActionNode : Node {
     public delegate NodeStates ActionNodeDelegate(); //consider changing the paramater signature
 
     /* The delegate that is called to evaluate this node */
-    private ActionNodeDelegate m_action;
+    private ActionNodeDelegate mAction;
 
     /* Because this node contains no logic itself, 
      * the logic must be passed in in the form of  
@@ -16,14 +16,14 @@ public class ActionNode : Node {
      * needs to return a NodeStates enum */
     public ActionNode(ActionNodeDelegate action)
     {
-        m_action = action;
+        mAction = action;
     }
 
     /* Evaluates the node using the passed in delegate and  
      * reports the resulting state as appropriate */
     public override NodeStates Evaluate()
     {
-        switch (m_action())
+        switch (mAction())
         {
             case NodeStates.SUCCESS:
                 m_nodeState = NodeStates.SUCCESS;

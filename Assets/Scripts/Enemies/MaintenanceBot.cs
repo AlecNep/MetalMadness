@@ -67,6 +67,8 @@ public class MaintenanceBot : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
+        //This whole thing will probably need to be scapped/redone
         if (mCurState == 0) //Patrolling
         {
             mCounter += Time.deltaTime;
@@ -162,6 +164,18 @@ public class MaintenanceBot : MonoBehaviour {
         }
     }
 
+    public virtual NodeStates IsTargetInVerticalRange()
+    {
+        if ((int)mGravShifter.mCurGravity % 2 == 1)
+        {
+            return Mathf.Abs((mMainTarget.transform.position - transform.position).x) <= mAttackDistance ? NodeStates.SUCCESS : NodeStates.FAILURE;
+        }
+        else
+        {
+            return Mathf.Abs((mMainTarget.transform.position - transform.position).y) <= mAttackDistance ? NodeStates.SUCCESS : NodeStates.FAILURE;
+        }
+    }
+
     public virtual NodeStates IsTargetInSight()
     {
         RaycastHit lSight;
@@ -177,15 +191,15 @@ public class MaintenanceBot : MonoBehaviour {
         byte lScanDirections = 15;
 
         //Scan for suitable surfaces to shift to
-        Vector3 lDir = (mMainTarget.transform.position - transform.position).normalized; //TEMP: for testing
+        Vector3 lDir = (mMainTarget.transform.position - transform.position).normalized;
         float lAngle = Vector3.SignedAngle(-transform.up, lDir, Vector3.forward);
 
         int lRoundedAngle = (int)lAngle; //should be a more accurate rounding operations
-        lRoundedAngle = (lRoundedAngle + 360) % 360;
+        lRoundedAngle = (lRoundedAngle + 360) % 360; //Gets the angle from [0, 360) instead of [-180, 180]
 
         if (((lRoundedAngle / 30) % 3) % 2 == 0) //within 30 degrees of a cardinal direction
         {
-            int lRoundedDiv = (int)lAngle / 90;
+            int lRoundedDiv = lRoundedAngle / 90;
 
             lScanDirections ^= (byte)~(1 << lRoundedDiv);
 
