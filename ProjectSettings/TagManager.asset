@@ -10,6 +10,7 @@ TagManager:
   - MovingPlatform
   - Torchable
   - Rivetable
+  - Serviceable
   layers:
   - Default
   - TransparentFX

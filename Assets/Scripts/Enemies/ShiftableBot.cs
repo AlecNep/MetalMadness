@@ -12,6 +12,7 @@ public class ShiftableBot : MonoBehaviour
     protected readonly float DEFAULT_ARM_ROTATION = 90f;
     protected float mBodyRotationSpeed = 15f;
     protected Quaternion mTargetRotation;
+    protected Collider mCol;
 
     //Patrol Variables
     protected Vector3 mStartingPoint;
@@ -49,13 +50,18 @@ public class ShiftableBot : MonoBehaviour
         }
     }
 
+    private Selector RootNode;
+    private ActionNode ChaseNode;
+    private ActionNode PatrolNode;
+    private ActionNode ReturnToPatrol;
+
     // Use this for initialization
     void Start()
     {
         _mGravShifter = GetComponent<GravityShifter>();
         if (_mGravShifter == null)
         {
-            System.Console.Error.WriteLine("Warning: Maintenance bot " + name + "Was not given a GravityShifter component!");
+            System.Console.Error.WriteLine("Warning: " + name + " was not given a GravityShifter component!");
         }
         mStartingPoint = transform.position;
 
@@ -63,7 +69,11 @@ public class ShiftableBot : MonoBehaviour
         mArms.localEulerAngles = new Vector3(DEFAULT_ARM_ROTATION, 0, 0);
 
         mTargets = new List<GameObject>();
-        mMainTarget = GameObject.Find("Player"); //For testing purposes
+        //mMainTarget = GameObject.Find("Player"); //For testing purposes
+
+        mCol = GetComponent<Collider>();
+        if (mCol == null)
+            System.Console.Error.WriteLine("Warning: " + name + " was not given a Collider!");
     }
 
     // Update is called once per frame
@@ -125,11 +135,14 @@ public class ShiftableBot : MonoBehaviour
 
     }*/
 
-    private void OnTriggerEnter(Collider pCol)
+    /*private void OnTriggerEnter(Collider pCol)
     {
-        mTargets.Add(pCol.gameObject);
-        PrioritizeTargets();
-    }
+        if (pCol.tag == "Player" || pCol.tag == "Serviceable")
+        {
+            mTargets.Add(pCol.gameObject);
+            PrioritizeTargets();
+        }
+    }*/
 
     public void PrioritizeTargets()
     {
@@ -184,7 +197,7 @@ public class ShiftableBot : MonoBehaviour
     public NodeStates TargetInSight()
     {
         RaycastHit lSight;
-        LayerMask lMask = ~(1 << 9 | 1 << 12);
+        LayerMask lMask = ~(1 << 9 | 1 << 12); //9 = PlayerBullet, 12 = Enemy
         Physics.Raycast(transform.position, mMainTarget.transform.position, out lSight, mMaxTrackingDistance, lMask);
 
         return ReferenceEquals(lSight.collider.gameObject, mMainTarget.transform.gameObject) ? NodeStates.SUCCESS : NodeStates.FAILURE;
@@ -192,13 +205,14 @@ public class ShiftableBot : MonoBehaviour
 
     public NodeStates TartgetInHorizontalReach()
     {
-        if ((int)mGravShifter.mCurGravity % 2 == 0)
+        float lHeight = mCol.bounds.extents.y + 0.05f; //added a slight increase
+        if ((int)mGravShifter.mCurGravity % 2 == 1) //East or West gravity
         {
-            return Mathf.Abs((mMainTarget.transform.position - transform.position).x) < mAttackDistance / 2 ? NodeStates.SUCCESS : NodeStates.FAILURE;
+            return Mathf.Abs((mMainTarget.transform.position - transform.position).x) < lHeight ? NodeStates.SUCCESS : NodeStates.FAILURE;
         }
         else
         {
-            return Mathf.Abs((mMainTarget.transform.position - transform.position).y) < mAttackDistance / 2 ? NodeStates.SUCCESS : NodeStates.FAILURE;
+            return Mathf.Abs((mMainTarget.transform.position - transform.position).y) < lHeight ? NodeStates.SUCCESS : NodeStates.FAILURE;
         }
     }
 
