@@ -1,10 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class MaintenanceBot : MonoBehaviour {
-
+public class ShiftableBot : MonoBehaviour
+{
     //Personal variables
     protected int mIntendedDirection = 1;
     [SerializeField]
@@ -18,7 +18,7 @@ public class MaintenanceBot : MonoBehaviour {
     public float mPatrolDistance;
     protected float mCounter;
     protected float mDistFromStart;
-    public enum State {patrolling = 0, seeking = 1, attacking = 2, returning = 3 }
+    public enum State { patrolling = 0, seeking = 1, attacking = 2, returning = 3 }
     public State mCurState = State.patrolling;
     protected float mPreviousDist = 0;
 
@@ -33,7 +33,7 @@ public class MaintenanceBot : MonoBehaviour {
     protected float mAttackDistance;
 
     [System.Flags]
-    public enum RelativeDirections {down = 1, right = 2, up = 4, left = 8 };
+    public enum RelativeDirections { down = 1, right = 2, up = 4, left = 8 };
 
 
     //Gravity shifting functionality
@@ -50,11 +50,12 @@ public class MaintenanceBot : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         _mGravShifter = GetComponent<GravityShifter>();
         if (_mGravShifter == null)
         {
-            System.Console.Error.WriteLine("Maintenance bot " + name + "Was not given a GravityShifter component!");
+            System.Console.Error.WriteLine("Warning: Maintenance bot " + name + "Was not given a GravityShifter component!");
         }
         mStartingPoint = transform.position;
 
@@ -66,7 +67,8 @@ public class MaintenanceBot : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
 
         //This whole thing will probably need to be scapped/redone
         if (mCurState == 0) //Patrolling
@@ -164,7 +166,46 @@ public class MaintenanceBot : MonoBehaviour {
         }
     }
 
-    public virtual NodeStates IsTargetInVerticalRange()
+    public NodeStates TargetInRange()
+    {
+        if (mTargetDistance > mMaxTrackingDistance)
+        {
+            mMainTarget = null;
+            mTargetDistance = 0;
+            return NodeStates.FAILURE;
+        }
+
+        return NodeStates.SUCCESS;
+    }
+
+    /**
+     * Might be able to replace with its own class
+     */
+    public NodeStates TargetInSight()
+    {
+        RaycastHit lSight;
+        LayerMask lMask = ~(1 << 9 | 1 << 12);
+        Physics.Raycast(transform.position, mMainTarget.transform.position, out lSight, mMaxTrackingDistance, lMask);
+
+        return ReferenceEquals(lSight.collider.gameObject, mMainTarget.transform.gameObject) ? NodeStates.SUCCESS : NodeStates.FAILURE;
+    }
+
+    public NodeStates TartgetInHorizontalReach()
+    {
+        if ((int)mGravShifter.mCurGravity % 2 == 0)
+        {
+            return Mathf.Abs((mMainTarget.transform.position - transform.position).x) < mAttackDistance / 2 ? NodeStates.SUCCESS : NodeStates.FAILURE;
+        }
+        else
+        {
+            return Mathf.Abs((mMainTarget.transform.position - transform.position).y) < mAttackDistance / 2 ? NodeStates.SUCCESS : NodeStates.FAILURE;
+        }
+    }
+
+    /**
+     * Calculates if the target can be reached without the need for shifting
+     */
+    public virtual NodeStates IsTargetInVerticalReach()
     {
         if ((int)mGravShifter.mCurGravity % 2 == 1)
         {
@@ -176,19 +217,10 @@ public class MaintenanceBot : MonoBehaviour {
         }
     }
 
-    public virtual NodeStates IsTargetInSight()
-    {
-        RaycastHit lSight;
-        LayerMask lMask = ~(1 << 9 | 1 << 12);
-        Physics.Raycast(transform.position, mMainTarget.transform.position, out lSight, mMaxTrackingDistance, lMask);
-
-        return ReferenceEquals(lSight.collider.gameObject, mMainTarget) ? NodeStates.SUCCESS : NodeStates.FAILURE;
-    }
-
-    public NodeStates TargetVisibleShift() //Possibly rename
+    public NodeStates TargetVisibleShift() //Name pending
     {
         Collider[] lSurfaces = Physics.OverlapSphere(mMainTarget.transform.position, mAttackDistance, 11); //11 = environment layer
-        byte lScanDirections = 15;
+        byte lScanDirections = 15; //1111
 
         //Scan for suitable surfaces to shift to
         Vector3 lDir = (mMainTarget.transform.position - transform.position).normalized;
@@ -220,11 +252,9 @@ public class MaintenanceBot : MonoBehaviour {
             else //down to some extent
                 lScanDirections ^= (byte)RelativeDirections.up;
 
-            //TODO
-
             /**
              * Scan directions follow LURD - Left, Up, Right, Down
-             * For combinations, only 0011, 0110, 1001, and 1100 are possible
+             * Only possible combinations are 0011, 0110, 1001, and 1100
              */
 
             Vector3[] lPossibleVectors = new Vector3[2];
@@ -241,15 +271,15 @@ public class MaintenanceBot : MonoBehaviour {
                 lPossibleVectors[1] *= -1;
 
             RaycastHit[] lScannedSurfaces = new RaycastHit[2];
-            for (int i=0; i<2; ++i)
+            for (int i = 0; i < 2; ++i)
             {
                 Physics.Raycast(transform.position, lPossibleVectors[i], out lScannedSurfaces[i], mMaxTrackingDistance, 11);
             }
 
             int lValidSurfaces = 0;
-            for(int i=0; i < 2; ++i)
+            for (int i = 0; i < 2; ++i)
             {
-               if (lSurfaces.Contains(lScannedSurfaces[i].collider))
+                if (lSurfaces.Contains(lScannedSurfaces[i].collider))
                 {
                     lValidSurfaces += (i + 1);
                 }
@@ -267,7 +297,7 @@ public class MaintenanceBot : MonoBehaviour {
                     mGravShifter.ShiftGravity(lHorizontal); //Will return 1 if right, or 3 if left
                     return NodeStates.SUCCESS;
                 case 3: //both
-                    if (Vector3.Distance(transform.position, lScannedSurfaces[0].collider.transform.position) 
+                    if (Vector3.Distance(transform.position, lScannedSurfaces[0].collider.transform.position)
                         < Vector3.Distance(transform.position, lScannedSurfaces[1].collider.transform.position))
                         mGravShifter.ShiftGravity(lVertical);
                     else
