@@ -50,10 +50,22 @@ public class ShiftableBot : MonoBehaviour
         }
     }
 
-    private Selector RootNode;
-    private ActionNode ChaseNode;
+    private Selector TestTreeRoot; //probably needs a repeater
+    private Sequence Chasing;
+    private ActionNode HasTargetNode;
+    private ActionNode TargetInRangeNode;
+    private ActionNode TargetInSightNode;
+    private Selector Approaching;
+    private Sequence Horizontal;
+    private Sequence Vertical;
+    private ActionNode HorizontalReachNode;
+    private ActionNode VerticalReachNode;
+    private ActionNode HorizontalApproachNode;
+    private ActionNode VerticalApproachNode;
+    private ActionNode AttackNode;
+    private Selector Patrolling;
     private ActionNode PatrolNode;
-    private ActionNode ReturnToPatrol;
+    private ActionNode ReturnToPatrolNode;
 
     // Use this for initialization
     void Start()
@@ -74,6 +86,29 @@ public class ShiftableBot : MonoBehaviour
         mCol = GetComponent<Collider>();
         if (mCol == null)
             System.Console.Error.WriteLine("Warning: " + name + " was not given a Collider!");
+
+        HasTargetNode = new ActionNode(HasTarget);
+        TargetInRangeNode = new ActionNode(TargetInRange);
+        TargetInSightNode = new ActionNode(TargetInSight);
+        HorizontalReachNode = new ActionNode(TargetInHorizontalReach);
+        VerticalReachNode = new ActionNode(TargetInVerticalReach);
+        HorizontalApproachNode = new ActionNode(HorizontalApproach);
+        VerticalApproachNode = new ActionNode(VerticalApproach);
+        AttackNode = new ActionNode(Attack);
+
+        Horizontal = new Sequence(new List<Node> {HorizontalReachNode, HorizontalApproachNode });
+        Vertical = new Sequence(new List<Node> { VerticalReachNode, VerticalApproachNode }); 
+
+        Approaching = new Selector(new List<Node> { Horizontal, Vertical }); //Will eventually need a node for shifting here
+
+        Chasing = new Sequence(new List<Node> { HasTargetNode, TargetInRangeNode, TargetInSightNode, Approaching, AttackNode });
+
+        PatrolNode = new ActionNode(Patrol);
+        ReturnToPatrolNode = new ActionNode(ReturnToPatrol);
+
+        Patrolling = new Selector(new List<Node> { PatrolNode, ReturnToPatrolNode });
+
+        TestTreeRoot = new Selector(new List<Node> { Chasing, Patrolling });
     }
 
     // Update is called once per frame
@@ -130,20 +165,6 @@ public class ShiftableBot : MonoBehaviour
         mStartingPoint = pCenter;
     }
 
-    /*public NodeStates ReturnToPatrol()
-    {
-
-    }*/
-
-    /*private void OnTriggerEnter(Collider pCol)
-    {
-        if (pCol.tag == "Player" || pCol.tag == "Serviceable")
-        {
-            mTargets.Add(pCol.gameObject);
-            PrioritizeTargets();
-        }
-    }*/
-
     public void PrioritizeTargets()
     {
         if (mTargets.Count == 0)
@@ -179,10 +200,16 @@ public class ShiftableBot : MonoBehaviour
         }
     }
 
+    public NodeStates HasTarget()
+    {
+        return mMainTarget != null ? NodeStates.SUCCESS : NodeStates.FAILURE;
+    }
+
     public NodeStates TargetInRange()
     {
         if (mTargetDistance > mMaxTrackingDistance)
         {
+            mTargets.Remove(mMainTarget);
             mMainTarget = null;
             mTargetDistance = 0;
             return NodeStates.FAILURE;
@@ -203,7 +230,7 @@ public class ShiftableBot : MonoBehaviour
         return ReferenceEquals(lSight.collider.gameObject, mMainTarget.transform.gameObject) ? NodeStates.SUCCESS : NodeStates.FAILURE;
     }
 
-    public NodeStates TartgetInHorizontalReach()
+    public NodeStates TargetInHorizontalReach()
     {
         float lHeight = mCol.bounds.extents.y + 0.05f; //added a slight increase
         if ((int)mGravShifter.mCurGravity % 2 == 1) //East or West gravity
@@ -219,7 +246,7 @@ public class ShiftableBot : MonoBehaviour
     /**
      * Calculates if the target can be reached without the need for shifting
      */
-    public virtual NodeStates IsTargetInVerticalReach()
+    public virtual NodeStates TargetInVerticalReach()
     {
         if ((int)mGravShifter.mCurGravity % 2 == 1)
         {
@@ -229,6 +256,20 @@ public class ShiftableBot : MonoBehaviour
         {
             return Mathf.Abs((mMainTarget.transform.position - transform.position).y) <= mAttackDistance ? NodeStates.SUCCESS : NodeStates.FAILURE;
         }
+    }
+
+    public NodeStates HorizontalApproach()
+    {
+        //TODO
+
+        return NodeStates.FAILURE;
+    }
+
+    public NodeStates VerticalApproach()
+    {
+        //TODO
+
+        return NodeStates.FAILURE;
     }
 
     public NodeStates TargetVisibleShift() //Name pending
@@ -324,6 +365,24 @@ public class ShiftableBot : MonoBehaviour
         return NodeStates.FAILURE; //Here for default
     }
 
-    protected virtual void Attack() { }
+    protected virtual NodeStates Attack()
+    {
+        //TODO
 
+        return NodeStates.SUCCESS;
+    }
+
+    protected virtual NodeStates Patrol()
+    {
+        //TODO
+
+        return NodeStates.SUCCESS;
+    }
+
+    protected virtual NodeStates ReturnToPatrol()
+    {
+        //TODO
+
+        return NodeStates.SUCCESS;
+    }
 }

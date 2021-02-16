@@ -104,6 +104,7 @@
     <Compile Include="Assets\Scripts\AI\TargetInSightNode.cs" />
     <Compile Include="Assets\Scripts\Enemies\ShiftableBot.cs" />
     <Compile Include="Assets\Scripts\AI\TargetInRageNode.cs" />
+    <Compile Include="Assets\Scripts\AI\Inverter.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
