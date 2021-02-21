@@ -21,6 +21,7 @@ public class PlayerControls : MonoBehaviour {
 
 
     //Movement and speed
+    [SerializeField]
     private float mMovementSpeed = 2f;
     public float mDashSpeed;
     public float mChargedDashSpeed;
@@ -77,8 +78,10 @@ public class PlayerControls : MonoBehaviour {
     
 
     private int mIntendedDirection = 1; 
-    public readonly float mJumpforce = 7f;
-    public readonly float mChargedJumpForce = 10f;
+    [SerializeField]
+    public float mJumpForce;
+    [SerializeField]
+    public float mChargedJumpForce;
     private bool mOnMovingObject; //used for when the player is on top of another moving object
     private float mZDistance = 0f;
 
@@ -122,12 +125,25 @@ public class PlayerControls : MonoBehaviour {
     }
 
 
+    private void Update() //doesn't seem to matter if it's regular or Late
+    {
+        mTargetRotation = Quaternion.LookRotation(_mGravShifter.GetMovementVector() * -mIntendedDirection, -_mGravShifter.GetGravityNormal());
+
+        if (transform.rotation != mTargetRotation)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mBodyRotationSpeed);
+        }
+
+        mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
+    
+    }
+
     /**
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~IMPORTANT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      * Movement physics should not be frame-dependent
      * Change the behavior here so that it performs the same way in FixedUpdate
      */
-    void Update () {
+    void FixedUpdate () {
         float lLx = Input.GetAxis("LStickX");
         float lLy = Input.GetAxis("LStickY");
         float lRx = Input.GetAxis("RStickX");
@@ -209,14 +225,14 @@ public class PlayerControls : MonoBehaviour {
             }
         }
 
-        mTargetRotation = Quaternion.LookRotation(_mGravShifter.GetMovementVector() * -mIntendedDirection, -_mGravShifter.GetGravityNormal());
+        /*TargetRotation = Quaternion.LookRotation(_mGravShifter.GetMovementVector() * -mIntendedDirection, -_mGravShifter.GetGravityNormal());
 
         if (transform.rotation != mTargetRotation)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mBodyRotationSpeed);
         }
 
-        mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
+        mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);*/
 
         //Ideally it would look the best if the camera turned with the player, but for now it just needs to work
         mCamera.transform.rotation = Quaternion.Euler(0, 0, _mGravShifter.GetShiftAngle());
@@ -282,7 +298,7 @@ public class PlayerControls : MonoBehaviour {
     public void ChangeControlMode(int mMode) //consider overridding this method for more than just int input
     {
         mCurControls = (ControlMode)mMode;
-        mGravShifter.GravityIsActive(mCurControls == ControlMode.Gameplay);
+        mGravShifter.GravityIsActive((int)mCurControls < 2);
     }
 
     public void ClearWeapons()

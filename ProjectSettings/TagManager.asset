@@ -11,6 +11,7 @@ TagManager:
   - Torchable
   - Rivetable
   - Serviceable
+  - Explosion
   layers:
   - Default
   - TransparentFX

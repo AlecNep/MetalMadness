@@ -120,7 +120,7 @@ public class ShiftableBot : MonoBehaviour
         {
             mCounter += Time.deltaTime;
             float lSineResult = Mathf.Sin(mCounter * mMovementSpeed);
-            mIntendedDirection = (int)Mathf.Sign(lSineResult - mPreviousDist);
+            mIntendedDirection = -(int)Mathf.Sign(lSineResult - mPreviousDist);
             mPreviousDist = lSineResult;
             mDistFromStart = mPatrolDistance * lSineResult;
 
@@ -146,18 +146,11 @@ public class ShiftableBot : MonoBehaviour
 
         }
 
-        mTargetRotation = Quaternion.LookRotation(_mGravShifter.GetMovementVector() * -mIntendedDirection, -_mGravShifter.GetGravityNormal());
+        mTargetRotation = Quaternion.LookRotation(_mGravShifter.GetMovementVector() * mIntendedDirection, -_mGravShifter.GetGravityNormal());
         if (transform.rotation != mTargetRotation)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mBodyRotationSpeed);
         }
-
-        /*if (mTargetDistance > mMaxTrackingDistance)
-        {
-            mTarget = null;
-            mTargetDistance = 0;
-            mCurState = State.returning;
-        }*/
     }
 
     public void SetPatrolPoint(Vector3 pCenter)

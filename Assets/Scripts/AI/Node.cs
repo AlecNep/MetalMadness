@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class Node {
 
     /* Delegate that returns the state of the node.*/
-    public delegate NodeStates NodeReturn();
+    public delegate NodeStates NodeReturn(); //Seems to be unnecessary
 
     /* The current state of the node */
     protected NodeStates m_nodeState;

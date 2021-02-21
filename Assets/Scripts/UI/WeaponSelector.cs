@@ -15,7 +15,7 @@ public class WeaponSelector : MonoBehaviour {
         mWeapons = new List<WheelIcon>(GetComponentsInChildren<WheelIcon>());
         mPlayerRef = GameObject.Find("Player").GetComponent<PlayerControls>();
         mHighlighted = -1;
-        mWeaponCount = mPlayerRef.mWeaponCount;
+        //mWeaponCount = mPlayerRef.mWeaponCount;
 	}
 	
 	// Update is called once per frame
@@ -25,6 +25,8 @@ public class WeaponSelector : MonoBehaviour {
 
     public void Selector(Vector2 pAngle)
     {
+        mWeaponCount = mPlayerRef.mWeaponCount; //not sure why this had to be moved here, but okay
+
         float lSlotSize = 360f / mWeaponCount;
         float lAngle = Vector2.Angle(Vector2.up, pAngle);
         int lSelected;

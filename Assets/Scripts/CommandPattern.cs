@@ -13,14 +13,6 @@ namespace CommandPattern
         public enum mType { press = 0, hold = 1, pAndR = 2 }
         public mType mButtonType = 0;
         public bool mInUse;
-        //Idea: if the button type calls for it, start a timer once the button is pressed and stop it once it's released
-        //could also create a toggle for things where the duration doesn't matter
-        //essentially writing button code from scratch!
-
-        //Ex. 1: if the weapon wheel button is released before a certain threshold, only swap to the last weapon
-        //e.g. after releasing: if (pressTime < threshold) {swapWeapon();} else {openWheel();}
-        //Ex. 2: for weapons like the minigun or FT, turn on a variable once the fire button is pressed and turn it off when released
-        //e.g. in weapon script update function: if (firing) {fire()} keep in mind timer is already taken care of in parent class
 
 
         //Parent function
@@ -53,15 +45,19 @@ namespace CommandPattern
         public override void Press()
         {
             
-            if (mPlayerControls.IsGrounded())// || mPlayerControls.mCanDoubleJump)
+            if (mPlayerControls.IsGrounded())
             {
                 if (OverCharge.mCharged)
                 {
-                    mPlayerRb.AddForce(mPlayerControls.mChargedJumpForce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
+                    //Doesn't seem to make a difference; very inconsistent regardless
+                    //mPlayerRb.AddForce(mPlayerControls.mChargedJumpForce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
+                    mPlayerRb.velocity = -mPlayerControls.mGravShifter.mGravNormal * mPlayerControls.mChargedJumpForce;
                 }
                 else
                 {
-                    mPlayerRb.AddForce(mPlayerControls.mJumpforce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
+                    //Doesn't seem to make a difference; very inconsistent regardless
+                    //mPlayerRb.AddForce(mPlayerControls.mJumpforce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
+                    mPlayerRb.velocity = -mPlayerControls.mGravShifter.mGravNormal * mPlayerControls.mJumpForce;
                 }
             }
         }
