@@ -27,5 +27,8 @@ public class QuickFunctions : MonoBehaviour
         return count;
     }
 
-
+    public static void Print(string s)
+    {
+        print(s);
+    }
 }

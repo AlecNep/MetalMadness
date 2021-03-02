@@ -25,11 +25,13 @@ public class ShiftableBot : MonoBehaviour
 
     //References
     public Transform mArms { get; private set; } //maybe should just be private
+    
 
     //Tracking variables
     protected List<GameObject> mTargets;
     protected GameObject mMainTarget; //not sure just yet if this should be a Gameobject or Transform
     protected float mTargetDistance;
+    [SerializeField]
     protected float mMaxTrackingDistance;
     protected float mAttackDistance;
 
@@ -45,6 +47,19 @@ public class ShiftableBot : MonoBehaviour
         {
             if (_mGravShifter != null)
                 return _mGravShifter;
+            else
+                return null;
+        }
+    }
+
+    //NavMesh functionality
+    protected CustomNavMesh _mNavMesh;
+    public CustomNavMesh mNavMesh
+    {
+        get
+        {
+            if (_mNavMesh != null)
+                return _mNavMesh;
             else
                 return null;
         }
@@ -75,6 +90,13 @@ public class ShiftableBot : MonoBehaviour
         {
             System.Console.Error.WriteLine("Warning: " + name + " was not given a GravityShifter component!");
         }
+
+        _mNavMesh = GetComponent<CustomNavMesh>();
+        if (_mNavMesh == null)
+        {
+            System.Console.Error.WriteLine("Warning: " + name + " was not given a CustomNavMesh component!");
+        }
+
         mStartingPoint = transform.position;
 
         mArms = transform.Find("Arms");
@@ -114,43 +136,11 @@ public class ShiftableBot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        TestTreeRoot.Evaluate();
 
-        //This whole thing will probably need to be scapped/redone
-        if (mCurState == 0) //Patrolling
-        {
-            mCounter += Time.deltaTime;
-            float lSineResult = Mathf.Sin(mCounter * mMovementSpeed);
-            mIntendedDirection = -(int)Mathf.Sign(lSineResult - mPreviousDist);
-            mPreviousDist = lSineResult;
-            mDistFromStart = mPatrolDistance * lSineResult;
+        mNavMesh.AdjustOrientation(mGravShifter.GetMovementVector(), mGravShifter.GetGravityNormal(), mIntendedDirection, mBodyRotationSpeed);
 
-            transform.position = mStartingPoint + _mGravShifter.GetMovementVector() * mDistFromStart;
-
-            if (Mathf.Abs(transform.position.z) > 0.05f)
-            {
-                transform.position -= Vector3.forward * transform.position.z;
-            }
-
-            //TODO
-        }
-        else if ((int)mCurState == 1) //Seeking
-        {
-            //perhaps should be in a child class
-        }
-        else if ((int)mCurState == 2) //About to attack a target
-        {
-            //perhaps should be in a child class
-        }
-        else
-        {
-
-        }
-
-        mTargetRotation = Quaternion.LookRotation(_mGravShifter.GetMovementVector() * mIntendedDirection, -_mGravShifter.GetGravityNormal());
-        if (transform.rotation != mTargetRotation)
-        {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mBodyRotationSpeed);
-        }
+        
     }
 
     public void SetPatrolPoint(Vector3 pCenter)
@@ -173,6 +163,7 @@ public class ShiftableBot : MonoBehaviour
             {
                 if (g.tag == "Player")
                 {
+                    //The player takes the highest precedence
                     mMainTarget = g;
                     break;
                 }
@@ -218,9 +209,14 @@ public class ShiftableBot : MonoBehaviour
     {
         RaycastHit lSight;
         LayerMask lMask = ~(1 << 9 | 1 << 12); //9 = PlayerBullet, 12 = Enemy
-        Physics.Raycast(transform.position, mMainTarget.transform.position, out lSight, mMaxTrackingDistance, lMask);
-
-        return ReferenceEquals(lSight.collider.gameObject, mMainTarget.transform.gameObject) ? NodeStates.SUCCESS : NodeStates.FAILURE;
+        if (Physics.Raycast(transform.position, mMainTarget.transform.position - transform.position, out lSight, mMaxTrackingDistance, lMask))
+        {
+            return ReferenceEquals(lSight.collider.gameObject, mMainTarget.transform.gameObject) ? NodeStates.SUCCESS : NodeStates.FAILURE;
+        }
+        else
+        {
+            return NodeStates.FAILURE;
+        }
     }
 
     public NodeStates TargetInHorizontalReach()
@@ -369,13 +365,22 @@ public class ShiftableBot : MonoBehaviour
     {
         //TODO
 
-        return NodeStates.SUCCESS;
+        return NodeStates.FAILURE;
     }
 
     protected virtual NodeStates ReturnToPatrol()
     {
         //TODO
 
-        return NodeStates.SUCCESS;
+        return NodeStates.FAILURE;
+    }
+
+    private void OnTriggerEnter(Collider pCol)
+    {
+        if (pCol.tag == "Player" || pCol.tag == "Serviceable")
+        {
+            mTargets.Add(pCol.gameObject);
+            PrioritizeTargets();
+        }
     }
 }

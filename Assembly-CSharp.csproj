@@ -64,8 +64,8 @@
     <Compile Include="Assets\Scripts\Player\StickyBomb.cs" />
     <Compile Include="Assets\Scripts\Player\ThermiteThrower.cs" />
     <Compile Include="Assets\Scripts\Player\Bullet.cs" />
-    <Compile Include="Assets\Scripts\AI\Selector.cs" />
-    <Compile Include="Assets\Scripts\AI\Node.cs" />
+    <Compile Include="Assets\Scripts\Behavior Tree\Selector.cs" />
+    <Compile Include="Assets\Scripts\Behavior Tree\Node.cs" />
     <Compile Include="Assets\Scripts\Explosion.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\PseudoVolumetricExplosion.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerControls.cs" />
@@ -73,7 +73,7 @@
     <Compile Include="Assets\Scripts\Player\Thermite.cs" />
     <Compile Include="Assets\PorglezompPyroclastics\ExplosionMat.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent.cs" />
-    <Compile Include="Assets\Scripts\AI\ActionNode.cs" />
+    <Compile Include="Assets\Scripts\Behavior Tree\ActionNode.cs" />
     <Compile Include="Assets\Scripts\UI\Compass.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\SingleLineAttribute.cs" />
     <Compile Include="Assets\Scripts\Environment\Oscillator.cs" />
@@ -81,30 +81,29 @@
     <Compile Include="Assets\True Explosions\System\Scripts\exploders\Exploder.cs" />
     <Compile Include="Assets\Scripts\UI\WeaponSelector.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent2D.cs" />
+    <Compile Include="Assets\Scripts\Enemies\ShiftableBot.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeGun.cs" />
     <Compile Include="Assets\Scripts\Tools\QuickFunctions.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireBaseScript.cs" />
     <Compile Include="Assets\Scripts\Player\StickyBombLauncher.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\PseudoVolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Player\Minigun.cs" />
-    <Compile Include="Assets\Scripts\AI\Sequence.cs" />
+    <Compile Include="Assets\Scripts\Behavior Tree\Sequence.cs" />
     <Compile Include="Assets\Scripts\InputManager.cs" />
     <Compile Include="Assets\Scripts\CommandPattern.cs" />
+    <Compile Include="Assets\Scripts\Behavior Tree\Inverter.cs" />
     <Compile Include="Assets\Scripts\Behaviors\GravityShifter.cs" />
     <Compile Include="Assets\Scripts\Player\Weapon.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireProjectileScript.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Player\Rocket.cs" />
-    <Compile Include="Assets\Scripts\AI\NodeStates.cs" />
+    <Compile Include="Assets\Scripts\Behavior Tree\NodeStates.cs" />
     <Compile Include="Assets\Scripts\Player\Spike.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\exploders\SphereExploder.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireConstantBaseScript.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireLightScript.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
-    <Compile Include="Assets\Scripts\AI\TargetInSightNode.cs" />
-    <Compile Include="Assets\Scripts\Enemies\ShiftableBot.cs" />
-    <Compile Include="Assets\Scripts\AI\TargetInRageNode.cs" />
-    <Compile Include="Assets\Scripts\AI\Inverter.cs" />
+    <Compile Include="Assets\Scripts\Enemies\CustomNavMesh.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />

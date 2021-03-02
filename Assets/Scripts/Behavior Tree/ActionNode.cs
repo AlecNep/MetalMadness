@@ -23,7 +23,7 @@ public class ActionNode : Node {
      * reports the resulting state as appropriate */
     public override NodeStates Evaluate()
     {
-        System.Console.WriteLine("Behavior tree: Executing " + mAction.Method.Name);
+        QuickFunctions.Print("Behavior tree: Executing " + mAction.Method.Name);
         switch (mAction())
         {
             case NodeStates.SUCCESS:
