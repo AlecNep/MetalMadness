@@ -8,10 +8,33 @@ public class CustomNavMesh : MonoBehaviour
     private Vector3 _destination;
     public Vector3 destination { get; private set; }
 
+    [SerializeField]
+    protected float mMovementSpeed;
+    protected float mBodyRotationSpeed = 15f;
+    protected int mIntendedDirection = 1;
+
+
+    //Gravity shifting functionality
+    protected GravityShifter _gravShifter;
+    public GravityShifter gravShifter
+    {
+        get
+        {
+            if (_gravShifter != null)
+                return _gravShifter;
+            else
+                return null;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _gravShifter = GetComponent<GravityShifter>();
+        if (_gravShifter == null)
+        {
+            System.Console.Error.WriteLine("Warning: " + name + " was not given a GravityShifter component!");
+        }
     }
 
     // Update is called once per frame
@@ -21,10 +44,14 @@ public class CustomNavMesh : MonoBehaviour
         {
             if (destination != null)
             {
+                Vector3 lVectorToTarget = transform.position + destination;
+                mIntendedDirection = (int)Mathf.Sign(Vector3.SignedAngle(-gravShifter.GetGravityNormal(), lVectorToTarget, Vector3.forward));
 
+                //Good for now, but this should ideally slow down when close
+                transform.position += mIntendedDirection * gravShifter.GetMovementVector() * mMovementSpeed;
             }
 
-
+            AdjustOrientation(gravShifter.GetMovementVector(), gravShifter.GetGravityNormal(), mIntendedDirection, mBodyRotationSpeed);
         }
     }
 

@@ -12,8 +12,7 @@ public class PlayerControls : MonoBehaviour {
     private readonly float DEFAULT_ARM_ROTATION = 90f;
     private readonly float ARM_SHIFTING_THRESHOLD = 0.25f;
 
-    private float mTargetShiftAngle = 0f; //Only here until the camera gets its own script
-    private float mBodyRotationSpeed = 20f; //Seems to be in charge of shifting and turning
+    private float mBodyRotationSpeed = 20f;
     private float mArmRotationSpeed = 20f;
 
     public int mArmVariable;
@@ -46,7 +45,6 @@ public class PlayerControls : MonoBehaviour {
     }
 
     //Overcharge
-    private bool mChargeActive = false; //might not be neccessary, already in CommandPattern
     private float mChargeEnergy;
 
     //Gravity stuff
@@ -73,8 +71,6 @@ public class PlayerControls : MonoBehaviour {
     private const float mGravShiftDelay = 1.5f; //potentially allow the player to reduce this later
     private float mTimer = 0f;
     private bool mCanShift = true;
-    private bool mCanDoubleJump = false; //might be useless if overcharged jump is implemented
-    private float mGravityFactor = 10f; //not sure why this is 10; investigate later
     
 
     private int mIntendedDirection = 1; 
@@ -135,14 +131,10 @@ public class PlayerControls : MonoBehaviour {
         }
 
         mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
-    
+        mCamera.transform.rotation = Quaternion.Euler(0, 0, _mGravShifter.GetShiftAngle());
     }
 
-    /**
-     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~IMPORTANT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     * Movement physics should not be frame-dependent
-     * Change the behavior here so that it performs the same way in FixedUpdate
-     */
+    
     void FixedUpdate () {
         float lLx = Input.GetAxis("LStickX");
         float lLy = Input.GetAxis("LStickY");
@@ -174,11 +166,11 @@ public class PlayerControls : MonoBehaviour {
                 {
                     //following lines are reduced by 1/10th because of the left stick sensitivity
                     float lDashSpeed = CommandPattern.OverCharge.mCharged ? mChargedDashSpeed : mDashSpeed;
-                    transform.position += 0.1f * mIntendedDirection * _mGravShifter.GetMovementVector() * lDashSpeed;
+                    transform.position += 0.1f * mIntendedDirection * mGravShifter.GetMovementVector() * lDashSpeed;
                 }
                 else
                 {
-                    transform.position += _mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
+                    transform.position += mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
                 }
 
                 mZDistance = transform.position.z;
@@ -235,7 +227,7 @@ public class PlayerControls : MonoBehaviour {
         mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);*/
 
         //Ideally it would look the best if the camera turned with the player, but for now it just needs to work
-        mCamera.transform.rotation = Quaternion.Euler(0, 0, _mGravShifter.GetShiftAngle());
+        //mCamera.transform.rotation = Quaternion.Euler(0, 0, _mGravShifter.GetShiftAngle());
 
 
         //Right stick controls

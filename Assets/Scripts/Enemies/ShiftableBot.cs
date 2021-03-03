@@ -5,12 +5,8 @@ using System.Linq;
 
 public class ShiftableBot : MonoBehaviour
 {
-    //Personal variables
-    protected int mIntendedDirection = 1;
-    [SerializeField]
-    protected float mMovementSpeed;
+    //Personal variables    
     protected readonly float DEFAULT_ARM_ROTATION = 90f;
-    protected float mBodyRotationSpeed = 15f;
     protected Quaternion mTargetRotation;
     protected Collider mCol;
 
@@ -109,6 +105,7 @@ public class ShiftableBot : MonoBehaviour
         if (mCol == null)
             System.Console.Error.WriteLine("Warning: " + name + " was not given a Collider!");
 
+        //All this should probably be in its own function so it's not completely cluttering the start function
         HasTargetNode = new ActionNode(HasTarget);
         TargetInRangeNode = new ActionNode(TargetInRange);
         TargetInSightNode = new ActionNode(TargetInSight);
@@ -138,7 +135,7 @@ public class ShiftableBot : MonoBehaviour
     {
         TestTreeRoot.Evaluate();
 
-        mNavMesh.AdjustOrientation(mGravShifter.GetMovementVector(), mGravShifter.GetGravityNormal(), mIntendedDirection, mBodyRotationSpeed);
+        //mNavMesh.AdjustOrientation(mGravShifter.GetMovementVector(), mGravShifter.GetGravityNormal(), mIntendedDirection, mBodyRotationSpeed);
 
         
     }
@@ -249,16 +246,37 @@ public class ShiftableBot : MonoBehaviour
 
     public NodeStates HorizontalApproach()
     {
-        //TODO
-
-        return NodeStates.FAILURE;
+        if (Vector3.Distance(transform.position, mMainTarget.transform.position) > mAttackDistance)
+        {
+            mNavMesh.isStopped = false;
+            mNavMesh.SetDestination(mMainTarget.transform.position);
+            return NodeStates.RUNNING;
+        }
+        else
+        {
+            mNavMesh.isStopped = true;
+            return NodeStates.SUCCESS;
+        }
     }
 
     public NodeStates VerticalApproach()
     {
-        //TODO
+        
+        //Aim if not already
+        Vector3 lTargetLocalPosition = transform.InverseTransformPoint(mMainTarget.transform.position);
+        lTargetLocalPosition.y = 0;
 
-        return NodeStates.FAILURE;
+        if (Vector3.Distance(transform.position, lTargetLocalPosition) > 0.5f) //CAUTION: 0.5f is here for testing; should be more precise in the future
+        {
+            mNavMesh.isStopped = false;
+            mNavMesh.SetDestination(mMainTarget.transform.position);
+            return NodeStates.RUNNING;
+        }
+        else
+        {
+            mNavMesh.isStopped = true;
+            return NodeStates.SUCCESS;
+        }
     }
 
     public NodeStates TargetVisibleShift() //Name pending
