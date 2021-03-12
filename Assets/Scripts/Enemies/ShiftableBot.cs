@@ -26,9 +26,10 @@ public class ShiftableBot : MonoBehaviour
     //Tracking variables
     protected List<GameObject> mTargets;
     protected GameObject mMainTarget; //not sure just yet if this should be a Gameobject or Transform
-    protected float mTargetDistance;
+    protected float mTargetDistance; //Seems completely useless
     [SerializeField]
     protected float mMaxTrackingDistance;
+    [SerializeField]
     protected float mAttackDistance;
 
     [System.Flags]
@@ -63,6 +64,7 @@ public class ShiftableBot : MonoBehaviour
 
     private Selector TestTreeRoot; //probably needs a repeater
     private Sequence Chasing;
+    private Repeater ChasingLoop;
     private ActionNode HasTargetNode;
     private ActionNode TargetInRangeNode;
     private ActionNode TargetInSightNode;
@@ -93,7 +95,7 @@ public class ShiftableBot : MonoBehaviour
             System.Console.Error.WriteLine("Warning: " + name + " was not given a CustomNavMesh component!");
         }
 
-        mStartingPoint = transform.position;
+        SetPatrolPoint(transform.position);
 
         mArms = transform.Find("Arms");
         mArms.localEulerAngles = new Vector3(DEFAULT_ARM_ROTATION, 0, 0);
@@ -121,6 +123,7 @@ public class ShiftableBot : MonoBehaviour
         Approaching = new Selector(new List<Node> { Horizontal, Vertical }); //Will eventually need a node for shifting here
 
         Chasing = new Sequence(new List<Node> { HasTargetNode, TargetInRangeNode, TargetInSightNode, Approaching, AttackNode });
+        //ChasingLoop = new Repeater(Chasing);
 
         PatrolNode = new ActionNode(Patrol);
         ReturnToPatrolNode = new ActionNode(ReturnToPatrol);
@@ -188,7 +191,7 @@ public class ShiftableBot : MonoBehaviour
 
     public NodeStates TargetInRange()
     {
-        if (mTargetDistance > mMaxTrackingDistance)
+        if (Vector3.Distance(transform.position, mMainTarget.transform.position) > mMaxTrackingDistance)
         {
             mTargets.Remove(mMainTarget);
             mMainTarget = null;
@@ -218,6 +221,7 @@ public class ShiftableBot : MonoBehaviour
 
     public NodeStates TargetInHorizontalReach()
     {
+        print("TargetInHorizontalReach called");
         float lHeight = mCol.bounds.extents.y + 0.05f; //added a slight increase
         if ((int)mGravShifter.mCurGravity % 2 == 1) //East or West gravity
         {
@@ -234,6 +238,7 @@ public class ShiftableBot : MonoBehaviour
      */
     public virtual NodeStates TargetInVerticalReach()
     {
+        print("TargetInVerticalReach called");
         if ((int)mGravShifter.mCurGravity % 2 == 1)
         {
             return Mathf.Abs((mMainTarget.transform.position - transform.position).x) <= mAttackDistance ? NodeStates.SUCCESS : NodeStates.FAILURE;
@@ -246,6 +251,7 @@ public class ShiftableBot : MonoBehaviour
 
     public NodeStates HorizontalApproach()
     {
+        print("HorizontalApproach being called");
         if (Vector3.Distance(transform.position, mMainTarget.transform.position) > mAttackDistance)
         {
             mNavMesh.isStopped = false;
@@ -261,15 +267,16 @@ public class ShiftableBot : MonoBehaviour
 
     public NodeStates VerticalApproach()
     {
-        
+        print("VerticalApproach being called");
         //Aim if not already
         Vector3 lTargetLocalPosition = transform.InverseTransformPoint(mMainTarget.transform.position);
+
         lTargetLocalPosition.y = 0;
 
         if (Vector3.Distance(transform.position, lTargetLocalPosition) > 0.5f) //CAUTION: 0.5f is here for testing; should be more precise in the future
         {
             mNavMesh.isStopped = false;
-            mNavMesh.SetDestination(mMainTarget.transform.position);
+            mNavMesh.SetDestination(transform.TransformPoint(lTargetLocalPosition));
             return NodeStates.RUNNING;
         }
         else
@@ -375,7 +382,7 @@ public class ShiftableBot : MonoBehaviour
     protected virtual NodeStates Attack()
     {
         //TODO
-
+        print("Attacking");
         return NodeStates.SUCCESS;
     }
 
@@ -383,14 +390,14 @@ public class ShiftableBot : MonoBehaviour
     {
         //TODO
 
-        return NodeStates.FAILURE;
+        return NodeStates.SUCCESS;
     }
 
     protected virtual NodeStates ReturnToPatrol()
     {
         //TODO
 
-        return NodeStates.FAILURE;
+        return NodeStates.SUCCESS;
     }
 
     private void OnTriggerEnter(Collider pCol)

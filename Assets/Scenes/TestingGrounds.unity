@@ -4168,6 +4168,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &873731426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873731420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2c750cdea63d24ea6121fcf5578e63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStopped: 0
+  mMovementSpeed: 1
 --- !u!1 &874097628
 GameObject:
   m_ObjectHideFlags: 0
@@ -5014,6 +5028,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1075184504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075184498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2c750cdea63d24ea6121fcf5578e63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStopped: 0
+  mMovementSpeed: 0.5
 --- !u!1 &1125618495
 GameObject:
   m_ObjectHideFlags: 0
@@ -10666,6 +10694,11 @@ PrefabInstance:
       propertyPath: mChargedJumpForce
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 4697890767569179875, guid: 56981ab5b8e0799449f79ca896b724f5,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4697890767569179879, guid: 56981ab5b8e0799449f79ca896b724f5,
         type: 3}
       propertyPath: m_Name
@@ -10739,6 +10772,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rivet Bot
+      objectReference: {fileID: 0}
+    - target: {fileID: 5453553919241454244, guid: 9c07e1d68fd818b419edce5ab7dead23,
+        type: 3}
+      propertyPath: mAttackDistance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5453553919241454244, guid: 9c07e1d68fd818b419edce5ab7dead23,
         type: 3}
@@ -10987,6 +11025,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Torch Bot
+      objectReference: {fileID: 0}
+    - target: {fileID: 6115099970594416037, guid: 7765e9002cb7cca4c8128ed84e3e7480,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6115099970594416039, guid: 7765e9002cb7cca4c8128ed84e3e7480,
         type: 3}

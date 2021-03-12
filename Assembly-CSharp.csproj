@@ -104,6 +104,7 @@
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireLightScript.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
     <Compile Include="Assets\Scripts\Enemies\CustomNavMesh.cs" />
+    <Compile Include="Assets\Scripts\Behavior Tree\Repeater.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CustomNavMesh : MonoBehaviour
 {
-    public bool isStopped;
+    public bool isStopped = true;
     private Vector3 _destination;
     public Vector3 destination { get; private set; }
 
@@ -35,6 +35,7 @@ public class CustomNavMesh : MonoBehaviour
         {
             System.Console.Error.WriteLine("Warning: " + name + " was not given a GravityShifter component!");
         }
+        destination = transform.position;
     }
 
     // Update is called once per frame
@@ -42,16 +43,16 @@ public class CustomNavMesh : MonoBehaviour
     {
         if (!isStopped)
         {
-            if (destination != null)
+            if (destination != transform.position)
             {
-                Vector3 lVectorToTarget = transform.position + destination;
+                Vector3 lVectorToTarget = (transform.position - destination).normalized;
                 mIntendedDirection = (int)Mathf.Sign(Vector3.SignedAngle(-gravShifter.GetGravityNormal(), lVectorToTarget, Vector3.forward));
 
                 //Good for now, but this should ideally slow down when close
-                transform.position += mIntendedDirection * gravShifter.GetMovementVector() * mMovementSpeed;
+                transform.position += 0.1f * mIntendedDirection * gravShifter.GetMovementVector() * mMovementSpeed;
             }
 
-            AdjustOrientation(gravShifter.GetMovementVector(), gravShifter.GetGravityNormal(), mIntendedDirection, mBodyRotationSpeed);
+            AdjustOrientation(gravShifter.GetMovementVector(), gravShifter.GetGravityNormal(), -mIntendedDirection, mBodyRotationSpeed);
         }
     }
 
