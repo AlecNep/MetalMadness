@@ -241,11 +241,14 @@ public class ShiftableBot : MonoBehaviour
         print("TargetInVerticalReach called");
         if ((int)mGravShifter.mCurGravity % 2 == 1)
         {
-            return Mathf.Abs((mMainTarget.transform.position - transform.position).x) <= mAttackDistance ? NodeStates.SUCCESS : NodeStates.FAILURE;
+            return Mathf.Abs((mMainTarget.transform.position - transform.position).x) <= mMaxTrackingDistance ? NodeStates.SUCCESS : NodeStates.FAILURE; //Purely here for testing purposes
+            //return Mathf.Abs((mMainTarget.transform.position - transform.position).x) <= mAttackDistance ? NodeStates.SUCCESS : NodeStates.FAILURE;
         }
         else
         {
-            return Mathf.Abs((mMainTarget.transform.position - transform.position).y) <= mAttackDistance ? NodeStates.SUCCESS : NodeStates.FAILURE;
+            return Mathf.Abs((mMainTarget.transform.position - transform.position).y) <= mMaxTrackingDistance ? NodeStates.SUCCESS : NodeStates.FAILURE; //Purely here for testing purposes
+
+            //return Mathf.Abs((mMainTarget.transform.position - transform.position).y) <= mAttackDistance ? NodeStates.SUCCESS : NodeStates.FAILURE;
         }
     }
 
@@ -286,8 +289,14 @@ public class ShiftableBot : MonoBehaviour
         }
     }
 
-    public NodeStates TargetVisibleShift() //Name pending
+    /// <summary>
+    /// Checks if any of the surfaces close to the target are directly lined up with a cardinal direction
+    /// </summary>
+    /// <returns>SUCCESS if true, else FAILURE</returns>
+    public NodeStates AxisAllignedShift() //Name pending
     {
+        print("AxisAllignedShift being called");
+
         Collider[] lSurfaces = Physics.OverlapSphere(mMainTarget.transform.position, mAttackDistance, 11); //11 = environment layer
         byte lScanDirections = 15; //1111
 
@@ -325,7 +334,6 @@ public class ShiftableBot : MonoBehaviour
              * Scan directions follow LURD - Left, Up, Right, Down
              * Only possible combinations are 0011, 0110, 1001, and 1100
              */
-
             Vector3[] lPossibleVectors = new Vector3[2];
 
             //Since all viable combinations use both vectors to some extent, we only need to find which directions of each are being used
@@ -377,6 +385,13 @@ public class ShiftableBot : MonoBehaviour
 
         Debug.LogError("Warning: The \"TargetVisibleShift\" function completed without any viable options");
         return NodeStates.FAILURE; //Here for default
+    }
+
+    protected virtual NodeStates Scan()
+    {
+        print("Scan being called");
+
+        return NodeStates.FAILURE;
     }
 
     protected virtual NodeStates Attack()

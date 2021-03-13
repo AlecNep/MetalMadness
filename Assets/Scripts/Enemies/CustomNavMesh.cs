@@ -39,7 +39,7 @@ public class CustomNavMesh : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!isStopped)
         {
@@ -51,9 +51,8 @@ public class CustomNavMesh : MonoBehaviour
                 //Good for now, but this should ideally slow down when close
                 transform.position += 0.1f * mIntendedDirection * gravShifter.GetMovementVector() * mMovementSpeed;
             }
-
-            AdjustOrientation(gravShifter.GetMovementVector(), gravShifter.GetGravityNormal(), -mIntendedDirection, mBodyRotationSpeed);
         }
+        AdjustOrientation(gravShifter.GetMovementVector(), gravShifter.GetGravityNormal(), -mIntendedDirection, mBodyRotationSpeed);
     }
 
     public void SetDestination(Vector3 pDestination)
