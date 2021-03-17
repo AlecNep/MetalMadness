@@ -75,6 +75,9 @@ public class ShiftableBot : MonoBehaviour
     private ActionNode VerticalReachNode;
     private ActionNode HorizontalApproachNode;
     private ActionNode VerticalApproachNode;
+    private Selector Shift;
+    private ActionNode AxisAllignedShiftNode;
+    private ActionNode ScanNode;
     private ActionNode AttackNode;
     private Selector Patrolling;
     private ActionNode PatrolNode;
@@ -115,12 +118,17 @@ public class ShiftableBot : MonoBehaviour
         VerticalReachNode = new ActionNode(TargetInVerticalReach);
         HorizontalApproachNode = new ActionNode(HorizontalApproach);
         VerticalApproachNode = new ActionNode(VerticalApproach);
+
+        AxisAllignedShiftNode = new ActionNode(AxisAllignedShift);
+        ScanNode = new ActionNode(Scan);
+        Shift = new Selector(new List<Node> { AxisAllignedShiftNode, ScanNode });
+
         AttackNode = new ActionNode(Attack);
 
         Horizontal = new Sequence(new List<Node> {HorizontalReachNode, HorizontalApproachNode });
         Vertical = new Sequence(new List<Node> { VerticalReachNode, VerticalApproachNode }); 
 
-        Approaching = new Selector(new List<Node> { Horizontal, Vertical }); //Will eventually need a node for shifting here
+        Approaching = new Selector(new List<Node> { Horizontal, Vertical, Shift }); //Will eventually need a node for shifting here
 
         Chasing = new Sequence(new List<Node> { HasTargetNode, TargetInRangeNode, TargetInSightNode, Approaching, AttackNode });
         //ChasingLoop = new Repeater(Chasing);
@@ -193,12 +201,13 @@ public class ShiftableBot : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, mMainTarget.transform.position) > mMaxTrackingDistance)
         {
+            print("Lost its target");
             mTargets.Remove(mMainTarget);
             mMainTarget = null;
             mTargetDistance = 0;
             return NodeStates.FAILURE;
         }
-
+        print("target in range");
         return NodeStates.SUCCESS;
     }
 
@@ -207,9 +216,8 @@ public class ShiftableBot : MonoBehaviour
      */
     public NodeStates TargetInSight()
     {
-        RaycastHit lSight;
         LayerMask lMask = ~(1 << 9 | 1 << 12); //9 = PlayerBullet, 12 = Enemy
-        if (Physics.Raycast(transform.position, mMainTarget.transform.position - transform.position, out lSight, mMaxTrackingDistance, lMask))
+        if (Physics.Raycast(transform.position, mMainTarget.transform.position - transform.position, out RaycastHit lSight, mMaxTrackingDistance, lMask))
         {
             return ReferenceEquals(lSight.collider.gameObject, mMainTarget.transform.gameObject) ? NodeStates.SUCCESS : NodeStates.FAILURE;
         }
@@ -241,20 +249,20 @@ public class ShiftableBot : MonoBehaviour
         print("TargetInVerticalReach called");
         if ((int)mGravShifter.mCurGravity % 2 == 1)
         {
-            return Mathf.Abs((mMainTarget.transform.position - transform.position).x) <= mMaxTrackingDistance ? NodeStates.SUCCESS : NodeStates.FAILURE; //Purely here for testing purposes
-            //return Mathf.Abs((mMainTarget.transform.position - transform.position).x) <= mAttackDistance ? NodeStates.SUCCESS : NodeStates.FAILURE;
+            //return Mathf.Abs((mMainTarget.transform.position - transform.position).x) <= mMaxTrackingDistance ? NodeStates.SUCCESS : NodeStates.FAILURE; //Purely here for testing purposes
+            return Mathf.Abs((mMainTarget.transform.position - transform.position).x) <= mAttackDistance ? NodeStates.SUCCESS : NodeStates.FAILURE;
         }
         else
         {
-            return Mathf.Abs((mMainTarget.transform.position - transform.position).y) <= mMaxTrackingDistance ? NodeStates.SUCCESS : NodeStates.FAILURE; //Purely here for testing purposes
-
-            //return Mathf.Abs((mMainTarget.transform.position - transform.position).y) <= mAttackDistance ? NodeStates.SUCCESS : NodeStates.FAILURE;
+            //return Mathf.Abs((mMainTarget.transform.position - transform.position).y) <= mMaxTrackingDistance ? NodeStates.SUCCESS : NodeStates.FAILURE; //Purely here for testing purposes
+            return Mathf.Abs((mMainTarget.transform.position - transform.position).y) <= mAttackDistance ? NodeStates.SUCCESS : NodeStates.FAILURE;
         }
     }
 
     public NodeStates HorizontalApproach()
     {
         print("HorizontalApproach being called");
+        
         if (Vector3.Distance(transform.position, mMainTarget.transform.position) > mAttackDistance)
         {
             mNavMesh.isStopped = false;
@@ -297,7 +305,8 @@ public class ShiftableBot : MonoBehaviour
     {
         print("AxisAllignedShift being called");
 
-        Collider[] lSurfaces = Physics.OverlapSphere(mMainTarget.transform.position, mAttackDistance, 11); //11 = environment layer
+        int lLayerMask = 1 << 11;
+        Collider[] lSurfaces = Physics.OverlapSphere(mMainTarget.transform.position, mAttackDistance, lLayerMask); //11 = environment layer
         byte lScanDirections = 15; //1111
 
         //Scan for suitable surfaces to shift to
@@ -311,10 +320,13 @@ public class ShiftableBot : MonoBehaviour
         {
             int lRoundedDiv = lRoundedAngle / 90;
 
-            lScanDirections ^= (byte)~(1 << lRoundedDiv);
+            lScanDirections &= (byte)(1 << lRoundedDiv);
 
-            if (lScanDirections != 1) //This really should never happen since this whole function depends on line of sight with a target
-                mGravShifter.ShiftGravity((int)Mathf.Log(2, lScanDirections));
+            if (lScanDirections != 1) //This really should never be 1 since this whole function depends on line of sight with a target
+            {
+                int lLog = (int)Mathf.Log(2, lScanDirections);
+                mGravShifter.ShiftGravity(lLog);
+            }
             return NodeStates.SUCCESS;
         }
         else
@@ -361,24 +373,28 @@ public class ShiftableBot : MonoBehaviour
                     lValidSurfaces += (i + 1);
                 }
             }
-            int lVertical = 2 * ((lScanDirections & 4) / 4);
-            int lHorizontal = 1 + 2 * ((lScanDirections & 8) / 8);
+            int lVertical = 2 * ((lScanDirections & 4) / 4); //Will return 0 if down, or 2 if up
+            int lHorizontal = 1 + 2 * ((lScanDirections & 8) / 8); //Will return 1 if right, or 3 if left
             switch (lValidSurfaces)
             {
                 case 0:
                     return NodeStates.FAILURE;
                 case 1: //only the first one
-                    mGravShifter.ShiftGravity(lVertical); //Will return 0 if down, or 2 if up
+                    mGravShifter.ShiftGravity(lVertical); 
                     return NodeStates.SUCCESS;
                 case 2: //only the second
-                    mGravShifter.ShiftGravity(lHorizontal); //Will return 1 if right, or 3 if left
+                    mGravShifter.ShiftGravity(lHorizontal);
                     return NodeStates.SUCCESS;
                 case 3: //both
                     if (Vector3.Distance(transform.position, lScannedSurfaces[0].collider.transform.position)
                         < Vector3.Distance(transform.position, lScannedSurfaces[1].collider.transform.position))
+                    {
                         mGravShifter.ShiftGravity(lVertical);
+                    }
                     else
+                    {
                         mGravShifter.ShiftGravity(lHorizontal);
+                    }
                     return NodeStates.SUCCESS;
             }
         }
