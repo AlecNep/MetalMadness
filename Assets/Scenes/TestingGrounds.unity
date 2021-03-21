@@ -10672,7 +10672,7 @@ PrefabInstance:
     - target: {fileID: 4697890767569179873, guid: 56981ab5b8e0799449f79ca896b724f5,
         type: 3}
       propertyPath: mJumpForce
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4697890767569179873, guid: 56981ab5b8e0799449f79ca896b724f5,
         type: 3}
@@ -10692,7 +10692,7 @@ PrefabInstance:
     - target: {fileID: 4697890767569179873, guid: 56981ab5b8e0799449f79ca896b724f5,
         type: 3}
       propertyPath: mChargedJumpForce
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4697890767569179875, guid: 56981ab5b8e0799449f79ca896b724f5,
         type: 3}

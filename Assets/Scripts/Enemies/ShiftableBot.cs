@@ -324,7 +324,7 @@ public class ShiftableBot : MonoBehaviour
 
             if (lScanDirections != 1) //This really should never be 1 since this whole function depends on line of sight with a target
             {
-                int lLog = (int)Mathf.Log(2, lScanDirections);
+                int lLog = (int)Mathf.Log(lScanDirections, 2);
                 mGravShifter.ShiftGravity(lLog);
             }
             return NodeStates.SUCCESS;
