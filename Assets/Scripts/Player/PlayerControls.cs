@@ -217,18 +217,6 @@ public class PlayerControls : MonoBehaviour {
             }
         }
 
-        /*TargetRotation = Quaternion.LookRotation(_mGravShifter.GetMovementVector() * -mIntendedDirection, -_mGravShifter.GetGravityNormal());
-
-        if (transform.rotation != mTargetRotation)
-        {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mBodyRotationSpeed);
-        }
-
-        mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);*/
-
-        //Ideally it would look the best if the camera turned with the player, but for now it just needs to work
-        //mCamera.transform.rotation = Quaternion.Euler(0, 0, _mGravShifter.GetShiftAngle());
-
 
         //Right stick controls
         if (mCurControls == 0) //can only shift gravity in gameplay mode; cannot shift if attached to anything

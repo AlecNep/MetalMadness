@@ -31,6 +31,7 @@ public class ShiftableBot : MonoBehaviour
     protected float mMaxTrackingDistance;
     [SerializeField]
     protected float mAttackDistance;
+    protected float mDistToGround;
 
     [System.Flags]
     public enum RelativeDirections { down = 1, right = 2, up = 4, left = 8 };
@@ -64,7 +65,6 @@ public class ShiftableBot : MonoBehaviour
 
     private Selector TestTreeRoot; //probably needs a repeater
     private Sequence Chasing;
-    private Repeater ChasingLoop;
     private ActionNode HasTargetNode;
     private ActionNode TargetInRangeNode;
     private ActionNode TargetInSightNode;
@@ -97,6 +97,7 @@ public class ShiftableBot : MonoBehaviour
         {
             System.Console.Error.WriteLine("Warning: " + name + " was not given a CustomNavMesh component!");
         }
+        
 
         SetPatrolPoint(transform.position);
 
@@ -109,6 +110,9 @@ public class ShiftableBot : MonoBehaviour
         mCol = GetComponent<Collider>();
         if (mCol == null)
             System.Console.Error.WriteLine("Warning: " + name + " was not given a Collider!");
+
+        mDistToGround = mCol.bounds.extents.y;
+        print("DistToGround=" + mDistToGround);
 
         //All this should probably be in its own function so it's not completely cluttering the start function
         HasTargetNode = new ActionNode(HasTarget);
@@ -131,7 +135,6 @@ public class ShiftableBot : MonoBehaviour
         Approaching = new Selector(new List<Node> { Horizontal, Vertical, Shift }); //Will eventually need a node for shifting here
 
         Chasing = new Sequence(new List<Node> { HasTargetNode, TargetInRangeNode, TargetInSightNode, Approaching, AttackNode });
-        //ChasingLoop = new Repeater(Chasing);
 
         PatrolNode = new ActionNode(Patrol);
         ReturnToPatrolNode = new ActionNode(ReturnToPatrol);
@@ -145,9 +148,6 @@ public class ShiftableBot : MonoBehaviour
     void Update()
     {
         TestTreeRoot.Evaluate();
-
-        //mNavMesh.AdjustOrientation(mGravShifter.GetMovementVector(), mGravShifter.GetGravityNormal(), mIntendedDirection, mBodyRotationSpeed);
-
         
     }
 
@@ -192,10 +192,17 @@ public class ShiftableBot : MonoBehaviour
         }
     }
 
+    public bool IsGrounded()
+    {
+        print("transform.down=" + -transform.up);
+        return Physics.Raycast(transform.position, -transform.up, mDistToGround + 0.15f);
+    }
+
     public NodeStates HasTarget()
     {
         return mMainTarget != null ? NodeStates.SUCCESS : NodeStates.FAILURE;
     }
+
 
     public NodeStates TargetInRange()
     {
@@ -304,6 +311,12 @@ public class ShiftableBot : MonoBehaviour
     public NodeStates AxisAllignedShift() //Name pending
     {
         print("AxisAllignedShift being called");
+
+        if (!IsGrounded())
+        {
+            print("not grounded");
+            return NodeStates.RUNNING;
+        }
 
         int lLayerMask = 1 << 11;
         Collider[] lSurfaces = Physics.OverlapSphere(mMainTarget.transform.position, mAttackDistance, lLayerMask); //11 = environment layer

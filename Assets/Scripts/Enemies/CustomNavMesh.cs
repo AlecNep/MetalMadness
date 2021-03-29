@@ -12,7 +12,7 @@ public class CustomNavMesh : MonoBehaviour
     protected float mMovementSpeed;
     protected float mBodyRotationSpeed = 15f;
     protected int mIntendedDirection = 1;
-
+    protected float mZDistance = 0;
 
     //Gravity shifting functionality
     protected GravityShifter _gravShifter;
@@ -51,6 +51,11 @@ public class CustomNavMesh : MonoBehaviour
                 //Good for now, but this should ideally slow down when close
                 transform.position += 0.1f * mIntendedDirection * gravShifter.GetMovementVector() * mMovementSpeed;
             }
+        }
+        mZDistance = transform.position.z;
+        if (Mathf.Abs(mZDistance) > 0.05f)
+        {
+            transform.position -= Vector3.forward * mZDistance;
         }
         AdjustOrientation(gravShifter.GetMovementVector(), gravShifter.GetGravityNormal(), -mIntendedDirection, mBodyRotationSpeed);
     }
