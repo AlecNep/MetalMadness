@@ -69,7 +69,7 @@ public class PlayerControls : MonoBehaviour {
     }
 
     private const float mGravShiftDelay = 1.5f; //potentially allow the player to reduce this later
-    private float mTimer = 0f;
+    private float shiftTimer = 0f;
     private bool mCanShift = true;
     
 
@@ -85,7 +85,9 @@ public class PlayerControls : MonoBehaviour {
     private float mDistToGround;
 
     //Actual player stats
-    private float mHealth = 100f;
+    private const float DEFAULT_HEALTH = 100f;
+    public float maxHealth { get; private set; }
+    public float health { get; private set; }
 
     public Weapon[] mWeapons; //TEMPORARY; DO NOT KEEP PUBLIC
     public int mWeaponIndex = 0; //TEMPORARY; DO NOT KEEP PUBLIC
@@ -103,6 +105,7 @@ public class PlayerControls : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        health = maxHealth = DEFAULT_HEALTH; //TODO: make this more secure later!
         mRb = GetComponent<Rigidbody>(); //secure this later
         _mGravShifter = GetComponent<GravityShifter>(); //secure this later
         mCamera = Camera.main;
@@ -225,19 +228,41 @@ public class PlayerControls : MonoBehaviour {
             float lGravAngle = 0f;
 
 
-            if (mTimer < mGravShiftDelay && !mCanShift)
+            /*if (shiftTimer > 0 && !mCanShift) //the mCanShift might be unnecessary
             {
-                mTimer += Time.deltaTime;
+                shiftTimer -= Time.deltaTime;
             }
-            if (mTimer >= mGravShiftDelay)
+            if (shiftTimer < 0)
             {
-                mTimer = 0;
+                shiftTimer = 0;
                 mCanShift = true;
             }
+
+            if (shiftTimer > 0)
+            {
+                shiftTimer -= Time.deltaTime;
+                if (shiftTimer < 0)
+                {
+                    shiftTimer = 0;
+                    mCanShift = true;
+                }
+            }*/
+
+            if (shiftTimer > 0 && !mCanShift)
+            {
+                shiftTimer -= Time.deltaTime;
+            }
+            if (shiftTimer < 0)
+            {
+                shiftTimer = 0;
+                mCanShift = true;
+            }
+
 
             if (lGravInput.magnitude > 0.1f && mCanShift && !mAttached)
             {
                 mCanShift = false;
+                shiftTimer = mGravShiftDelay;
 
                 lGravAngle = Vector2.Angle(Vector2.up, lGravInput);
                 Vector3 cross = Vector3.Cross(Vector2.up, lGravInput);
@@ -291,6 +316,42 @@ public class PlayerControls : MonoBehaviour {
             }
             else mWeapons[i].gameObject.SetActive(true);
         }
+    }
+
+    public float GetHealth()
+    {
+        return health;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public float GetShiftDelay()
+    {
+        return mGravShiftDelay;
+    }
+
+    public float GetShiftTimer()
+    {
+        return mGravShiftDelay - shiftTimer;
+    }
+
+    public float GetDashDelay()
+    {
+        //TODO: temporary code here!
+        return mDashDelay;
+    }
+
+    public float GetDashTimer()
+    {
+        return mDashDelay - mDashTimer;
+    }
+
+    public bool CanShift()
+    {
+        return shiftTimer == 0;
     }
 
     public bool CanDash()
