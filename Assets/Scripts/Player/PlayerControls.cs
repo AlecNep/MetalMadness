@@ -126,6 +126,12 @@ public class PlayerControls : MonoBehaviour {
 
     private void Update() //doesn't seem to matter if it's regular or Late
     {
+        
+    }
+
+    
+    void FixedUpdate () {
+
         mTargetRotation = Quaternion.LookRotation(_mGravShifter.GetMovementVector() * -mIntendedDirection, -_mGravShifter.GetGravityNormal());
 
         if (transform.rotation != mTargetRotation)
@@ -135,10 +141,7 @@ public class PlayerControls : MonoBehaviour {
 
         mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
         mCamera.transform.rotation = Quaternion.Euler(0, 0, _mGravShifter.GetShiftAngle());
-    }
 
-    
-    void FixedUpdate () {
         float lLx = Input.GetAxis("LStickX");
         float lLy = Input.GetAxis("LStickY");
         float lRx = Input.GetAxis("RStickX");
@@ -159,7 +162,7 @@ public class PlayerControls : MonoBehaviour {
                         mArmVariable = mTurnVariable = 2;
                     }
                     else
-                    { //turn to the relative right
+                    {   //turn to the relative right
                         mIntendedDirection = 1;
                         mArmVariable = mTurnVariable = 0;
                     }
@@ -228,38 +231,17 @@ public class PlayerControls : MonoBehaviour {
             float lGravAngle = 0f;
 
 
-            /*if (shiftTimer > 0 && !mCanShift) //the mCanShift might be unnecessary
-            {
-                shiftTimer -= Time.deltaTime;
-            }
-            if (shiftTimer < 0)
-            {
-                shiftTimer = 0;
-                mCanShift = true;
-            }
-
             if (shiftTimer > 0)
             {
                 shiftTimer -= Time.deltaTime;
                 if (shiftTimer < 0)
                 {
                     shiftTimer = 0;
-                    mCanShift = true;
                 }
-            }*/
-
-            if (shiftTimer > 0 && !mCanShift)
-            {
-                shiftTimer -= Time.deltaTime;
             }
-            if (shiftTimer < 0)
-            {
-                shiftTimer = 0;
-                mCanShift = true;
-            }
+            
 
-
-            if (lGravInput.magnitude > 0.1f && mCanShift && !mAttached)
+            if (lGravInput.magnitude > 0.1f && CanShift() && !mAttached)
             {
                 mCanShift = false;
                 shiftTimer = mGravShiftDelay;
@@ -340,7 +322,6 @@ public class PlayerControls : MonoBehaviour {
 
     public float GetDashDelay()
     {
-        //TODO: temporary code here!
         return mDashDelay;
     }
 

@@ -143,7 +143,6 @@ namespace CommandPattern
             }
 
             //D-pad
-            //Not sure how to "Holdify" these
             if (Input.GetAxis("DPadX") > 0)
             {
                 mRight.Press();
@@ -162,7 +161,6 @@ namespace CommandPattern
             }
 
             //Triggers
-            //Not sure how to "holdify" these either
             if (Input.GetAxis("RTrigger") >= 0.6f)
             {
                 mRTrigger.mInUse = true;

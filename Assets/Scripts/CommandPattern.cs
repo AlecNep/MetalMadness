@@ -50,14 +50,14 @@ namespace CommandPattern
                 if (OverCharge.mCharged)
                 {
                     //Doesn't seem to make a difference; very inconsistent regardless
-                    //mPlayerRb.AddForce(mPlayerControls.mChargedJumpForce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
-                    mPlayerRb.velocity = -mPlayerControls.mGravShifter.mGravNormal * mPlayerControls.mChargedJumpForce;
+                    mPlayerRb.AddForce(mPlayerControls.mChargedJumpForce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
+                    //mPlayerRb.velocity = -mPlayerControls.mGravShifter.mGravNormal * mPlayerControls.mChargedJumpForce;
                 }
                 else
                 {
                     //Doesn't seem to make a difference; very inconsistent regardless
-                    //mPlayerRb.AddForce(mPlayerControls.mJumpforce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
-                    mPlayerRb.velocity = -mPlayerControls.mGravShifter.mGravNormal * mPlayerControls.mJumpForce;
+                    mPlayerRb.AddForce(mPlayerControls.mJumpForce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
+                    //mPlayerRb.velocity = -mPlayerControls.mGravShifter.mGravNormal * mPlayerControls.mJumpForce;
                 }
             }
         }
