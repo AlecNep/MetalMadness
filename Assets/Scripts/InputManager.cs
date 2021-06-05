@@ -173,12 +173,15 @@ namespace CommandPattern
                 mRTrigger.Release();
             }
 
-            if (Input.GetButtonDown("LTrigger"))
+            if (Input.GetAxis("LTrigger") >= 0.6f)
             {
+                mLTrigger.mInUse = true;
                 mLTrigger.Press();
             }
-            if (Input.GetButtonUp("LTrigger"))
+            if (Input.GetAxis("LTrigger") < 0.6f && mLTrigger.mInUse)
             {
+                //Only call this section if JUST released, hence the mInUse
+                mLTrigger.mInUse = false;
                 mLTrigger.Release();
             }
         }

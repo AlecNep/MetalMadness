@@ -6020,7 +6020,7 @@ PrefabInstance:
     - target: {fileID: 594417933243029831, guid: 70462bfa83741954f979b49548d80335,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.91
+      value: -13.79
       objectReference: {fileID: 0}
     - target: {fileID: 594417933243029831, guid: 70462bfa83741954f979b49548d80335,
         type: 3}
@@ -8403,9 +8403,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79634f660006a2b4e91858758471f50d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mBladeSpeed: -350
-  mMovementSpeed: 0
-  mMovementDistance: 0
+  bladeSpeed: -350
+  movementSpeed: 1.5
+  movementDistance: 1
+  lerpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1.5707964
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 3.1415927
+      value: 0
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 4.712389
+      value: -1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 6.2831855
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 1
+    m_RotationOrder: 4
 --- !u!1 &1375546697
 GameObject:
   m_ObjectHideFlags: 0

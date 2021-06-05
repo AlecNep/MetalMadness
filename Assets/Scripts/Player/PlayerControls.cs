@@ -126,12 +126,6 @@ public class PlayerControls : MonoBehaviour {
 
     private void Update() //doesn't seem to matter if it's regular or Late
     {
-        
-    }
-
-    
-    void FixedUpdate () {
-
         mTargetRotation = Quaternion.LookRotation(_mGravShifter.GetMovementVector() * -mIntendedDirection, -_mGravShifter.GetGravityNormal());
 
         if (transform.rotation != mTargetRotation)
@@ -141,6 +135,10 @@ public class PlayerControls : MonoBehaviour {
 
         mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
         mCamera.transform.rotation = Quaternion.Euler(0, 0, _mGravShifter.GetShiftAngle());
+    }
+
+    
+    void FixedUpdate () {
 
         float lLx = Input.GetAxis("LStickX");
         float lLy = Input.GetAxis("LStickY");
