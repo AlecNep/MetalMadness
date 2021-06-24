@@ -95,6 +95,7 @@
     <Compile Include="Assets\Scripts\InputManager.cs" />
     <Compile Include="Assets\Scripts\CommandPattern.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Inverter.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayerHUD.cs" />
     <Compile Include="Assets\Scripts\Behaviors\GravityShifter.cs" />
     <Compile Include="Assets\Scripts\Player\Weapon.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireProjectileScript.cs" />
@@ -106,7 +107,6 @@
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireConstantBaseScript.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireLightScript.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
-    <Compile Include="Assets\Scripts\UI\PlayerHUD.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />

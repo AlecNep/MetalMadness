@@ -166,15 +166,23 @@ public class PlayerControls : MonoBehaviour {
                     }
                 }
 
-                if (IsDashing())
+                LayerMask lIgnoreLayers = ~(1 << 8 & 1 << 9);
+                if (!Physics.Raycast(transform.position, mGravShifter.GetMovementVector() * mIntendedDirection, 0.7f, lIgnoreLayers))
                 {
-                    //following lines are reduced by 1/10th because of the left stick sensitivity
-                    float lDashSpeed = CommandPattern.OverCharge.mCharged ? mChargedDashSpeed : mDashSpeed;
-                    transform.position += 0.1f * mIntendedDirection * mGravShifter.GetMovementVector() * lDashSpeed;
+                    if (IsDashing())
+                    {
+                        //following lines are reduced by 1/10th because of the left stick sensitivity
+                        float lDashSpeed = CommandPattern.OverCharge.mCharged ? mChargedDashSpeed : mDashSpeed;
+                        transform.position += 0.1f * mIntendedDirection * mGravShifter.GetMovementVector() * lDashSpeed;
+                    }
+                    else
+                    {
+                        transform.position += mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
+                    }
                 }
                 else
                 {
-                    transform.position += mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
+                    print("woah mane, goofy shit happening");
                 }
 
                 mZDistance = transform.position.z;
