@@ -16,6 +16,8 @@ public class SawTrap : MonoBehaviour
     float maxTime = Mathf.PI * 2;
     float timer = 0;
     Vector3 startingPosition;
+    [SerializeField]
+    float damage;
 
     // Start is called before the first frame update
     void Start()
@@ -53,5 +55,15 @@ public class SawTrap : MonoBehaviour
             lerpCurve.AddKey(new Keyframe(1.5f * Mathf.PI, -1, 0, 0));
             lerpCurve.AddKey(new Keyframe(2f * Mathf.PI, 0, 1, 1));
         }
+    }
+
+    private void OnCollisionEnter(Collision col)
+    {
+        if (col.GetContact(0).thisCollider.name == "SawBlade" && col.transform.tag == "Player")
+        {
+            PlayerControls lPlayer = col.transform.GetComponent<PlayerControls>();
+            lPlayer.ChangeHealth(-damage);
+        }
+        
     }
 }

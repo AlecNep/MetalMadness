@@ -306,6 +306,24 @@ public class PlayerControls : MonoBehaviour {
         }
     }
 
+    public void ChangeHealth(float pChange)
+    {
+        print("changing health by " + pChange);
+        health += pChange;
+        float lHalfMax = maxHealth / 2;
+        if (Mathf.Abs(health - lHalfMax) > lHalfMax) //either above 100 or dead af
+        {
+            if (health > 0)
+            { //over 100
+                health = 100;
+            }
+            else
+            {
+                //Dead
+            }
+        } 
+    }
+
     public float GetHealth()
     {
         return health;
