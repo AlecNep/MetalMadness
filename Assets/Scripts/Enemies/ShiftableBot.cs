@@ -112,7 +112,6 @@ public class ShiftableBot : MonoBehaviour
             System.Console.Error.WriteLine("Warning: " + name + " was not given a Collider!");
 
         mDistToGround = mCol.bounds.extents.y;
-        print("DistToGround=" + mDistToGround);
 
         //All this should probably be in its own function so it's not completely cluttering the start function
         HasTargetNode = new ActionNode(HasTarget);
@@ -194,7 +193,6 @@ public class ShiftableBot : MonoBehaviour
 
     public bool IsGrounded()
     {
-        print("transform.down=" + -transform.up);
         return Physics.Raycast(transform.position, -transform.up, mDistToGround + 0.15f);
     }
 

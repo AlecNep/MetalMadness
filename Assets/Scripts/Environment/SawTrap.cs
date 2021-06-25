@@ -18,6 +18,8 @@ public class SawTrap : MonoBehaviour
     Vector3 startingPosition;
     [SerializeField]
     float damage;
+    [SerializeField]
+    float knockbackForce;
 
     // Start is called before the first frame update
     void Start()
@@ -59,10 +61,13 @@ public class SawTrap : MonoBehaviour
 
     private void OnCollisionEnter(Collision col)
     {
-        if (col.GetContact(0).thisCollider.name == "SawBlade" && col.transform.tag == "Player")
+        Collider lThisPiece = col.GetContact(0).thisCollider;
+        if (lThisPiece.name == "SawBlade" && col.transform.tag == "Player")
         {
             PlayerControls lPlayer = col.transform.GetComponent<PlayerControls>();
             lPlayer.ChangeHealth(-damage);
+            col.rigidbody.AddForce((lThisPiece.transform.position + col.collider.transform.position).normalized * knockbackForce, ForceMode.Impulse);
+            //col.rigidbody.AddForce((col.collider.transform.position - lThisPiece.transform.position).normalized * knockbackForce, ForceMode.Impulse);
         }
         
     }

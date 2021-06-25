@@ -180,10 +180,6 @@ public class PlayerControls : MonoBehaviour {
                         transform.position += mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
                     }
                 }
-                else
-                {
-                    print("woah mane, goofy shit happening");
-                }
 
                 mZDistance = transform.position.z;
                 if (Mathf.Abs(mZDistance) > 0.05f)
@@ -308,7 +304,6 @@ public class PlayerControls : MonoBehaviour {
 
     public void ChangeHealth(float pChange)
     {
-        print("changing health by " + pChange);
         health += pChange;
         float lHalfMax = maxHealth / 2;
         if (Mathf.Abs(health - lHalfMax) > lHalfMax) //either above 100 or dead af
@@ -320,6 +315,7 @@ public class PlayerControls : MonoBehaviour {
             else
             {
                 //Dead
+                Die();
             }
         } 
     }
@@ -403,6 +399,15 @@ public class PlayerControls : MonoBehaviour {
     public void SpikeDetached()
     {
         mAttachedToWall = mAttachedToEnemy = false;
+    }
+
+    public void Die()
+    {
+        //All temporary code!
+        print("died");
+        _mGravShifter.ShiftGravity(4 - (int)_mGravShifter.mCurGravity);
+        transform.position = Vector3.zero;
+        health = maxHealth;
     }
 
     private void OnCollisionEnter(Collision col)
