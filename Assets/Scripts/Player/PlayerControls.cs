@@ -166,7 +166,7 @@ public class PlayerControls : MonoBehaviour {
                     }
                 }
 
-                LayerMask lIgnoreLayers = ~(1 << 8 & 1 << 9);
+                /*LayerMask lIgnoreLayers = ~(1 << 8 & 1 << 9);
                 if (!Physics.Raycast(transform.position, mGravShifter.GetMovementVector() * mIntendedDirection, 0.7f, lIgnoreLayers))
                 {
                     if (IsDashing())
@@ -179,6 +179,17 @@ public class PlayerControls : MonoBehaviour {
                     {
                         transform.position += mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
                     }
+                }*/
+
+                if (IsDashing())
+                {
+                    //following lines are reduced by 1/10th because of the left stick sensitivity
+                    float lDashSpeed = CommandPattern.OverCharge.mCharged ? mChargedDashSpeed : mDashSpeed;
+                    transform.position += 0.1f * mIntendedDirection * mGravShifter.GetMovementVector() * lDashSpeed;
+                }
+                else
+                {
+                    transform.position += mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
                 }
 
                 mZDistance = transform.position.z;
@@ -404,9 +415,9 @@ public class PlayerControls : MonoBehaviour {
     public void Die()
     {
         //All temporary code!
-        print("died");
         _mGravShifter.ShiftGravity(4 - (int)_mGravShifter.mCurGravity);
         transform.position = Vector3.zero;
+        mRb.velocity = Vector3.zero;
         health = maxHealth;
     }
 
