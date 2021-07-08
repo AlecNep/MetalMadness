@@ -59,7 +59,6 @@ public class SentryDrone : MonoBehaviour
 
     private IEnumerator SelfDestruct()
     {
-        //Rigidbody targetRB = aiDestination.target.GetComponent<Rigidbody>();
         aiDestination.target = null;
         yellowLight.SetActive(false);
         redLight.SetActive(true);
@@ -73,7 +72,7 @@ public class SentryDrone : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
 
-        LayerMask entities = ~(1 << 8 & 1 << 12);
+        LayerMask entities = 1 << 8 | 1 << 12;
         Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, entities);
 
         foreach (Collider col in cols)
@@ -83,7 +82,8 @@ public class SentryDrone : MonoBehaviour
             if (col.tag == "Player")
             {
                 PlayerControls pc = col.GetComponent<PlayerControls>();
-                pc.ChangeHealth(-damage * (Vector3.Distance(transform.position, col.transform.position) / explosionRadius));
+                float value = (explosionRadius - Vector3.Distance(transform.position, col.transform.position)) / explosionRadius;
+                pc.ChangeHealth(-damage * (value));
             }
             else if (col.tag == "Enemy")
             {
@@ -94,7 +94,6 @@ public class SentryDrone : MonoBehaviour
         }
 
         Instantiate(explosion, transform.position, transform.rotation);
-        //targetRB.AddExplosionForce(explosionForce, transform.position, explosionRadius, 0f, ForceMode.Impulse);
         Destroy(gameObject);
     }
 

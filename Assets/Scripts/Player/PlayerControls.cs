@@ -166,39 +166,27 @@ public class PlayerControls : MonoBehaviour {
                     }
                 }
 
-                //LayerMask lIgnoreLayers = ~(1 << 8 & 1 << 9);
-                LayerMask layers = (1 << 11 & 1 << 12);
-                if (!Physics.Raycast(transform.position, mGravShifter.GetMovementVector() * mIntendedDirection, 0.7f, layers))
+                LayerMask layers = 1 << 11 | 1 << 12;
+                RaycastHit hit;
+                if (!Physics.Raycast(transform.position, mGravShifter.GetMovementVector() * mIntendedDirection, out hit, 0.7f, layers))
                 {
                     if (IsDashing())
                     {
                         //following lines are reduced by 1/10th because of the left stick sensitivity
                         float lDashSpeed = CommandPattern.OverCharge.mCharged ? mChargedDashSpeed : mDashSpeed;
-                        transform.position += 0.1f * mIntendedDirection * mGravShifter.GetMovementVector() * lDashSpeed;
+                        transform.position += 0.1f * mIntendedDirection * _mGravShifter.GetMovementVector() * lDashSpeed;
                     }
                     else
                     {
-                        transform.position += mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
+                        transform.position += _mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
                     }
                 }
 
-                /*if (IsDashing())
-                {
-                    //following lines are reduced by 1/10th because of the left stick sensitivity
-                    float lDashSpeed = CommandPattern.OverCharge.mCharged ? mChargedDashSpeed : mDashSpeed;
-                    transform.position += 0.1f * mIntendedDirection * mGravShifter.GetMovementVector() * lDashSpeed;
-                }
-                else
-                {
-                    transform.position += mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
-                }*/
 
                 mZDistance = transform.position.z;
                 if (Mathf.Abs(mZDistance) > 0.05f)
                 {
-                    //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
                     transform.position -= Vector3.forward * mZDistance;
-                    //mZDistance = 0;
                 }
                 //End main movement section
 
@@ -236,7 +224,6 @@ public class PlayerControls : MonoBehaviour {
                 }
             }
         }
-
 
         //Right stick controls
         if (mCurControls == 0) //can only shift gravity in gameplay mode; cannot shift if attached to anything
