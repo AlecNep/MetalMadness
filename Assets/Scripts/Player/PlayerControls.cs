@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour {
 
-    private Rigidbody mRb;
+    public Rigidbody mRb { get; private set; }
     private Camera mCamera;
     private Quaternion mTargetRotation;
     public Transform mArms { get; private set; }
@@ -166,8 +166,9 @@ public class PlayerControls : MonoBehaviour {
                     }
                 }
 
-                /*LayerMask lIgnoreLayers = ~(1 << 8 & 1 << 9);
-                if (!Physics.Raycast(transform.position, mGravShifter.GetMovementVector() * mIntendedDirection, 0.7f, lIgnoreLayers))
+                //LayerMask lIgnoreLayers = ~(1 << 8 & 1 << 9);
+                LayerMask layers = (1 << 11 & 1 << 12);
+                if (!Physics.Raycast(transform.position, mGravShifter.GetMovementVector() * mIntendedDirection, 0.7f, layers))
                 {
                     if (IsDashing())
                     {
@@ -179,9 +180,9 @@ public class PlayerControls : MonoBehaviour {
                     {
                         transform.position += mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
                     }
-                }*/
+                }
 
-                if (IsDashing())
+                /*if (IsDashing())
                 {
                     //following lines are reduced by 1/10th because of the left stick sensitivity
                     float lDashSpeed = CommandPattern.OverCharge.mCharged ? mChargedDashSpeed : mDashSpeed;
@@ -190,7 +191,7 @@ public class PlayerControls : MonoBehaviour {
                 else
                 {
                     transform.position += mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
-                }
+                }*/
 
                 mZDistance = transform.position.z;
                 if (Mathf.Abs(mZDistance) > 0.05f)

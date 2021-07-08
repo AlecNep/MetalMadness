@@ -7,6 +7,8 @@ public class SentryDrone : MonoBehaviour
 {
     Transform playerRef;
     AIDestinationSetter aiDestination;
+    Rigidbody rb;
+
     [SerializeField]
     float distanceThreshold;
     bool isInRange = false;
@@ -16,6 +18,11 @@ public class SentryDrone : MonoBehaviour
     float explosionForce;
     [SerializeField]
     float explosionRadius;
+
+    [SerializeField]
+    float damage;
+    [SerializeField]
+    float health;
 
     GameObject redLight;
     GameObject yellowLight;
@@ -33,6 +40,8 @@ public class SentryDrone : MonoBehaviour
         yellowLight = lLights.Find("Yellow light").gameObject;
 
         redLight.SetActive(false);
+        rb = GetComponent<Rigidbody>();
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     // Update is called once per frame
@@ -44,10 +53,13 @@ public class SentryDrone : MonoBehaviour
             //TODO
             StartCoroutine(SelfDestruct());
         }
+        if (Mathf.Abs(transform.position.z) > 0.1)
+            transform.position -= Vector3.forward * transform.position.z;
     }
 
     private IEnumerator SelfDestruct()
     {
+        //Rigidbody targetRB = aiDestination.target.GetComponent<Rigidbody>();
         aiDestination.target = null;
         yellowLight.SetActive(false);
         redLight.SetActive(true);
@@ -61,8 +73,28 @@ public class SentryDrone : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
 
+        LayerMask entities = ~(1 << 8 & 1 << 12);
+        Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, entities);
+
+        foreach (Collider col in cols)
+        {
+            if (col.transform.root == transform)
+                continue;
+            if (col.tag == "Player")
+            {
+                PlayerControls pc = col.GetComponent<PlayerControls>();
+                pc.ChangeHealth(-damage * (Vector3.Distance(transform.position, col.transform.position) / explosionRadius));
+            }
+            else if (col.tag == "Enemy")
+            {
+                //TODO
+            }
+            col.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius, 0f, ForceMode.Impulse);
+
+        }
+
         Instantiate(explosion, transform.position, transform.rotation);
-        GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius, 3f, ForceMode.Impulse);
+        //targetRB.AddExplosionForce(explosionForce, transform.position, explosionRadius, 0f, ForceMode.Impulse);
         Destroy(gameObject);
     }
 
