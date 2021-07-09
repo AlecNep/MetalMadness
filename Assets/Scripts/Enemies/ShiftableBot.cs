@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class ShiftableBot : MonoBehaviour
+public class ShiftableBot : Damageable
 {
     //Personal variables    
     protected readonly float DEFAULT_ARM_ROTATION = 90f;
@@ -82,6 +82,8 @@ public class ShiftableBot : MonoBehaviour
     private Selector Patrolling;
     private ActionNode PatrolNode;
     private ActionNode ReturnToPatrolNode;
+
+    private float health;
 
     // Use this for initialization
     void Start()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class SentryDrone : MonoBehaviour
+public class SentryDrone : Damageable
 {
     Transform playerRef;
     AIDestinationSetter aiDestination;
@@ -72,6 +72,11 @@ public class SentryDrone : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
 
+        Explode();
+    }
+
+    private void Explode()
+    {
         LayerMask entities = 1 << 8 | 1 << 12;
         Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, entities);
 
@@ -79,15 +84,11 @@ public class SentryDrone : MonoBehaviour
         {
             if (col.transform.root == transform)
                 continue;
-            if (col.tag == "Player")
+            if (col.tag == "Player" || col.tag == "Enemy")
             {
-                PlayerControls pc = col.GetComponent<PlayerControls>();
+                Damageable victim = col.GetComponent<Damageable>();
                 float value = (explosionRadius - Vector3.Distance(transform.position, col.transform.position)) / explosionRadius;
-                pc.ChangeHealth(-damage * (value));
-            }
-            else if (col.tag == "Enemy")
-            {
-                //TODO
+                victim.ChangeHealth(-damage * (value));
             }
             col.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius, 0f, ForceMode.Impulse);
 

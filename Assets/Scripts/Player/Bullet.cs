@@ -9,6 +9,8 @@ public class Bullet : MonoBehaviour {
     float mLifespan;
     [SerializeField]
     protected float mMaxLifespan;
+    [SerializeField]
+    float damage;
 
 
     // Use this for initialization

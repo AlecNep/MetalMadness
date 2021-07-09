@@ -18,6 +18,7 @@ public class Thermite : Bullet {
         {
             gameObject.AddComponent<FixedJoint>();
             GetComponent<FixedJoint>().connectedBody = col.rigidbody;
+
             StartCoroutine(mSticking);
         }
     }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControls : MonoBehaviour {
+public class PlayerControls : Damageable {
 
     public Rigidbody mRb { get; private set; }
     private Camera mCamera;
@@ -86,8 +86,6 @@ public class PlayerControls : MonoBehaviour {
 
     //Actual player stats
     private const float DEFAULT_HEALTH = 100f;
-    public float maxHealth { get; private set; }
-    public float health { get; private set; }
 
     public Weapon[] mWeapons; //TEMPORARY; DO NOT KEEP PUBLIC
     public int mWeaponIndex = 0; //TEMPORARY; DO NOT KEEP PUBLIC
@@ -301,7 +299,7 @@ public class PlayerControls : MonoBehaviour {
         }
     }
 
-    public void ChangeHealth(float pChange)
+    /*public override void ChangeHealth(float pChange)
     {
         health += pChange;
         float lHalfMax = maxHealth / 2;
@@ -309,25 +307,15 @@ public class PlayerControls : MonoBehaviour {
         {
             if (health > 0)
             { //over 100
-                health = 100;
+                health = maxHealth;
             }
             else
             {
                 //Dead
                 Die();
             }
-        } 
-    }
-
-    public float GetHealth()
-    {
-        return health;
-    }
-
-    public float GetMaxHealth()
-    {
-        return maxHealth;
-    }
+        }
+    }*/
 
     public float GetShiftDelay()
     {

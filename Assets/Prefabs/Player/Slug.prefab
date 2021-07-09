@@ -78,6 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mSpeed: 15
   mMaxLifespan: 3
+  damage: 15
 --- !u!1 &8581171206398126288
 GameObject:
   m_ObjectHideFlags: 0
