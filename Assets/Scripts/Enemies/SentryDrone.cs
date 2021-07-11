@@ -21,8 +21,6 @@ public class SentryDrone : Damageable
 
     [SerializeField]
     float damage;
-    [SerializeField]
-    float health;
 
     GameObject redLight;
     GameObject yellowLight;
@@ -30,6 +28,7 @@ public class SentryDrone : Damageable
     // Start is called before the first frame update
     void Start()
     {
+        health = maxHealth;
         aiDestination = GetComponent<AIDestinationSetter>();
         playerRef = GameObject.Find("Player").transform;
         if (playerRef == null)
@@ -72,17 +71,17 @@ public class SentryDrone : Damageable
         }
         yield return new WaitForSeconds(0.1f);
 
-        Explode();
+        Die();
     }
 
-    private void Explode()
+    protected override void Die()
     {
         LayerMask entities = 1 << 8 | 1 << 12;
         Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, entities);
 
         foreach (Collider col in cols)
         {
-            if (col.transform.root == transform)
+            if (col.gameObject == gameObject)
                 continue;
             if (col.tag == "Player" || col.tag == "Enemy")
             {

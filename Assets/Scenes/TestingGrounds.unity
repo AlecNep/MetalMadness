@@ -3072,7 +3072,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 452349118}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.09, y: 1.9615651, z: 0.2076456}
+  m_LocalPosition: {x: -40, y: 1.9615651, z: 0.2076456}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 695305747}
@@ -3184,12 +3184,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1ef6ffcb2522c4a8e17a9e0ba06c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 30
   distanceThreshold: 3
   explosion: {fileID: 1741139860889314, guid: 7bdb4cb7604baf34b9167f46e0b962e4, type: 3}
   explosionForce: 15
   explosionRadius: 5
   damage: 25
-  health: 50
 --- !u!54 &452349125
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13528,6 +13528,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rivet Bot
+      objectReference: {fileID: 0}
+    - target: {fileID: 5453553919241454244, guid: 9c07e1d68fd818b419edce5ab7dead23,
+        type: 3}
+      propertyPath: maxHealth
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5453553919241454244, guid: 9c07e1d68fd818b419edce5ab7dead23,
         type: 3}

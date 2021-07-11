@@ -4,30 +4,22 @@ using UnityEngine;
 
 public class Damageable : MonoBehaviour
 {
-    public float maxHealth { get; protected set; }
-    public float health { get; protected set; }
+    [SerializeField]
+    protected float maxHealth;
+    protected float health;
 
     public virtual void ChangeHealth(float pChange)
     {
         health += pChange;
-        float lHalfMax = maxHealth / 2;
-        if (Mathf.Abs(health - lHalfMax) > lHalfMax) //either above 100 or dead af
-        {
-            if (health > 0)
-            { //over 100
-                health = maxHealth;
-            }
-            else
-            {
-                //Dead
-                Die();
-            }
-        }
+        if (health > maxHealth)
+            health = maxHealth;
+        else if (health <= 0)
+            Die();
     }
 
     public float GetHealth() { return health; }
 
     public float GetMaxHealth() { return maxHealth; }
 
-    public virtual void Die() { }
+    protected virtual void Die() { Destroy(gameObject); }
 }

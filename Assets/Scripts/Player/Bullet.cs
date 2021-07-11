@@ -37,6 +37,11 @@ public class Bullet : MonoBehaviour {
     {
         if (collision.gameObject.tag != "Player" && collision.gameObject.tag != "PlayerBullet")
         {
+            Damageable victim = collision.collider.GetComponent<Damageable>();
+            if (victim != null)
+            {
+                victim.ChangeHealth(-damage);
+            }
             Destroy(gameObject);
         }
         

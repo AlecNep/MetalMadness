@@ -83,11 +83,11 @@ public class ShiftableBot : Damageable
     private ActionNode PatrolNode;
     private ActionNode ReturnToPatrolNode;
 
-    private float health;
 
     // Use this for initialization
     void Start()
     {
+        health = maxHealth; //There has to be a better way to do this, but functions like Start and Awake can't be called via "base."
         _mGravShifter = GetComponent<GravityShifter>();
         if (_mGravShifter == null)
         {
