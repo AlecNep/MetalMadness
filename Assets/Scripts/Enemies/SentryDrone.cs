@@ -74,31 +74,6 @@ public class SentryDrone : Explodable
         Explode();
     }
 
-    /*protected override void Die()
-    {
-        LayerMask entities = 1 << 8 | 1 << 12; //Player and enemy layers
-        Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, entities);
-
-        foreach (Collider col in cols)
-        {
-            if (col.gameObject == gameObject)
-                continue;
-            if (col.tag == "Player" || col.tag == "Enemy") //this if-statement might be completely useless
-            {
-                Damageable victim = col.GetComponent<Damageable>();
-                float value = (explosionRadius - Vector3.Distance(transform.position, col.transform.position)) / explosionRadius;
-                victim.ChangeHealth(-damage * (value));
-            }
-            else
-                print("explosion caught " + col.name);
-            col.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius, 0f, ForceMode.Impulse);
-
-        }
-
-        Instantiate(explosion, transform.position, transform.rotation);
-        Destroy(gameObject);
-    }*/
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
