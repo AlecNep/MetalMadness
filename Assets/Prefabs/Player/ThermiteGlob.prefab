@@ -112,6 +112,7 @@ MonoBehaviour:
   mSpeed: 15
   mMaxLifespan: 15
   damage: 5
+  counterIncrement: 0.2
 --- !u!54 &54134455274095338
 Rigidbody:
   m_ObjectHideFlags: 0

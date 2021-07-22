@@ -388,10 +388,10 @@ public class PlayerControls : Damageable {
         mAttachedToWall = mAttachedToEnemy = false;
     }
 
-    public void Die()
+    protected override void Die()
     {
         //All temporary code!
-        _mGravShifter.ShiftGravity(4 - (int)_mGravShifter.mCurGravity);
+        mGravShifter.ShiftGravity(4 - (int)mGravShifter.mCurGravity);
         transform.position = Vector3.zero;
         mRb.velocity = Vector3.zero;
         health = maxHealth;

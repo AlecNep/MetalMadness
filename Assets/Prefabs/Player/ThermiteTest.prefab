@@ -111,7 +111,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mSpeed: 18
   mMaxLifespan: 10
-  damage: 2
+  damage: 0.3
+  counterIncrement: 0.2
 --- !u!54 &54307804964508436
 Rigidbody:
   m_ObjectHideFlags: 0

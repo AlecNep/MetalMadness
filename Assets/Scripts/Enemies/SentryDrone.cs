@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class SentryDrone : Damageable
+public class SentryDrone : Explodable
 {
     Transform playerRef;
     AIDestinationSetter aiDestination;
@@ -12,7 +12,7 @@ public class SentryDrone : Damageable
     [SerializeField]
     float distanceThreshold;
     bool isInRange = false;
-    [SerializeField]
+    /*[SerializeField]
     GameObject explosion;
     [SerializeField]
     float explosionForce;
@@ -20,7 +20,7 @@ public class SentryDrone : Damageable
     float explosionRadius;
 
     [SerializeField]
-    float damage;
+    float damage;*/
 
     GameObject redLight;
     GameObject yellowLight;
@@ -71,31 +71,33 @@ public class SentryDrone : Damageable
         }
         yield return new WaitForSeconds(0.1f);
 
-        Die();
+        Explode();
     }
 
-    protected override void Die()
+    /*protected override void Die()
     {
-        LayerMask entities = 1 << 8 | 1 << 12;
+        LayerMask entities = 1 << 8 | 1 << 12; //Player and enemy layers
         Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, entities);
 
         foreach (Collider col in cols)
         {
             if (col.gameObject == gameObject)
                 continue;
-            if (col.tag == "Player" || col.tag == "Enemy")
+            if (col.tag == "Player" || col.tag == "Enemy") //this if-statement might be completely useless
             {
                 Damageable victim = col.GetComponent<Damageable>();
                 float value = (explosionRadius - Vector3.Distance(transform.position, col.transform.position)) / explosionRadius;
                 victim.ChangeHealth(-damage * (value));
             }
+            else
+                print("explosion caught " + col.name);
             col.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius, 0f, ForceMode.Impulse);
 
         }
 
         Instantiate(explosion, transform.position, transform.rotation);
         Destroy(gameObject);
-    }
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {
