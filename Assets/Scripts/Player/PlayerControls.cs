@@ -242,30 +242,34 @@ public class PlayerControls : Damageable {
 
             if (lGravInput.magnitude > 0.1f && CanShift() && !mAttached)
             {
-                mCanShift = false;
-                shiftTimer = mGravShiftDelay;
-
                 lGravAngle = Vector2.Angle(Vector2.up, lGravInput);
                 Vector3 cross = Vector3.Cross(Vector2.up, lGravInput);
 
                 if (cross.z > 0)
                     lGravAngle = -lGravAngle;
+                
+                if (!(Mathf.Abs(lGravAngle) > 135f)) //not downwards
+                {
+                    mCanShift = false;
+                    shiftTimer = mGravShiftDelay;
 
-                if (lGravAngle > -45f && lGravAngle <= 45f)
-                {
-                    //Shift gravity to the relative "up"
-                    _mGravShifter.ShiftGravity(2);
+                    if (lGravAngle > -45f && lGravAngle <= 45f)
+                    {
+                        //Shift gravity to the relative "up"
+                        mGravShifter.ShiftGravity(2);
+                    }
+                    else if (lGravAngle > 45f && lGravAngle <= 135f)
+                    {
+                        //Shift gravity to the relative "right"
+                        mGravShifter.ShiftGravity(1);
+                    }
+                    else if (lGravAngle <= -45f && lGravAngle >= -135f)
+                    {
+                        //Shift gravity to the relative "left"
+                        mGravShifter.ShiftGravity(3);
+                    }
                 }
-                else if (lGravAngle > 45f && lGravAngle <= 135f)
-                {
-                    //Shift gravity to the relative "right"
-                    _mGravShifter.ShiftGravity(1);
-                }
-                else if (lGravAngle <= -45f && lGravAngle >= -135f)
-                {
-                    //Shift gravity to the relative "left"
-                    _mGravShifter.ShiftGravity(3);
-                }
+                
             }
         }
         else if ((int)mCurControls == 1) //Weapon wheel mode

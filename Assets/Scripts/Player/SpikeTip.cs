@@ -15,8 +15,8 @@ public class SpikeTip : MonoBehaviour {
 
     [SerializeField] Collider mColl;
 
-    /*private Spike mSpikeBase;
-    private Vector3 mStartPos;
+    private Spike spikeBase;
+    /*private Vector3 mStartPos;
     private Vector3 mEndPos;*/
 
     
@@ -24,13 +24,13 @@ public class SpikeTip : MonoBehaviour {
     // Use this for initialization
     void Start () {
         mPlayer = transform.root.GetComponent<PlayerControls>();
-        /*mSpikeBase = GetComponentInParent<Spike>();
-        if (mSpikeBase == null)
+        spikeBase = GetComponentInParent<Spike>();
+        if (spikeBase == null)
         {
             print("Shit, couldn't find the spike base");
         }
 
-        mStartPos = transform.localPosition;
+        /*mStartPos = transform.localPosition;
         mEndPos = mStartPos + Vector3.up * mSpikeBase.mConeEnd;*/
 
     }
@@ -52,6 +52,7 @@ public class SpikeTip : MonoBehaviour {
         if (pTag == "Enemy")
         {
             //TODO: Make the enemy a child of the player if applicable
+            //pTargetRB.GetComponent<Damageable>().ChangeHealth(-spikeBase.damage);
         }
         mFixedJointTarget.connectedBody = pTargetRB;
         mFixedJointPlayer.connectedBody = mPlayerRB;

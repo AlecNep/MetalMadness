@@ -110,6 +110,7 @@
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireLightScript.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
     <Compile Include="Assets\Scripts\Behaviors\Explodable.cs" />
+    <Compile Include="Assets\Scripts\Behaviors\Interactive.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />

@@ -200,6 +200,24 @@ namespace CommandPattern
         }
     }
 
+    public class Interact : Command
+    {
+        public override void Press()
+        {
+            
+        }
+
+        public override void Release()
+        {
+
+        }
+
+        public Interact() : base()
+        {
+
+        }
+    }
+
     public class OpenMap : Command
     {
         public override void Press()

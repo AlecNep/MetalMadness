@@ -37,7 +37,7 @@ namespace CommandPattern
             mRight = new DoNothing();
             mRTrigger = new OverCharge();
             mLTrigger = new DoNothing();
-            mRClick = new DoNothing();
+            mRClick = new Interact();
             mLClick = new DoNothing();
             mBack = new OpenMap();
         }

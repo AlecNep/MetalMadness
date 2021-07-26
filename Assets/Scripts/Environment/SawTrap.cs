@@ -13,7 +13,7 @@ public class SawTrap : MonoBehaviour
     [SerializeField]
     float movementDistance;
     public AnimationCurve lerpCurve;
-    float maxTime = Mathf.PI * 2;
+    float maxTime = Mathf.PI * 2f;
     float timer = 0;
     Vector3 startingPosition;
     [SerializeField]
@@ -34,7 +34,7 @@ public class SawTrap : MonoBehaviour
         blade.Rotate(0, 0, bladeSpeed * Time.deltaTime);
 
         timer += Time.deltaTime;
-        if (timer >= maxTime)
+        if (timer == maxTime)
         {
             timer = 0;
         }
@@ -52,9 +52,13 @@ public class SawTrap : MonoBehaviour
                 lerpCurve.RemoveKey(0);
             lerpCurve.postWrapMode = WrapMode.Loop;
             lerpCurve.AddKey(new Keyframe(0, 0, 1, 1)); // 0, sin(0), sin'(0) = cos(0), sin'(0) = cos(0)
+            lerpCurve.AddKey(new Keyframe(0.4f * Mathf.PI, 1, 0, 0));
             lerpCurve.AddKey(new Keyframe(0.5f * Mathf.PI, 1, 0, 0));
+            lerpCurve.AddKey(new Keyframe(0.6f * Mathf.PI, 1, 0, 0));
             lerpCurve.AddKey(new Keyframe(Mathf.PI, 0, -1, -1));
+            lerpCurve.AddKey(new Keyframe(1.4f * Mathf.PI, -1, 0, 0));
             lerpCurve.AddKey(new Keyframe(1.5f * Mathf.PI, -1, 0, 0));
+            lerpCurve.AddKey(new Keyframe(1.6f * Mathf.PI, -1, 0, 0));
             lerpCurve.AddKey(new Keyframe(2f * Mathf.PI, 0, 1, 1));
         }
     }

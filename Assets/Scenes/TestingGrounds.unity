@@ -6591,6 +6591,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 1131936812704571891, guid: 70462bfa83741954f979b49548d80335,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1131936812704571891, guid: 70462bfa83741954f979b49548d80335,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2526330862136724856, guid: 70462bfa83741954f979b49548d80335,
         type: 3}
       propertyPath: m_RootOrder
@@ -8841,7 +8851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bladeSpeed: -350
-  movementSpeed: 1.5
+  movementSpeed: 1
   movementDistance: 1
   lerpCurve:
     serializedVersion: 2
@@ -8856,7 +8866,25 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
+      time: 1.2566371
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
       time: 1.5707964
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1.8849558
       value: 1
       inSlope: 0
       outSlope: 0
@@ -8874,7 +8902,25 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
+      time: 4.3982296
+      value: -1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
       time: 4.712389
+      value: -1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 5.0265484
       value: -1
       inSlope: 0
       outSlope: 0
@@ -8894,7 +8940,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 1
     m_RotationOrder: 4
-  damage: 5
+  damage: 10
   knockbackForce: 5
 --- !u!54 &1364681430
 Rigidbody:
