@@ -87,7 +87,6 @@ public class SecurityDrone : Explodable
         Vector3 cross = Vector3.Cross(Vector3.right, lDirection);
         if (cross.z < 0)
             angle *= -1;
-        print("angle = " + angle);
         Vector3 lOrientation = angle * Vector3.forward;
         GameObject lBullet = Instantiate(laser, transform.position, Quaternion.Euler(lOrientation)) as GameObject; //update soon
 
