@@ -36,7 +36,8 @@ public class Bullet : MonoBehaviour {
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != "Player" && collision.gameObject.tag != "PlayerBullet")
+        //if (collision.gameObject.tag != "Player" && collision.gameObject.tag != "PlayerBullet")
+        if(collision.gameObject.tag != "PlayerBullet" && collision.gameObject.tag != "EnemyBullet")
         {
             Damageable victim = collision.collider.GetComponent<Damageable>();
             if (victim != null)

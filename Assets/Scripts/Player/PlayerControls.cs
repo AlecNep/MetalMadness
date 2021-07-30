@@ -224,7 +224,7 @@ public class PlayerControls : Damageable {
         }
 
         //Right stick controls
-        if (mCurControls == 0) //can only shift gravity in gameplay mode; cannot shift if attached to anything
+        if (mCurControls == 0) //can only shift gravity in gameplay mode;
         {
             Vector2 lGravInput = new Vector2(lRx, lRy);
             float lGravAngle = 0f;
@@ -248,7 +248,7 @@ public class PlayerControls : Damageable {
                 if (cross.z > 0)
                     lGravAngle = -lGravAngle;
                 
-                if (!(Mathf.Abs(lGravAngle) > 135f)) //not downwards
+                if (Mathf.Abs(lGravAngle) < 135f) //not downwards
                 {
                     mCanShift = false;
                     shiftTimer = mGravShiftDelay;

@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\Player\StickyBomb.cs" />
     <Compile Include="Assets\Scripts\Player\ThermiteThrower.cs" />
     <Compile Include="Assets\Scripts\Player\Bullet.cs" />
+    <Compile Include="Assets\Scripts\Behaviors\Interactive.cs" />
     <Compile Include="Assets\Scripts\Behaviors\Damageable.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Selector.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Node.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent2D.cs" />
     <Compile Include="Assets\Scripts\Enemies\ShiftableBot.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Repeater.cs" />
+    <Compile Include="Assets\Scripts\Behaviors\Explodable.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeGun.cs" />
     <Compile Include="Assets\Scripts\Tools\QuickFunctions.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireBaseScript.cs" />
@@ -109,8 +111,7 @@
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireConstantBaseScript.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireLightScript.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
-    <Compile Include="Assets\Scripts\Behaviors\Explodable.cs" />
-    <Compile Include="Assets\Scripts\Behaviors\Interactive.cs" />
+    <Compile Include="Assets\Scripts\Enemies\SecurityDrone.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />

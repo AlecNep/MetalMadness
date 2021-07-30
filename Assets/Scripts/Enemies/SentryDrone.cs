@@ -5,22 +5,12 @@ using Pathfinding;
 
 public class SentryDrone : Explodable
 {
-    Transform playerRef;
     AIDestinationSetter aiDestination;
     Rigidbody rb;
 
     [SerializeField]
     float distanceThreshold;
     bool isInRange = false;
-    /*[SerializeField]
-    GameObject explosion;
-    [SerializeField]
-    float explosionForce;
-    [SerializeField]
-    float explosionRadius;
-
-    [SerializeField]
-    float damage;*/
 
     GameObject redLight;
     GameObject yellowLight;
@@ -30,9 +20,6 @@ public class SentryDrone : Explodable
     {
         health = maxHealth;
         aiDestination = GetComponent<AIDestinationSetter>();
-        playerRef = GameObject.Find("Player").transform;
-        if (playerRef == null)
-            Debug.LogError("Drone was unable to find the player");
 
         Transform lLights = transform.Find("Lights");
         redLight = lLights.Find("Red light").gameObject;
@@ -78,7 +65,7 @@ public class SentryDrone : Explodable
     {
         if (other.tag == "Player")
         {
-            aiDestination.target = playerRef;
+            aiDestination.target = other.transform;
         }
     }
 
