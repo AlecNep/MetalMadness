@@ -5,29 +5,21 @@ using UnityEngine;
 public class WeaponSelector : MonoBehaviour {
 
     static List<WheelIcon> mWeapons;
-    int mWeaponCount; //NOTE: might not be necessary. Here for placeholder purposes  //hardcoded
     static PlayerControls mPlayerRef;
     public static int mHighlighted { get; private set; }
 
 	// Use this for initialization
 	void Start () {
-        //Need to figure out when and how to determine the weapon amount
         mWeapons = new List<WheelIcon>(GetComponentsInChildren<WheelIcon>());
         mPlayerRef = GameObject.Find("Player").GetComponent<PlayerControls>();
         mHighlighted = -1;
-        //mWeaponCount = mPlayerRef.mWeaponCount;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
     public void Selector(Vector2 pAngle)
     {
-        mWeaponCount = mPlayerRef.mWeaponCount; //not sure why this had to be moved here, but okay
+        int weaponCount = mPlayerRef.mWeaponCount; //not sure why this had to be moved here, but okay
 
-        float lSlotSize = 360f / mWeaponCount;
+        float lSlotSize = 360f / weaponCount;
         float lAngle = Vector2.Angle(Vector2.up, pAngle);
         int lSelected;
 
@@ -39,7 +31,7 @@ public class WeaponSelector : MonoBehaviour {
         }
         lSelected = (int)(lAngle / lSlotSize);
         if (mHighlighted == -1) //fresh start; nothing has been highlighted since the wheel was opened
-        {
+        { //Edit 13/09/2021: I have no idea why I did this or why it works, but it works (for now), so I'm not touching it!!!
             mWeapons[lSelected].Toggle();
             mHighlighted = lSelected;
         }
@@ -56,9 +48,7 @@ public class WeaponSelector : MonoBehaviour {
     {
         if(mHighlighted > -1)
         {
-            mPlayerRef.mPreviousWeaponIndex = mPlayerRef.mWeaponIndex;
-            mPlayerRef.mWeaponIndex = mHighlighted;
-            mPlayerRef.ClearWeapons();
+            mPlayerRef.SetWeapons(mHighlighted);
             mWeapons[mHighlighted].Toggle();
             mHighlighted = -1;
         }

@@ -291,6 +291,13 @@ public class PlayerControls : Damageable {
         mGravShifter.GravityIsActive((int)mCurControls < 2);
     }
 
+    public void SetWeapons(int newWeaponIndex)
+    {
+        mPreviousWeaponIndex = mWeaponIndex;
+        mWeaponIndex = newWeaponIndex;
+        ClearWeapons();
+    }
+
     public void ClearWeapons()
     {
         for (int i = 0; i < mWeaponCount * 2; i++)
