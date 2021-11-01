@@ -19,7 +19,7 @@ public class GravityShifter : MonoBehaviour {
             SetGravityVariables();
         }
     }*/
-    private float mGravityFactor = 10f;
+    [SerializeField] private float mGravityFactor = 10f;
     public Vector3 mGravNormal { get; private set; }
     private Vector3 mMovementVector;
     private float mTargetShiftAngle = 0f; //Only here until the camera gets its own script
@@ -36,7 +36,7 @@ public class GravityShifter : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (mGravityActive)
         {
             mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);

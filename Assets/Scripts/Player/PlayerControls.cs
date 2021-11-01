@@ -53,10 +53,13 @@ public class PlayerControls : Damageable {
     {
         get
         {
-            if (_mGravShifter != null)
-                return _mGravShifter;
-            else
-                return null;
+            if (_mGravShifter == null)
+            {
+
+                _mGravShifter = gameObject.AddComponent<GravityShifter>();
+                
+            }
+            return _mGravShifter;
         }
     }
 
@@ -172,11 +175,11 @@ public class PlayerControls : Damageable {
                     {
                         //following lines are reduced by 1/10th because of the left stick sensitivity
                         float lDashSpeed = CommandPattern.OverCharge.mCharged ? mChargedDashSpeed : mDashSpeed;
-                        transform.position += 0.1f * mIntendedDirection * _mGravShifter.GetMovementVector() * lDashSpeed;
+                        transform.position += 0.1f * mIntendedDirection * mGravShifter.GetMovementVector() * lDashSpeed;
                     }
                     else
                     {
-                        transform.position += _mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
+                        transform.position += mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
                     }
                 }
 
