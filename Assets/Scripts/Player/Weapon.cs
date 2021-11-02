@@ -26,6 +26,10 @@ public abstract class Weapon : MonoBehaviour {
 
     public bool mOvercharged { get; private set; }
 
+    protected int ammo;
+    [SerializeField]
+    protected int maxAmmo;
+
     public void Awake()
     {
         mBulletSpawn = transform.Find("BulletSpawn");
