@@ -43,10 +43,12 @@ public class ShiftableBot : Damageable
     {
         get
         {
-            if (_mGravShifter != null)
-                return _mGravShifter;
-            else
-                return null;
+            if (_mGravShifter == null)
+            {
+
+                _mGravShifter = gameObject.AddComponent<GravityShifter>();
+            }
+            return _mGravShifter;
         }
     }
 

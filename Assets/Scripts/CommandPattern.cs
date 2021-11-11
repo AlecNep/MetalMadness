@@ -208,7 +208,10 @@ namespace CommandPattern
     {
         public override void Press()
         {
-            
+            if (mPlayerControls.interactibleObject != null)
+            {
+                mPlayerControls.interactibleObject.Interact();
+            }
         }
 
         public override void Release()

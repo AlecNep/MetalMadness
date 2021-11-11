@@ -18,6 +18,18 @@ public class PlayerControls : Damageable {
     public int mArmVariable;
     public int mTurnVariable;
 
+    private Interactive _interactibleObject;
+    public Interactive interactibleObject
+    {
+        get
+        {
+            return _interactibleObject;
+        }
+        set
+        {
+            _interactibleObject = value;
+        }
+    }
 
     //Movement and speed
     [SerializeField]
@@ -57,7 +69,6 @@ public class PlayerControls : Damageable {
             {
 
                 _mGravShifter = gameObject.AddComponent<GravityShifter>();
-                
             }
             return _mGravShifter;
         }
@@ -119,7 +130,9 @@ public class PlayerControls : Damageable {
         mWeaponCount = mWeapons.Length / 2;
 
         ClearWeapons(); //check later on if this is still necessary
-        mWeaponWheelRef = GameObject.Find("Weapon Wheel").GetComponent<WeaponSelector>();
+
+        
+        mWeaponWheelRef = GameManager.Instance.UI.transform.Find("Weapon Wheel").GetComponent<WeaponSelector>();
         mWheelWidth = mWeaponWheelRef.GetComponent<RectTransform>().sizeDelta.x;
         mWeaponWheelCursor = mWeaponWheelRef.transform.Find("Cursor").gameObject;
     }
@@ -127,7 +140,7 @@ public class PlayerControls : Damageable {
 
     private void Update() //doesn't seem to matter if it's regular or Late
     {
-        mTargetRotation = Quaternion.LookRotation(_mGravShifter.GetMovementVector() * -mIntendedDirection, -_mGravShifter.GetGravityNormal());
+        mTargetRotation = Quaternion.LookRotation(mGravShifter.GetMovementVector() * -mIntendedDirection, -mGravShifter.GetGravityNormal());
 
         if (transform.rotation != mTargetRotation)
         {
@@ -167,7 +180,7 @@ public class PlayerControls : Damageable {
                     }
                 }
 
-                LayerMask layers = 1 << 11 | 1 << 12;
+                LayerMask layers = 1 << 11 | 1 << 12; //"environment" and "enemies"
                 RaycastHit hit;
                 if (!Physics.Raycast(transform.position, mGravShifter.GetMovementVector() * mIntendedDirection, out hit, 0.7f, layers))
                 {

@@ -2,26 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public class Interactive : MonoBehaviour
 {
-    Collider bounds;
+    protected GameObject bounds;
+    protected GameObject interactableObject;
 
-    private void Awake()
+
+    protected void Awake()
     {
-        bounds = GetComponent<Collider>();
-        bounds.isTrigger = true;
+        bounds = transform.Find("Bounds").gameObject;
+        if (bounds.TryGetComponent(out BoxCollider col))
+        {
+            col.isTrigger = true;
+        }
+        else
+        {
+            Debug.LogError("Interactive object " + name + "Does not have collider in bounds object!");
+        }
+
+        interactableObject = transform.Find("Object").gameObject;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public virtual void Interact() { }
+
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.tag == "Player")
+        {
+            GameManager.Instance.player.interactibleObject = this;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider other)
     {
-        
+        if (other.tag == "Player")
+        {
+            GameManager.Instance.player.interactibleObject = null;
+        }
     }
 }

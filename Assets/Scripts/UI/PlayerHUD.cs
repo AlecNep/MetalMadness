@@ -26,7 +26,6 @@ public class PlayerHUD : MonoBehaviour
         dash.maxValue = player.GetDashDelay();
     }
 
-    // Update is called once per frame
     void LateUpdate()
     {
         //TODO: MAJORLY temporary code here! Change ASAP!

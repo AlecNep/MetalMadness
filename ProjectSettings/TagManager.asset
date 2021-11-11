@@ -12,6 +12,7 @@ TagManager:
   - Rivetable
   - Serviceable
   - Explosion
+  - WeaponWheel
   layers:
   - Default
   - TransparentFX

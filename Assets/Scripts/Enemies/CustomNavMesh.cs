@@ -20,10 +20,12 @@ public class CustomNavMesh : MonoBehaviour
     {
         get
         {
-            if (_gravShifter != null)
-                return _gravShifter;
-            else
-                return null;
+            if (_gravShifter == null)
+            {
+
+                _gravShifter = gameObject.AddComponent<GravityShifter>();
+            }
+            return _gravShifter;
         }
     }
 
