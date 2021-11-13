@@ -17,6 +17,13 @@ public class Damageable : MonoBehaviour
             Die();
     }
 
+    public virtual void SetHealth(float pChange)
+    {
+        health = pChange;
+        if(health <= 0)
+            Die();
+    }
+
     public float GetHealth() { return health; }
 
     public float GetMaxHealth() { return maxHealth; }
