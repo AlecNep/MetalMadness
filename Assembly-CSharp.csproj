@@ -94,6 +94,7 @@
     <Compile Include="Assets\Scripts\Behavior Tree\Inverter.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHUD.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Node.cs" />
+    <Compile Include="Assets\Scripts\Behaviors\TestDoor.cs" />
     <Compile Include="Assets\Scripts\Behaviors\GravityShifter.cs" />
     <Compile Include="Assets\Scripts\Player\Weapon.cs" />
     <Compile Include="Assets\Scripts\Enemies\SentryDrone.cs" />
@@ -114,7 +115,7 @@
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\ActionNode.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
-    <Compile Include="Assets\Scripts\Behaviors\TestDoor.cs" />
+    <Compile Include="Assets\Scripts\Environment\DamageHazard.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />

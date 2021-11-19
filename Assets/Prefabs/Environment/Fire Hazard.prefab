@@ -19209,9 +19209,9 @@ GameObject:
   - component: {fileID: 6442375955463572859}
   - component: {fileID: 6442375955463612781}
   - component: {fileID: 6442375953951408693}
-  - component: {fileID: 6442375953951408692}
+  - component: {fileID: -6203614674676855981}
   m_Layer: 10
-  m_Name: WallOfFire
+  m_Name: Fire Hazard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19287,7 +19287,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 12, y: 3, z: 1}
   m_Center: {x: 0, y: 0.71, z: 0}
---- !u!114 &6442375953951408692
+--- !u!114 &-6203614674676855981
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19296,7 +19296,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6442375955452406251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d560c3f2446e1d41a5bbb85dcbbc5c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 46af2b45d58d02e46a3de879241db5b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0.5

@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireTrap : MonoBehaviour
+public class DamageHazard : MonoBehaviour
 {
     [SerializeField]
     private float damage;
 
+    /// <summary>
+    /// Causes damage if the player is inside a damaging zone
+    /// Used if the attached collider is a trigger
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player" || other.tag == "Enemy")
@@ -16,6 +21,11 @@ public class FireTrap : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Causes damage if the player is touching the object
+    /// Used if the attached collider is not a trigger
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionStay(Collision collision)
     {
         if (collision.collider.tag == "Player" || collision.collider.tag == "Enemy")
