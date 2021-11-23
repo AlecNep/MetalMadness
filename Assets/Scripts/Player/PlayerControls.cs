@@ -87,6 +87,10 @@ public class PlayerControls : Damageable {
     public bool mShifting = false;
     private float mDistToGround;
 
+    [SerializeField]
+    private float cameraDistance;
+
+
     //Actual player stats
     private const float DEFAULT_HEALTH = 100f;
 
@@ -133,8 +137,8 @@ public class PlayerControls : Damageable {
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mBodyRotationSpeed);
         }
-
-        mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
+        
+        mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, cameraDistance);
         mCamera.transform.rotation = Quaternion.Euler(0, 0, _mGravShifter.GetShiftAngle());
     }
 
