@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2271225420460972805}
   - component: {fileID: 2271225420460972804}
   - component: {fileID: 2271225420460972802}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: LargeHeatedCoils
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 2271225420711043937}
   - component: {fileID: 2271225420711043935}
   - component: {fileID: 2271225420711043934}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 2271225420992546138}
   - component: {fileID: 2271225420992546136}
   - component: {fileID: 2271225420992546139}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 2271225421564903537}
   - component: {fileID: 2271225421564903535}
   - component: {fileID: 2271225421564903534}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
