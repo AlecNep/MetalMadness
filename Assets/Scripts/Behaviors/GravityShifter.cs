@@ -6,9 +6,9 @@ public class GravityShifter : MonoBehaviour {
 
     private Rigidbody mRb;
     public enum Gravity { South = 0, East = 1, North = 2, West = 3 };
-    //private Gravity _mCurGravity = Gravity.South;
-    public Gravity mCurGravity; //temporary; can't set in editor if it's the other way around
-    /*{
+    private Gravity _mCurGravity = Gravity.South;
+    public Gravity mCurGravity 
+    {
         get
         {
             return _mCurGravity;
@@ -18,19 +18,18 @@ public class GravityShifter : MonoBehaviour {
             _mCurGravity = value;
             SetGravityVariables();
         }
-    }*/
+    }
     [SerializeField] private float mGravityFactor = 10f;
     public Vector3 mGravNormal { get; private set; }
     private Vector3 mMovementVector;
     private float mTargetShiftAngle = 0f; //Only here until the camera gets its own script
     private bool mGravityActive;
+    private bool mGravLocked = false;
 
 
     // Use this for initialization
     void Start () {
         mRb = GetComponent<Rigidbody>(); //secure this later
-        //mGravNormal = Vector3.down;
-        //mCurGravity = Gravity.South;
         mGravityActive = true;
         SetGravityVariables();
     }
@@ -42,6 +41,25 @@ public class GravityShifter : MonoBehaviour {
             mRb.AddForce(mGravityFactor * mRb.mass * mGravNormal);
         }
 	}
+
+    public void ForceGravity(int pDirection)
+    {
+        if ((int)mCurGravity != pDirection)
+            mRb.velocity = Vector3.zero;
+        mCurGravity = (Gravity)pDirection;
+        Lock(true);
+    }
+
+    //Might not need to be public; but I'll leave it that way for now
+    public void Lock(bool locked)
+    {
+        mGravLocked = locked;
+    }
+
+    public bool IsLocked()
+    {
+        return mGravLocked;
+    }
 
     public void GravityIsActive(bool pActive)
     {
@@ -72,6 +90,10 @@ public class GravityShifter : MonoBehaviour {
 
     private void SetGravityVariables()
     {
+        if (mGravLocked)
+        {
+            Debug.Log(name + " cannot shift gravity due to being grav-locked");
+        }
         switch ((int)mCurGravity)
         {
             case 0: //South (normal gravity)

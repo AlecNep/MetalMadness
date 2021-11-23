@@ -29,7 +29,7 @@ public class Interactive : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            GameManager.Instance.player.interactibleObject = this;
+            GameManager.Instance.player.interactableObject = this;
         }
     }
 
@@ -37,7 +37,7 @@ public class Interactive : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            GameManager.Instance.player.interactibleObject = null;
+            GameManager.Instance.player.interactableObject = null;
         }
     }
 }

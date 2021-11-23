@@ -17,19 +17,7 @@ public class PlayerControls : Damageable {
 
     public int mArmVariable;
     public int mTurnVariable;
-
-    private Interactive _interactibleObject;
-    public Interactive interactibleObject
-    {
-        get
-        {
-            return _interactibleObject;
-        }
-        set
-        {
-            _interactibleObject = value;
-        }
-    }
+    public Interactive interactableObject { get; set; }
 
     //Movement and speed
     [SerializeField]
@@ -138,7 +126,7 @@ public class PlayerControls : Damageable {
     }
 
 
-    private void Update() //doesn't seem to matter if it's regular or Late
+    private void Update() 
     {
         mTargetRotation = Quaternion.LookRotation(mGravShifter.GetMovementVector() * -mIntendedDirection, -mGravShifter.GetGravityNormal());
 
@@ -366,7 +354,7 @@ public class PlayerControls : Damageable {
 
     public bool CanShift()
     {
-        return shiftTimer == 0;
+        return !mGravShifter.IsLocked() && shiftTimer == 0;
     }
 
     public bool CanDash()

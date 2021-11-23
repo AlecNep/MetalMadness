@@ -106,6 +106,7 @@
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireCollisionForwardScript.cs" />
     <Compile Include="Assets\Scripts\Player\Thermite.cs" />
     <Compile Include="Assets\Scripts\Player\Rocket.cs" />
+    <Compile Include="Assets\Scripts\Environment\DamageHazard.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\NodeStates.cs" />
     <Compile Include="Assets\Scripts\Player\Spike.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\exploders\SphereExploder.cs" />
@@ -115,7 +116,7 @@
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\ActionNode.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
-    <Compile Include="Assets\Scripts\Environment\DamageHazard.cs" />
+    <Compile Include="Assets\Scripts\Environment\BrokenGravityPanel.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
