@@ -452,10 +452,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc7adcb06e51c04492e690aab1a78c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 50
   explosion: {fileID: 1741139860889314, guid: 7bdb4cb7604baf34b9167f46e0b962e4, type: 3}
   explosionForce: 15
-  explosionRadius: 5
+  explosionRadius: 6
   damage: 25
   fireRate: 2
   laser: {fileID: 5606160744072448360, guid: 6b5c05959a1252d449d7d72c6cc98a5c, type: 3}
