@@ -19,7 +19,12 @@ public class GravityShifter : MonoBehaviour {
             SetGravityVariables();
         }
     }
-    [SerializeField] private float mGravityFactor = 10f;
+
+    [SerializeField]
+    private int defaultGravity;
+
+    [SerializeField]
+    private float mGravityFactor = 10f;
     public Vector3 mGravNormal { get; private set; }
     private Vector3 mMovementVector;
     private float mTargetShiftAngle = 0f; //Only here until the camera gets its own script
@@ -27,10 +32,19 @@ public class GravityShifter : MonoBehaviour {
     private bool mGravLocked = false;
 
 
+    private void OnValidate()
+    {
+        if (defaultGravity < 0 || defaultGravity > 3)
+        {
+            defaultGravity = 0;
+        }
+    }
+
     // Use this for initialization
     void Start () {
         mRb = GetComponent<Rigidbody>(); //secure this later
         mGravityActive = true;
+        mCurGravity = (Gravity)defaultGravity;
         SetGravityVariables();
     }
 	
