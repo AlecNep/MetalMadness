@@ -14,6 +14,9 @@ public class TestDoor : Interactive
 
     private Vector3 movementAxis;
 
+    [SerializeField]
+    private InteractivePanel[] panels;
+
     private new void Awake()
     {
         base.Awake();
