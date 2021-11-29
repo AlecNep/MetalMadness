@@ -80,6 +80,7 @@
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireBaseScript.cs" />
     <Compile Include="Assets\Scripts\Player\StickyBomb.cs" />
     <Compile Include="Assets\Scripts\Player\StickyBombLauncher.cs" />
+    <Compile Include="Assets\Scripts\Environment\PanelManagerEditor.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\PseudoVolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Player\ThermiteThrower.cs" />
     <Compile Include="Assets\Scripts\Environment\SawTrap.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Explosion.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\PseudoVolumetricExplosion.cs" />
+    <Compile Include="Assets\Scripts\Environment\PanelManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerControls.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireCollisionForwardScript.cs" />
     <Compile Include="Assets\Scripts\Player\Thermite.cs" />
@@ -118,8 +120,7 @@
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\ActionNode.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
-    <Compile Include="Assets\Scripts\Environment\PanelManagerEditor.cs" />
-    <Compile Include="Assets\Scripts\Environment\PanelManager.cs" />
+    <Compile Include="Assets\Scripts\Environment\LaserTrap.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
