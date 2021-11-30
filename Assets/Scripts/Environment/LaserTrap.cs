@@ -2,26 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserTrap : MonoBehaviour
+public class LaserTrap : Interactive
 {
-    private Transform base1;
-    private Transform base2;
-    private Transform laser;
+    protected Transform base1;
+    protected Transform base2;
+    protected Transform laser;
 
     [SerializeField]
-    private float length;
+    protected float length;
     [SerializeField]
-    private float damage;
-
-    [Range(0,1)]
-    public float powerOnPercentage;
-    private float powerTimer = 0;
-
+    protected float damage;
+    //private bool isOn = true;
 
     private void OnValidate()
     {
         SetUpLaser();
-        
     }
 
     void Awake()
@@ -29,31 +24,13 @@ public class LaserTrap : MonoBehaviour
         SetUpLaser();
     }
 
-    private void Start()
-    {
-        laser.gameObject.SetActive(false);
-    }
-
     // Update is called once per frame
     void Update()
     {
-        powerTimer += Time.deltaTime;
-        if (IsPoweredOn())
-        {
-            laser.gameObject.SetActive(true);
-        }
-        else
-        {
-            laser.gameObject.SetActive(false);
-        }
+        
     }
 
-    public bool IsPoweredOn()
-    {
-        return Mathf.Abs(Mathf.Sin(powerTimer)) >= (1 - powerOnPercentage);
-    }
-
-    private void SetUpLaser()
+    protected void SetUpLaser()
     {
         if (base1 == null || base2 == null || laser == null)
         {
@@ -68,11 +45,16 @@ public class LaserTrap : MonoBehaviour
         laser.localScale = new Vector3(2.5f, length - lBaseHeight, 2.5f);
     }
 
+    public virtual bool IsPoweredOn()
+    {
+        return false;
+        //return isOn;
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (IsPoweredOn() && other.TryGetComponent(out Damageable d))
         {
-            print("should be damaging " + other.name);
             d.ChangeHealth(-damage);
         }
     }
