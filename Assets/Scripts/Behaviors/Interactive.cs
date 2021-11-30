@@ -10,7 +10,7 @@ public class Interactive : MonoBehaviour
 
     protected void Awake()
     {
-        bounds = transform.Find("Bounds").gameObject;
+        /*bounds = transform.Find("Bounds").gameObject;
         if (bounds.TryGetComponent(out BoxCollider col))
         {
             col.isTrigger = true;
@@ -20,7 +20,7 @@ public class Interactive : MonoBehaviour
             Debug.LogError("Interactive object " + name + "Does not have collider in bounds object!");
         }
 
-        interactableObject = transform.Find("Object").gameObject;
+        interactableObject = transform.Find("Object").gameObject;*/
     }
 
     public virtual void Interact() { }

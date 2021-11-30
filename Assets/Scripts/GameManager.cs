@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 
     public PlayerControls player;
     public GameObject UI;
+    public PauseMenu pauseMenu;
 
     private void Awake()
     {

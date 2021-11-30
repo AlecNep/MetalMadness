@@ -247,7 +247,7 @@ namespace CommandPattern
     {
         public override void Press()
         {
-            
+            GameManager.Instance.pauseMenu.PauseGame();
         }
 
         public override void Release()
