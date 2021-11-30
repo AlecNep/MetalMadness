@@ -19,6 +19,10 @@ public class TimedLaserTrap : LaserTrap
     void Update()
     {
         powerTimer += Time.deltaTime;
+        if (powerTimer > 2 * Mathf.PI)
+        {
+            powerTimer -= 2 * Mathf.PI;
+        }
         if (IsPoweredOn())
         {
             laser.gameObject.SetActive(true);
