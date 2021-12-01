@@ -7,37 +7,40 @@ public class TestDoor : Interactive
     private Vector3 startPos;
     private Vector3 endPos;
     [SerializeField]
-    private float distance;
+    private float delayTimer;
     [SerializeField]
     private float speed;
     private bool isOpen = false;
 
-    private Vector3 movementAxis;
-
+    public enum Orientation { left = 0, up = 1, right = 2, down = 3 }
     [SerializeField]
-    private InteractivePanel[] panels;
+    public Orientation opensTo;
 
-    private new void Awake()
+    private Transform door;
+
+    private void OnValidate()
     {
-        base.Awake();
-        startPos = interactableObject.transform.position; //get world position
-        endPos = startPos + (distance * interactableObject.transform.up);
-        movementAxis = Vector3.zero; //probably unnecessary
+        transform.rotation = Quaternion.Euler(Vector3.forward * (90 * (int)opensTo));
+        /*if (opensTo == 0) //Is horizontal
+        {
+            transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
+        else //Is Vertical
+        {
+            transform.rotation = Quaternion.Euler(Vector3.forward * 90);
+        }*/
+    }
 
-        Vector3 diff = endPos - startPos;
-        int nonZero = 0;
-        for (int i = 0; i < 2; ++i) //Setting to 2 because we don't need the Z-axis
+    protected void Awake()
+    {
+        door = transform.Find("Door");
+        if (door == null)
         {
-            if (diff[i] != 0)
-            {
-                movementAxis[i] = diff[i] / Mathf.Abs(diff[i]); //Will give 1 if positive or -1 if negative, otherwise 0
-                ++nonZero;
-            }
+            Debug.LogError("Object " + name + " at " + transform.position + " does not have a door!");
         }
-        if (nonZero > 1)
-        {
-            Debug.LogError("ERROR: Object " + name + " is not alligned with an axis! Current axis=" + movementAxis);
-        }
+
+        startPos = door.localPosition;
+        endPos = startPos + Vector3.right * door.localScale.x;
     }
 
     public override void Interact()
@@ -55,16 +58,27 @@ public class TestDoor : Interactive
         isOpen = !isOpen;
     }
 
+    //while loop somehow isn't finishing
     private IEnumerator Move(Vector3 destination)
     {
-        
-
-        while (Vector3.Distance(interactableObject.transform.position, destination) > 0)
+        float delay = 0;
+        while (delay < delayTimer)
         {
-            interactableObject.transform.position += interactableObject.transform.TransformDirection(destination - interactableObject.transform.position) * speed;
+            yield return null;
+            delay += Time.deltaTime;
+        }
+
+        while (Vector3.Distance(door.localPosition, destination) > 0)
+        {
+            door.localPosition = Vector3.MoveTowards(door.localPosition, destination, speed * Time.deltaTime);
+
+            if (Mathf.Approximately(door.localPosition.x, destination.x))
+            {
+                door.localPosition = destination;
+                break;
+            }
 
             yield return null;
-        }
-        interactableObject.transform.position = destination;
+        }        
     }
 }

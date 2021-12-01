@@ -7,8 +7,8 @@ public class Interactive : MonoBehaviour
     protected GameObject bounds;
     protected GameObject interactableObject;
 
-
-    protected void Awake()
+    //This might might be completely unnecessary
+    /*protected void Awake()
     {
         bounds = transform.Find("Bounds").gameObject;
         if (bounds.TryGetComponent(out BoxCollider col))
@@ -21,11 +21,11 @@ public class Interactive : MonoBehaviour
         }
 
         interactableObject = transform.Find("Object").gameObject;
-    }
+    }*/
 
     public virtual void Interact() { }
 
-    private void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
@@ -33,7 +33,7 @@ public class Interactive : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {
