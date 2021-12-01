@@ -53,6 +53,9 @@
     <UnityVersion>2020.2.3f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Scripts\UI\Compass.cs" />
     <Compile Include="Assets\Scripts\Environment\BrokenGravityPanel.cs" />
     <Compile Include="Assets\Scripts\Enemies\SecurityDrone.cs" />
@@ -72,6 +75,7 @@
     <Compile Include="Assets\Scripts\Behavior Tree\Repeater.cs" />
     <Compile Include="Assets\Scripts\Player\Shotgun.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\MeteorSwarmScript.cs" />
+    <Compile Include="Assets\Scripts\Environment\InteractiveLaserTrap.cs" />
     <Compile Include="Assets\Scripts\Behaviors\Explodable.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\exploders\Exploder2D.cs" />
     <Compile Include="Assets\Scripts\Player\AutomaticWeapon.cs" />
@@ -85,6 +89,7 @@
     <Compile Include="Assets\Scripts\Player\ThermiteThrower.cs" />
     <Compile Include="Assets\Scripts\Environment\SawTrap.cs" />
     <Compile Include="Assets\Scripts\Player\Bullet.cs" />
+    <Compile Include="Assets\Scripts\Environment\TimedLaserTrap.cs" />
     <Compile Include="Assets\Scripts\Player\Minigun.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Sequence.cs" />
     <Compile Include="Assets\Scripts\InputManager.cs" />
@@ -94,6 +99,7 @@
     <Compile Include="Assets\Scripts\CommandPattern.cs" />
     <Compile Include="Assets\Scripts\Environment\FireTrap.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Inverter.cs" />
+    <Compile Include="Assets\Scripts\Environment\LaserTrap.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHUD.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Node.cs" />
     <Compile Include="Assets\Scripts\Behaviors\TestDoor.cs" />
@@ -120,9 +126,6 @@
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\ActionNode.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
-    <Compile Include="Assets\Scripts\Environment\LaserTrap.cs" />
-    <Compile Include="Assets\Scripts\Environment\TimedLaserTrap.cs" />
-    <Compile Include="Assets\Scripts\Environment\InteractiveLaserTrap.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
