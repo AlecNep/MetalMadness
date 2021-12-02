@@ -21,14 +21,6 @@ public class TestDoor : Interactive
     private void OnValidate()
     {
         transform.rotation = Quaternion.Euler(Vector3.forward * (90 * (int)opensTo));
-        /*if (opensTo == 0) //Is horizontal
-        {
-            transform.rotation = Quaternion.Euler(Vector3.zero);
-        }
-        else //Is Vertical
-        {
-            transform.rotation = Quaternion.Euler(Vector3.forward * 90);
-        }*/
     }
 
     protected void Awake()
@@ -80,5 +72,17 @@ public class TestDoor : Interactive
 
             yield return null;
         }        
+    }
+
+    public void ForceOpen()
+    {
+        StartCoroutine(Move(endPos));
+        isOpen = true;
+    }
+
+    public void ForceClose()
+    {
+        StartCoroutine(Move(startPos));
+        isOpen = false;
     }
 }
