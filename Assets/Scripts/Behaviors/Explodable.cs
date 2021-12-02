@@ -39,7 +39,7 @@ public class Explodable : Damageable
         Destroy(gameObject);
     }
 
-    protected override void Die()
+    public override void Die()
     {
         Explode(); //There's probable a better way to do this, but this should work for now
     }

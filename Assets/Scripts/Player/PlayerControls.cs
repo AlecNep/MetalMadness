@@ -403,7 +403,7 @@ public class PlayerControls : Damageable {
         mAttachedToWall = mAttachedToEnemy = false;
     }
 
-    protected override void Die()
+    public override void Die()
     {
         //All temporary code!
         mGravShifter.ShiftGravity(4 - (int)mGravShifter.mCurGravity);
