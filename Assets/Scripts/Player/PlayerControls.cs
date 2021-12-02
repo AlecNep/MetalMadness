@@ -135,7 +135,7 @@ public class PlayerControls : Damageable {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mBodyRotationSpeed);
         }
 
-        mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
+        mCamera.transform.position = new Vector3(transform.position.x, transform.position.y + 3, -20);
         mCamera.transform.rotation = Quaternion.Euler(0, 0, _mGravShifter.GetShiftAngle());
     }
 
