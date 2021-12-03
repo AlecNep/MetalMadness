@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ClearBlue
+  m_Name: ClearRed
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _ALPHABLEND_ON _EMISSION
-  m_LightmapFlags: 1
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
@@ -74,6 +74,6 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 0.26032397, g: 0.45480978, b: 0.8490566, a: 0.49019608}
-    - _EmissionColor: {r: 0.07008721, g: 0.1321312, b: 0.4245283, a: 1}
+    - _Color: {r: 0.9056604, g: 0.28622285, b: 0.28622285, a: 0.49019608}
+    - _EmissionColor: {r: 0.5, g: 0.015686275, b: 0.015686275, a: 1}
   m_BuildTextureStacks: []
