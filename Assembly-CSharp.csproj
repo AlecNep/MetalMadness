@@ -71,9 +71,12 @@
     <Compile Include="Assets\Scripts\Environment\DoorCloserTrigger.cs" />
     <Compile Include="Assets\Scripts\Enemies\CustomNavMesh.cs" />
     <Compile Include="Assets\Scripts\UI\WeaponSelector.cs" />
+    <Compile Include="Assets\Scripts\Items\HealthRefill.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent2D.cs" />
+    <Compile Include="Assets\Scripts\Items\DashRefill.cs" />
     <Compile Include="Assets\Scripts\UI\WheelIcon.cs" />
     <Compile Include="Assets\Scripts\Enemies\ShiftableBot.cs" />
+    <Compile Include="Assets\Scripts\Environment\InstaKillHazard.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Repeater.cs" />
     <Compile Include="Assets\Scripts\Player\Shotgun.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\MeteorSwarmScript.cs" />
@@ -87,6 +90,7 @@
     <Compile Include="Assets\Scripts\Player\StickyBomb.cs" />
     <Compile Include="Assets\Scripts\Player\StickyBombLauncher.cs" />
     <Compile Include="Assets\Scripts\Environment\PanelManagerEditor.cs" />
+    <Compile Include="Assets\Scripts\Items\GravShiftRefill.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\PseudoVolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Player\ThermiteThrower.cs" />
     <Compile Include="Assets\Scripts\Environment\SawTrap.cs" />
@@ -101,6 +105,7 @@
     <Compile Include="Assets\Scripts\CommandPattern.cs" />
     <Compile Include="Assets\Scripts\Environment\FireTrap.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Inverter.cs" />
+    <Compile Include="Assets\Scripts\Items\Pickup.cs" />
     <Compile Include="Assets\Scripts\Environment\LaserTrap.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHUD.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Node.cs" />
@@ -129,10 +134,6 @@
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\ActionNode.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
-<<<<<<< HEAD
-=======
-    <Compile Include="Assets\Scripts\Environment\InstaKillHazard.cs" />
->>>>>>> Hazards
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
