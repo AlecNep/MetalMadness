@@ -7,6 +7,8 @@ public class TimedLaserTrap : LaserTrap
     [Range(0, 1)]
     public float powerOnPercentage;
     private float powerTimer = 0;
+    [SerializeField]
+    private float timeOffset;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +37,6 @@ public class TimedLaserTrap : LaserTrap
 
     public override bool IsPoweredOn()
     {
-        return Mathf.Abs(Mathf.Sin(powerTimer)) >= (1 - powerOnPercentage);
+        return Mathf.Abs(Mathf.Sin(powerTimer - timeOffset)) >= (1 - powerOnPercentage);
     }
 }

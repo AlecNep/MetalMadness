@@ -17,8 +17,8 @@ public class Oscillator : MonoBehaviour {
     private float mMovementVar;
 
 	// Use this for initialization
-	void Start () {
-        gameObject.tag = "MovingPlatform";
+	void OnValidate () {
+        //gameObject.tag = "MovingPlatform";
         mCol = GetComponent<BoxCollider>();
         mCube = transform.GetChild(0);
         mCol.size = mCube.localScale = new Vector3(mLength, 0.2f, 3f);
