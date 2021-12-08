@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace CommandPattern
 {
@@ -38,7 +39,70 @@ namespace CommandPattern
 
     //~~~Child classes~~~
 
-    
+    public class GameplayCommand : Command
+    {
+        private Action pressCommand;
+        private Action releaseCommand;
+
+        public override void Press()
+        {
+            if (pressCommand == null)
+            {
+                throw new System.NotImplementedException();
+            }
+            else
+            {
+                if (!PauseMenu.isPaused)
+                {
+                    pressCommand();
+                }
+                else
+                {
+                    Debug.Log("Trying to call a GameplayCommand.Press() method while paused");
+                }
+            }
+                
+        }
+
+        public override void Release()
+        {
+            if (releaseCommand == null)
+            {
+                throw new System.NotImplementedException();
+            }
+            else
+            {
+                if (!PauseMenu.isPaused)
+                {
+                    releaseCommand();
+                }
+                else
+                {
+                    Debug.Log("Trying to call a GameplayCommand.Release() method while paused");
+                }
+            }
+        }
+
+        public GameplayCommand()
+        {
+            pressCommand = null;
+            releaseCommand = null;
+            Debug.LogWarning(name + " is a GameplayCommand but has no methods to implement!");
+        }
+
+        public GameplayCommand(Action press, Action release)
+        {
+            pressCommand = press;
+            releaseCommand = release;
+        }
+
+        public GameplayCommand(Command c)
+        {
+            pressCommand = c.Press;
+            releaseCommand = c.Release;
+        }
+    }
+
     //Active gameplay commands
     public class Jump : Command
     {
