@@ -25,7 +25,7 @@ public class Interactive : MonoBehaviour
 
     public virtual void Interact() { }
 
-    private void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
@@ -33,7 +33,7 @@ public class Interactive : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {

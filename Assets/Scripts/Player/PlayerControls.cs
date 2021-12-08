@@ -168,7 +168,7 @@ public class PlayerControls : Damageable {
                     }
                 }
 
-                LayerMask layers = 1 << 11 | 1 << 12; //"environment" and "enemies"
+                LayerMask layers = 1 << 11 | 1 << 12 | 1 << 13 | 1<< 15; //environment, enemies, destructible, and doors
                 RaycastHit hit;
                 if (!Physics.Raycast(transform.position, mGravShifter.GetMovementVector() * mIntendedDirection, out hit, 0.7f, layers))
                 {
@@ -314,24 +314,6 @@ public class PlayerControls : Damageable {
         }
     }
 
-    /*public override void ChangeHealth(float pChange)
-    {
-        health += pChange;
-        float lHalfMax = maxHealth / 2;
-        if (Mathf.Abs(health - lHalfMax) > lHalfMax) //either above 100 or dead af
-        {
-            if (health > 0)
-            { //over 100
-                health = maxHealth;
-            }
-            else
-            {
-                //Dead
-                Die();
-            }
-        }
-    }*/
-
     public float GetShiftDelay()
     {
         return mGravShiftDelay;
@@ -379,7 +361,6 @@ public class PlayerControls : Damageable {
             mOnMovingObject = false;
             transform.SetParent(null, true);
         }
-        
     }
 
     public void SpikeAttached(string pTag)
@@ -403,7 +384,17 @@ public class PlayerControls : Damageable {
         mAttachedToWall = mAttachedToEnemy = false;
     }
 
-    protected override void Die()
+    public void RefillGravity()
+    {
+        shiftTimer = 0;
+    }
+
+    public void RefillDash()
+    {
+        mDashTimer = 0;
+    }
+
+    public override void Die()
     {
         //All temporary code!
         mGravShifter.ShiftGravity(4 - (int)mGravShifter.mCurGravity);

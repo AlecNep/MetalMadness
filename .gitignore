@@ -298,3 +298,4 @@ sysinfo.txt
 *.apk
 *.unitypackage
 >>>>>>> 0a5a50f5af2f58ac63db2d1f30f987ee9a06a260
+Library/ShaderCache.db
