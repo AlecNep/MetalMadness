@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\UI\Compass.cs" />
+    <Compile Include="Assets\Scripts\Environment\ForcedGravityRoom.cs" />
     <Compile Include="Assets\Scripts\Environment\BrokenGravityPanel.cs" />
     <Compile Include="Assets\Scripts\Enemies\SecurityDrone.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\SingleLineAttribute.cs" />
@@ -67,11 +68,15 @@
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\LightComponent.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\exploders\Exploder.cs" />
     <Compile Include="Assets\Scripts\Player\RivetGun.cs" />
+    <Compile Include="Assets\Scripts\Environment\DoorCloserTrigger.cs" />
     <Compile Include="Assets\Scripts\Enemies\CustomNavMesh.cs" />
     <Compile Include="Assets\Scripts\UI\WeaponSelector.cs" />
+    <Compile Include="Assets\Scripts\Items\HealthRefill.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent2D.cs" />
+    <Compile Include="Assets\Scripts\Items\DashRefill.cs" />
     <Compile Include="Assets\Scripts\UI\WheelIcon.cs" />
     <Compile Include="Assets\Scripts\Enemies\ShiftableBot.cs" />
+    <Compile Include="Assets\Scripts\Environment\InstaKillHazard.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Repeater.cs" />
     <Compile Include="Assets\Scripts\Player\Shotgun.cs" />
     <Compile Include="Assets\Scripts\UI\PauseMenu.cs" />
@@ -86,6 +91,7 @@
     <Compile Include="Assets\Scripts\Player\StickyBomb.cs" />
     <Compile Include="Assets\Scripts\Player\StickyBombLauncher.cs" />
     <Compile Include="Assets\Scripts\Environment\PanelManagerEditor.cs" />
+    <Compile Include="Assets\Scripts\Items\GravShiftRefill.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\PseudoVolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Player\ThermiteThrower.cs" />
     <Compile Include="Assets\Scripts\Environment\SawTrap.cs" />
@@ -100,10 +106,11 @@
     <Compile Include="Assets\Scripts\CommandPattern.cs" />
     <Compile Include="Assets\Scripts\Environment\FireTrap.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Inverter.cs" />
+    <Compile Include="Assets\Scripts\Items\Pickup.cs" />
     <Compile Include="Assets\Scripts\Environment\LaserTrap.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHUD.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Node.cs" />
-    <Compile Include="Assets\Scripts\Behaviors\TestDoor.cs" />
+    <Compile Include="Assets\Scripts\Environment\TestDoor.cs" />
     <Compile Include="Assets\Scripts\Behaviors\GravityShifter.cs" />
     <Compile Include="Assets\Scripts\Player\Weapon.cs" />
     <Compile Include="Assets\Scripts\Enemies\SentryDrone.cs" />
@@ -123,6 +130,7 @@
     <Compile Include="Assets\True Explosions\System\Scripts\exploders\SphereExploder.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireConstantBaseScript.cs" />
     <Compile Include="Assets\PorglezompPyroclastics\ExplosionMat.cs" />
+    <Compile Include="Assets\Scripts\Environment\DoorResetter.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireLightScript.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\ActionNode.cs" />
