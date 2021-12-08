@@ -35,19 +35,26 @@ public class TestDoor : Interactive
         endPos = startPos + Vector3.right * door.localScale.x;
     }
 
-    public override void Interact()
+    public override void Interact(string input = "")
     {
-        if (isOpen)
+        if (input == "")
         {
-            //Close
-            StartCoroutine(Move(startPos));
+            if (isOpen)
+            {
+                //Close
+                StartCoroutine(Move(startPos));
+            }
+            else
+            {
+                //Open
+                StartCoroutine(Move(endPos));
+            }
+            isOpen = !isOpen;
         }
         else
         {
-            //Open
-            StartCoroutine(Move(endPos));
+            //not sure if we will need this, but it's good to have
         }
-        isOpen = !isOpen;
     }
 
     //while loop somehow isn't finishing

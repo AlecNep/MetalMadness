@@ -44,7 +44,8 @@ public class Oscillator : MonoBehaviour {
         mCounter += Time.deltaTime;
 
         mMovementVar = mStartingPoint + mMovementDistance * Mathf.Sin(mCounter * mMovementSpeed);
-
+        
+        //Could probably just be done with localPosition instead
         Vector3 lPos = mVertical ? new Vector3(transform.position.x, mMovementVar, transform.position.z) : 
             new Vector3(mMovementVar, transform.position.y, transform.position.z);
         transform.position = lPos;
