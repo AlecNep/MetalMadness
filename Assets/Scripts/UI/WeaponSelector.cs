@@ -5,19 +5,17 @@ using UnityEngine;
 public class WeaponSelector : MonoBehaviour {
 
     static List<WheelIcon> mWeapons;
-    static PlayerControls mPlayerRef;
     public static int mHighlighted { get; private set; }
 
 	// Use this for initialization
 	void Start () {
         mWeapons = new List<WheelIcon>(GetComponentsInChildren<WheelIcon>());
-        mPlayerRef = GameObject.Find("Player").GetComponent<PlayerControls>();
         mHighlighted = -1;
 	}
 
     public void Selector(Vector2 pAngle)
     {
-        int weaponCount = mPlayerRef.mWeaponCount; //not sure why this had to be moved here, but okay
+        int weaponCount = GameManager.Instance.player.mWeaponCount; //not sure why this had to be moved here, but okay
 
         float lSlotSize = 360f / weaponCount;
         float lAngle = Vector2.Angle(Vector2.up, pAngle);
@@ -48,7 +46,7 @@ public class WeaponSelector : MonoBehaviour {
     {
         if(mHighlighted > -1)
         {
-            mPlayerRef.SetWeapons(mHighlighted);
+            GameManager.Instance.player.SetWeapons(mHighlighted);
             mWeapons[mHighlighted].Toggle();
             mHighlighted = -1;
         }

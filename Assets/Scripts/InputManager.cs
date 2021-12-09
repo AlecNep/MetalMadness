@@ -7,13 +7,6 @@ namespace CommandPattern
 {
     public class InputManager : MonoBehaviour
     {
-
-        //Player transform
-        //public Rigidbody mPlayerRB;
-
-        //Game mode
-        public enum GameModes { Gameplay = 0, Menu = 1, Map = 2};
-        public GameModes mGameMode = GameModes.Gameplay;
         //Controls on a basic Xbox 360 controller
         private Command mAButton, mBButton, mXButton, mYButton, mRBumper, mLBumper, mUp, mDown, mLeft, mRight, mRTrigger,
             mLTrigger, mRClick, mLClick, mStart, mBack;
@@ -22,7 +15,6 @@ namespace CommandPattern
         // Use this for initialization
         void Start()
         {
-            //Default bindings
             //Will probably have to be optimized if/when more funtionality is added
 
             //Commands that should only be registered during gameplay
@@ -42,9 +34,7 @@ namespace CommandPattern
             GameplayCommand gOc = new GameplayCommand(oc);
             GameplayCommand gOm = new GameplayCommand(om);
 
-
-            //mAButton = new Jump();
-            //mBButton = new Dash();
+            //Default bindings
             mAButton = gJump;
             mBButton = gDash;
             mXButton = gAttack;

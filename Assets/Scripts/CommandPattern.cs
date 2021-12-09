@@ -202,33 +202,22 @@ namespace CommandPattern //Might not need this
 
     public class WeaponWheel : Command
     {
-        GameObject mWheel;
-
         public override void Press()
         {
-            mWheel.SetActive(true);
+            GameManager.Instance.weaponWheel.gameObject.SetActive(true);
             GameManager.Instance.SetGameMode(1);
         }
         
         public override void Release()
         {
-            mWheel.SetActive(false);
+            GameManager.Instance.weaponWheel.gameObject.SetActive(false);
             GameManager.Instance.SetGameMode(0);
             WeaponSelector.Reset();
         }
 
-        public GameObject GetWeaponWheel() //probably useless
-        {
-            return mWheel;
-        }
-
         public WeaponWheel() : base()
         {
-            mWheel = GameObject.Find("Weapon Wheel").gameObject;
-            if (mWheel != null)
-            {
-                mWheel.SetActive(false);
-            }
+            GameManager.Instance.weaponWheel.gameObject.SetActive(false);
         }
     }
 
@@ -327,6 +316,8 @@ namespace CommandPattern //Might not need this
         public override void Press()
         {
             GameManager.Instance.pauseMenu.PauseGame();
+            GameManager.Instance.weaponWheel.gameObject.SetActive(false);
+            WeaponSelector.Reset();
         }
 
         public override void Release()

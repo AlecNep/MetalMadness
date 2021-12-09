@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour {
 
     public PlayerControls player;
     public GameObject UI;
-    public PauseMenu pauseMenu;
+    public PauseMenu pauseMenu { get; private set; }
+    public WeaponSelector weaponWheel { get; private set; }
 
     public enum GameMode { Gameplay = 0, WeaponWheel = 1, Menu = 2, Map = 3 };
     private GameMode _currentGameMode = GameMode.Gameplay;
@@ -22,7 +23,6 @@ public class GameManager : MonoBehaviour {
         private set
         {
             _currentGameMode = value;
-            print("Changed game mode to " + _currentGameMode);
         }
     }
 
@@ -34,6 +34,13 @@ public class GameManager : MonoBehaviour {
             return;
         }
         Instance = this;
+
+        pauseMenu = UI.transform.Find("PauseMenu").GetComponent<PauseMenu>();
+        if (pauseMenu == null)
+            Debug.LogError("Unable to find PauseMenu inside the UI");
+        weaponWheel = UI.transform.Find("Weapon Wheel").GetComponent<WeaponSelector>();
+        if (weaponWheel == null)
+            Debug.LogError("Unable to find Weapon Wheel inside the UI");
     }
 
     public void SetGameMode(int mode)

@@ -119,7 +119,7 @@ public class PlayerControls : Damageable {
 
         ClearWeapons(); //check later on if this is still necessary
 
-        
+        //Need to slowly move this to a better class
         mWeaponWheelRef = GameManager.Instance.UI.transform.Find("Weapon Wheel").GetComponent<WeaponSelector>();
         mWheelWidth = mWeaponWheelRef.GetComponent<RectTransform>().sizeDelta.x;
         mWeaponWheelCursor = mWeaponWheelRef.transform.Find("Cursor").gameObject;
@@ -288,12 +288,6 @@ public class PlayerControls : Damageable {
             
         }
     } //~~~~~~end Update~~~~~~
-
-    public void ChangeControlMode(int mMode) //consider overridding this method for more than just int input
-    {
-        mCurControls = (ControlMode)mMode;
-        mGravShifter.GravityIsActive((int)mCurControls < 2);
-    }
 
     public void SetWeapons(int newWeaponIndex)
     {

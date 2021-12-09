@@ -14411,7 +14411,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1378482055}
   UI: {fileID: 655071420}
-  pauseMenu: {fileID: 1228403182}
 --- !u!4 &1147702523 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2271225420460972805, guid: c99c1ae8b363f034189275292aa55074,
@@ -15134,18 +15133,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1222872972}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1228403182 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 379089710983269225, guid: 8942553186e84294f8940e2ec9852a63,
-    type: 3}
-  m_PrefabInstance: {fileID: 136894020}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c9b80dfbd6c10346986a9352cf2d777, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1229058301
 GameObject:
   m_ObjectHideFlags: 0
