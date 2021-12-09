@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace CommandPattern
+namespace CommandPattern //Might not need this
 {
 
     public abstract class Command : MonoBehaviour
@@ -60,8 +60,7 @@ namespace CommandPattern
                 {
                     Debug.Log("Trying to call a GameplayCommand.Press() method while paused");
                 }
-            }
-                
+            }       
         }
 
         public override void Release()
@@ -100,6 +99,22 @@ namespace CommandPattern
         {
             pressCommand = c.Press;
             releaseCommand = c.Release;
+        }
+    }
+
+    public class MenuCommand : Command
+    {
+        private Action pressCommand;
+        private Action releaseCommand;
+
+        public override void Press()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Release()
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -192,13 +207,13 @@ namespace CommandPattern
         public override void Press()
         {
             mWheel.SetActive(true);
-            mPlayerControls.ChangeControlMode(1);
+            GameManager.Instance.SetGameMode(1);
         }
         
         public override void Release()
         {
             mWheel.SetActive(false);
-            mPlayerControls.ChangeControlMode(0);
+            GameManager.Instance.SetGameMode(0);
             WeaponSelector.Reset();
         }
 
@@ -362,6 +377,58 @@ namespace CommandPattern
         public Cancel() : base()
         {
 
+        }
+    }
+
+    public class MenuMoveRight : Command
+    {
+        public override void Press()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Release()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class MenuMoveLeft : Command
+    {
+        public override void Press()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Release()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class MenuMoveUp : Command
+    {
+        public override void Press()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Release()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class MenuMoveDown : Command
+    {
+        public override void Press()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Release()
+        {
+            throw new NotImplementedException();
         }
     }
 

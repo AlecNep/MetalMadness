@@ -149,7 +149,7 @@ public class PlayerControls : Damageable {
 
 
         //Left stick controls
-        if((int)mCurControls < 2) //Can move with the "Gameplay" and "WeaponWheel" modes
+        if((int)GameManager.Instance.currentGameMode < 2) //Can move with the "Gameplay" and "WeaponWheel" modes
         {
             //Main movement section
             if (!mAttachedToWall) //cannot move if attached to a wall
@@ -228,7 +228,7 @@ public class PlayerControls : Damageable {
         }
 
         //Right stick controls
-        if (mCurControls == 0) //can only shift gravity in gameplay mode;
+        if (GameManager.Instance.currentGameMode == 0) //can only shift gravity in gameplay mode;
         {
             Vector2 lGravInput = new Vector2(lRx, lRy);
             float lGravAngle = 0f;
@@ -276,7 +276,7 @@ public class PlayerControls : Damageable {
                 
             }
         }
-        else if ((int)mCurControls == 1) //Weapon wheel mode
+        else if ((int)GameManager.Instance.currentGameMode == 1) //Weapon wheel mode
         {
             Vector3 lUpRight = Vector3.right + Vector3.up;
             Vector3 lRStick = new Vector3(lRx, lRy);
