@@ -109,12 +109,40 @@ namespace CommandPattern //Might not need this
 
         public override void Press()
         {
-            throw new NotImplementedException();
+            if (pressCommand == null)
+            {
+                throw new System.NotImplementedException();
+            }
+            else
+            {
+                if ((int)GameManager.currentGameMode == 2)
+                {
+                    pressCommand();
+                }
+                else
+                {
+                    Debug.Log("Trying to call a MenuCommand.Press() method while not paused. How did you manage to pull that off???");
+                }
+            }
         }
 
         public override void Release()
         {
-            throw new NotImplementedException();
+            if (releaseCommand == null)
+            {
+                throw new System.NotImplementedException();
+            }
+            else
+            {
+                if ((int)GameManager.currentGameMode == 2)
+                {
+                    releaseCommand();
+                }
+                else
+                {
+                    Debug.Log("Trying to call a MenuCommand.Release() method while not paused. How did you manage to pull that off???");
+                }
+            }
         }
     }
 
@@ -205,13 +233,13 @@ namespace CommandPattern //Might not need this
         public override void Press()
         {
             GameManager.Instance.weaponWheel.gameObject.SetActive(true);
-            GameManager.Instance.SetGameMode(1);
+            GameManager.SetGameMode(1);
         }
         
         public override void Release()
         {
             GameManager.Instance.weaponWheel.gameObject.SetActive(false);
-            GameManager.Instance.SetGameMode(0);
+            GameManager.SetGameMode(0);
             WeaponSelector.Reset();
         }
 
@@ -316,8 +344,11 @@ namespace CommandPattern //Might not need this
         public override void Press()
         {
             GameManager.Instance.pauseMenu.PauseGame();
-            GameManager.Instance.weaponWheel.gameObject.SetActive(false);
-            WeaponSelector.Reset();
+            if (GameManager.Instance.weaponWheel.gameObject.activeSelf)
+            {
+                GameManager.Instance.weaponWheel.gameObject.SetActive(false);
+                WeaponSelector.Reset();
+            }
         }
 
         public override void Release()

@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour {
     public WeaponSelector weaponWheel { get; private set; }
 
     public enum GameMode { Gameplay = 0, WeaponWheel = 1, Menu = 2, Map = 3 };
-    private GameMode _currentGameMode = GameMode.Gameplay;
-    public GameMode currentGameMode
+    private static GameMode _currentGameMode = GameMode.Gameplay;
+    public static GameMode currentGameMode //consider making this static
     {
         //might be a bit redundant with the SetGameMode method
         get
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour {
             Debug.LogError("Unable to find Weapon Wheel inside the UI");
     }
 
-    public void SetGameMode(int mode)
+    public static void SetGameMode(int mode)
     {
         currentGameMode = (GameMode)mode;
     }

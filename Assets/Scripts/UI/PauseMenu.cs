@@ -29,15 +29,15 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 0f;
             gameObject.SetActive(true);
             AudioListener.pause = true;
-            previousGameMode = (int)GameManager.Instance.currentGameMode;
-            GameManager.Instance.SetGameMode(2);
+            previousGameMode = (int)GameManager.currentGameMode;
+            GameManager.SetGameMode(2);
         }
         else
         {
             Time.timeScale = 1f;
             gameObject.SetActive(false);
             AudioListener.pause = false;
-            GameManager.Instance.SetGameMode(previousGameMode);
+            GameManager.SetGameMode(previousGameMode);
         }
     }
 }
