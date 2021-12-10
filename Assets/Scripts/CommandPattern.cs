@@ -56,10 +56,10 @@ namespace CommandPattern //Might not need this
                 {
                     pressCommand();
                 }
-                else
+                /*else
                 {
                     Debug.Log("Trying to call a GameplayCommand.Press() method while paused");
-                }
+                }*/
             }       
         }
 
@@ -75,10 +75,10 @@ namespace CommandPattern //Might not need this
                 {
                     releaseCommand();
                 }
-                else
+                /*else
                 {
                     Debug.Log("Trying to call a GameplayCommand.Release() method while paused");
-                }
+                }*/
             }
         }
 

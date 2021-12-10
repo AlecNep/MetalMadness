@@ -34,6 +34,8 @@ namespace CommandPattern
             GameplayCommand gOc = new GameplayCommand(oc);
             GameplayCommand gOm = new GameplayCommand(om);
 
+            //MenuCommand menuLeft = 
+
             //Default bindings
             mAButton = gJump;
             mBButton = gDash;
