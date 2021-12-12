@@ -108,7 +108,7 @@ public class PlayerControls : Damageable {
         health = maxHealth = DEFAULT_HEALTH; //TODO: make this more secure later!
         mRb = GetComponent<Rigidbody>(); //secure this later
         _mGravShifter = GetComponent<GravityShifter>(); //secure this later
-        mCamera = Camera.main;
+        //mCamera = Camera.main;
         mDistToGround = GetComponent<Collider>().bounds.extents.y; //secure this later
 
         mArms = transform.Find("Arms");
@@ -135,8 +135,8 @@ public class PlayerControls : Damageable {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mBodyRotationSpeed);
         }
 
-        mCamera.transform.position = new Vector3(transform.position.x, transform.position.y + 3, -20);
-        mCamera.transform.rotation = Quaternion.Euler(0, 0, _mGravShifter.GetShiftAngle());
+        //mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
+        //mCamera.transform.rotation = Quaternion.Euler(0, 0, _mGravShifter.GetShiftAngle());
     }
 
     
