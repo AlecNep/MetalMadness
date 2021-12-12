@@ -131,7 +131,7 @@
     <Compile Include="Assets\True Explosions\System\Scripts\exploders\SphereExploder.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireConstantBaseScript.cs" />
     <Compile Include="Assets\PorglezompPyroclastics\ExplosionMat.cs" />
-    <Compile Include="Assets\Scripts\Environment\DoorResetter.cs" />
+    <Compile Include="Assets\Scripts\Environment\RemotePlatform.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireLightScript.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\ActionNode.cs" />
