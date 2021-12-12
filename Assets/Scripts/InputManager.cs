@@ -7,13 +7,6 @@ namespace CommandPattern
 {
     public class InputManager : MonoBehaviour
     {
-
-        //Player transform
-        //public Rigidbody mPlayerRB;
-
-        //Game mode
-        public enum GameModes { Gameplay = 0, Menu = 1, Map = 2};
-        public GameModes mGameMode = GameModes.Gameplay;
         //Controls on a basic Xbox 360 controller
         private Command mAButton, mBButton, mXButton, mYButton, mRBumper, mLBumper, mUp, mDown, mLeft, mRight, mRTrigger,
             mLTrigger, mRClick, mLClick, mStart, mBack;
@@ -22,24 +15,44 @@ namespace CommandPattern
         // Use this for initialization
         void Start()
         {
-            //Default bindings
             //Will probably have to be optimized if/when more funtionality is added
-            mAButton = new Jump();
-            mBButton = new Dash();
-            mXButton = new Attack();
-            mYButton = new SwapWeapon();
-            mRBumper = new WeaponWheel();
+
+            //Commands that should only be registered during gameplay
+            Jump jump = new Jump();
+            Dash dash = new Dash();
+            Attack attack = new Attack();
+            WeaponWheel ww = new WeaponWheel();
+            SwapWeapon sw = new SwapWeapon();
+            OverCharge oc = new OverCharge();
+            OpenMap om = new OpenMap();
+            Interact interact = new Interact();
+
+            GameplayCommand gJump = new GameplayCommand(jump);
+            GameplayCommand gDash = new GameplayCommand(dash);
+            GameplayCommand gAttack = new GameplayCommand(attack);
+            GameplayCommand gWw = new GameplayCommand(ww);
+            GameplayCommand gSw = new GameplayCommand(sw);
+            GameplayCommand gOc = new GameplayCommand(oc);
+            GameplayCommand gOm = new GameplayCommand(om);
+            GameplayCommand gInteract = new GameplayCommand(interact);
+
+            //Default bindings
+            mAButton = gJump;
+            mBButton = gDash;
+            mXButton = gAttack;
+            mYButton = gSw;
+            mRBumper = gWw;
             mLBumper = new DoNothing();
             mStart = new Pause();
             mUp = new DoNothing();
             mDown = new DoNothing();
             mLeft = new DoNothing();
             mRight = new DoNothing();
-            mRTrigger = new OverCharge();
+            mRTrigger = gOc;
             mLTrigger = new DoNothing();
-            mRClick = new Interact();
+            mRClick = gInteract;
             mLClick = new DoNothing();
-            mBack = new OpenMap();
+            mBack = gOm;
         }
 
         // Update is called once per frame

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-namespace CommandPattern
+namespace CommandPattern //Might not need this
 {
 
     public abstract class Command : MonoBehaviour
@@ -38,7 +39,113 @@ namespace CommandPattern
 
     //~~~Child classes~~~
 
-    
+    public class GameplayCommand : Command
+    {
+        private Action pressCommand;
+        private Action releaseCommand;
+
+        public override void Press()
+        {
+            if (pressCommand == null)
+            {
+                throw new NotImplementedException();
+            }
+            else
+            {
+                if (!PauseMenu.isPaused && (int)GameManager.currentGameMode < 2) //having both conditions is probably redundant
+                {
+                    pressCommand();
+                }
+                /*else
+                {
+                    Debug.Log("Trying to call a GameplayCommand.Press() method while paused");
+                }*/
+            }       
+        }
+
+        public override void Release()
+        {
+            if (releaseCommand == null)
+            {
+                throw new NotImplementedException();
+            }
+            else
+            {
+                if (!PauseMenu.isPaused && (int)GameManager.currentGameMode < 2) //having both conditions is probably redundant
+                {
+                    releaseCommand();
+                }
+                /*else
+                {
+                    Debug.Log("Trying to call a GameplayCommand.Release() method while paused");
+                }*/
+            }
+        }
+
+        public GameplayCommand()
+        {
+            pressCommand = null;
+            releaseCommand = null;
+            Debug.LogWarning(name + " is a GameplayCommand but has no methods to implement!");
+        }
+
+        public GameplayCommand(Action press, Action release)
+        {
+            pressCommand = press;
+            releaseCommand = release;
+        }
+
+        public GameplayCommand(Command c)
+        {
+            pressCommand = c.Press;
+            releaseCommand = c.Release;
+        }
+    }
+
+    public class MenuCommand : Command
+    {
+        private Action pressCommand;
+        private Action releaseCommand;
+
+        public override void Press()
+        {
+            if (pressCommand == null)
+            {
+                throw new NotImplementedException();
+            }
+            else
+            {
+                if ((int)GameManager.currentGameMode == 2)
+                {
+                    pressCommand();
+                }
+                else
+                {
+                    Debug.Log("Trying to call a MenuCommand.Press() method while not paused. How did you manage to pull that off???");
+                }
+            }
+        }
+
+        public override void Release()
+        {
+            if (releaseCommand == null)
+            {
+                throw new NotImplementedException();
+            }
+            else
+            {
+                if ((int)GameManager.currentGameMode == 2)
+                {
+                    releaseCommand();
+                }
+                else
+                {
+                    Debug.Log("Trying to call a MenuCommand.Release() method while not paused. How did you manage to pull that off???");
+                }
+            }
+        }
+    }
+
     //Active gameplay commands
     public class Jump : Command
     {
@@ -123,33 +230,22 @@ namespace CommandPattern
 
     public class WeaponWheel : Command
     {
-        GameObject mWheel;
-
         public override void Press()
         {
-            mWheel.SetActive(true);
-            mPlayerControls.ChangeControlMode(1);
+            GameManager.Instance.weaponWheel.gameObject.SetActive(true);
+            GameManager.SetGameMode(1);
         }
         
         public override void Release()
         {
-            mWheel.SetActive(false);
-            mPlayerControls.ChangeControlMode(0);
+            GameManager.Instance.weaponWheel.gameObject.SetActive(false);
+            GameManager.SetGameMode(0);
             WeaponSelector.Reset();
-        }
-
-        public GameObject GetWeaponWheel() //probably useless
-        {
-            return mWheel;
         }
 
         public WeaponWheel() : base()
         {
-            mWheel = GameObject.Find("Weapon Wheel").gameObject;
-            if (mWheel != null)
-            {
-                mWheel.SetActive(false);
-            }
+            GameManager.Instance.weaponWheel.gameObject.SetActive(false);
         }
     }
 
@@ -247,7 +343,12 @@ namespace CommandPattern
     {
         public override void Press()
         {
-            
+            GameManager.Instance.pauseMenu.PauseGame();
+            if (GameManager.Instance.weaponWheel.gameObject.activeSelf)
+            {
+                GameManager.Instance.weaponWheel.gameObject.SetActive(false);
+                WeaponSelector.Reset();
+            }
         }
 
         public override void Release()
@@ -298,6 +399,58 @@ namespace CommandPattern
         public Cancel() : base()
         {
 
+        }
+    }
+
+    public class MenuMoveRight : Command
+    {
+        public override void Press()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Release()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class MenuMoveLeft : Command
+    {
+        public override void Press()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Release()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class MenuMoveUp : Command
+    {
+        public override void Press()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Release()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class MenuMoveDown : Command
+    {
+        public override void Press()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Release()
+        {
+            throw new NotImplementedException();
         }
     }
 
