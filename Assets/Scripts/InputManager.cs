@@ -25,6 +25,7 @@ namespace CommandPattern
             SwapWeapon sw = new SwapWeapon();
             OverCharge oc = new OverCharge();
             OpenMap om = new OpenMap();
+            Interact interact = new Interact();
 
             GameplayCommand gJump = new GameplayCommand(jump);
             GameplayCommand gDash = new GameplayCommand(dash);
@@ -33,8 +34,7 @@ namespace CommandPattern
             GameplayCommand gSw = new GameplayCommand(sw);
             GameplayCommand gOc = new GameplayCommand(oc);
             GameplayCommand gOm = new GameplayCommand(om);
-
-            //MenuCommand menuLeft = 
+            GameplayCommand gInteract = new GameplayCommand(interact);
 
             //Default bindings
             mAButton = gJump;
@@ -50,7 +50,7 @@ namespace CommandPattern
             mRight = new DoNothing();
             mRTrigger = gOc;
             mLTrigger = new DoNothing();
-            mRClick = new Interact();
+            mRClick = gInteract;
             mLClick = new DoNothing();
             mBack = gOm;
         }

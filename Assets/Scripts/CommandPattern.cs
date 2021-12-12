@@ -52,7 +52,7 @@ namespace CommandPattern //Might not need this
             }
             else
             {
-                if (!PauseMenu.isPaused && (int)GameManager.currentGameMode < 2)
+                if (!PauseMenu.isPaused && (int)GameManager.currentGameMode < 2) //having both conditions is probably redundant
                 {
                     pressCommand();
                 }
@@ -71,7 +71,7 @@ namespace CommandPattern //Might not need this
             }
             else
             {
-                if (!PauseMenu.isPaused && (int)GameManager.currentGameMode < 2)
+                if (!PauseMenu.isPaused && (int)GameManager.currentGameMode < 2) //having both conditions is probably redundant
                 {
                     releaseCommand();
                 }

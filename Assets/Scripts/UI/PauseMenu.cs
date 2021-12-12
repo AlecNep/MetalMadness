@@ -26,7 +26,6 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = !isPaused;
         
-
         if (isPaused)
         {
             Time.timeScale = 0f;
@@ -40,11 +39,26 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false);
+            /*gameObject.SetActive(false);
             AudioListener.pause = false;
             Time.timeScale = 1f;
-            GameManager.SetGameMode(previousGameMode);
+            GameManager.SetGameMode(previousGameMode);*/
+            StartCoroutine(_UnPauseGame());
         }
+    }
+
+    private IEnumerator _UnPauseGame()
+    {
+        int i = 0;
+        while (i < 1)
+        {
+            yield return null;
+            ++i;
+        }
+        gameObject.SetActive(false);
+        AudioListener.pause = false;
+        Time.timeScale = 1f;
+        GameManager.SetGameMode(previousGameMode);
     }
 
     public void OpenControls()
