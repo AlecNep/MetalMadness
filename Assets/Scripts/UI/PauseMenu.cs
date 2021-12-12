@@ -39,10 +39,6 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
-            /*gameObject.SetActive(false);
-            AudioListener.pause = false;
-            Time.timeScale = 1f;
-            GameManager.SetGameMode(previousGameMode);*/
             StartCoroutine(_UnPauseGame());
         }
     }
