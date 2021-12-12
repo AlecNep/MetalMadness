@@ -68,6 +68,7 @@
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\LightComponent.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\exploders\Exploder.cs" />
     <Compile Include="Assets\Scripts\Player\RivetGun.cs" />
+    <Compile Include="Assets\Scripts\CameraBehavior.cs" />
     <Compile Include="Assets\Scripts\Environment\DoorCloserTrigger.cs" />
     <Compile Include="Assets\Scripts\Enemies\CustomNavMesh.cs" />
     <Compile Include="Assets\Scripts\UI\WeaponSelector.cs" />
@@ -135,7 +136,6 @@
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\ActionNode.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
-    <Compile Include="Assets\Scripts\CameraBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
