@@ -48,11 +48,11 @@ namespace CommandPattern //Might not need this
         {
             if (pressCommand == null)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
             else
             {
-                if (!PauseMenu.isPaused)
+                if (!PauseMenu.isPaused && (int)GameManager.currentGameMode < 2)
                 {
                     pressCommand();
                 }
@@ -67,11 +67,11 @@ namespace CommandPattern //Might not need this
         {
             if (releaseCommand == null)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
             else
             {
-                if (!PauseMenu.isPaused)
+                if (!PauseMenu.isPaused && (int)GameManager.currentGameMode < 2)
                 {
                     releaseCommand();
                 }
@@ -111,7 +111,7 @@ namespace CommandPattern //Might not need this
         {
             if (pressCommand == null)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
             else
             {
@@ -130,7 +130,7 @@ namespace CommandPattern //Might not need this
         {
             if (releaseCommand == null)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
             else
             {
