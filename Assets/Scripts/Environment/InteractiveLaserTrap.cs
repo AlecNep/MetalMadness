@@ -30,7 +30,7 @@ public class InteractiveLaserTrap : LaserTrap
         
     }
 
-    public override void Interact()
+    public override void Interact(string input="")
     {
         isOn = !isOn;
     }

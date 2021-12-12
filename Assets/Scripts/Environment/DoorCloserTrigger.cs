@@ -9,23 +9,6 @@ public class DoorCloserTrigger : Interactive
 
     private bool activatedOnce = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public override void Interact()
-    {
-        
-    }
-
     protected new void OnTriggerEnter(Collider other)
     {
         print(name + " detected " + other);
@@ -37,10 +20,5 @@ public class DoorCloserTrigger : Interactive
             }
         }
         activatedOnce = true;
-    }
-
-    protected new void OnTriggerExit(Collider other)
-    {
-
     }
 }

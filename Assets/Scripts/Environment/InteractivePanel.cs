@@ -6,11 +6,22 @@ public class InteractivePanel : Interactive
 {
     public Interactive[] interactables;
 
-    public override void Interact()
+    public override void Interact(string input = "")
     {
-        foreach(Interactive i in interactables)
+        //there is probably a better way to do this
+        if (input == "")
         {
-            i.Interact();
+            foreach (Interactive i in interactables)
+            {
+                i.Interact();
+            }
+        }
+        else
+        {
+            foreach (Interactive i in interactables)
+            {
+                i.Interact(input);
+            }
         }
     }
 }

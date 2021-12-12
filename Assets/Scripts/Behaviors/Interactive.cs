@@ -7,23 +7,9 @@ public class Interactive : MonoBehaviour
     protected GameObject bounds;
     protected GameObject interactableObject;
 
-
-    protected void Awake()
-    {
-        /*bounds = transform.Find("Bounds").gameObject;
-        if (bounds.TryGetComponent(out BoxCollider col))
-        {
-            col.isTrigger = true;
-        }
-        else
-        {
-            Debug.LogError("Interactive object " + name + "Does not have collider in bounds object!");
-        }
-
-        interactableObject = transform.Find("Object").gameObject;*/
-    }
-
-    public virtual void Interact() { }
+    //public virtual void Interact() { }
+    public virtual void Interact(string input="") {}
+    protected string input;
 
     protected void OnTriggerEnter(Collider other)
     {

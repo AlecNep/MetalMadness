@@ -17,8 +17,8 @@ public class Oscillator : MonoBehaviour {
     private float mMovementVar;
 
 	// Use this for initialization
-	void Start () {
-        gameObject.tag = "MovingPlatform";
+	void OnValidate () {
+        //gameObject.tag = "MovingPlatform";
         mCol = GetComponent<BoxCollider>();
         mCube = transform.GetChild(0);
         mCol.size = mCube.localScale = new Vector3(mLength, 0.2f, 3f);
@@ -44,7 +44,8 @@ public class Oscillator : MonoBehaviour {
         mCounter += Time.deltaTime;
 
         mMovementVar = mStartingPoint + mMovementDistance * Mathf.Sin(mCounter * mMovementSpeed);
-
+        
+        //Could probably just be done with localPosition instead
         Vector3 lPos = mVertical ? new Vector3(transform.position.x, mMovementVar, transform.position.z) : 
             new Vector3(mMovementVar, transform.position.y, transform.position.z);
         transform.position = lPos;
