@@ -22,12 +22,7 @@ public class TimedDoor : TestDoor
     {
         StartCoroutine(Move(endPos, delayTimer));
 
-        float timer = 0;
-        while (timer < timeOpen)
-        {
-            yield return null;
-            timer += Time.deltaTime;
-        }
+        yield return new WaitForSecondsRealtime(timeOpen);
 
         StartCoroutine(Move(startPos, 0));
     }
