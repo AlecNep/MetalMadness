@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class TestDoor : Interactive
 {
-    private Vector3 startPos;
-    private Vector3 endPos;
+    protected Vector3 startPos;
+    protected Vector3 endPos;
     [SerializeField]
-    private float delayTimer;
+    protected float delayTimer;
     [SerializeField]
-    private float speed;
-    private bool isOpen = false;
+    protected float speed;
+    protected bool isOpen = false;
 
     public enum Orientation { left = 0, up = 1, right = 2, down = 3 }
     [SerializeField]
     public Orientation opensTo;
 
-    private Transform door;
+    protected Transform door;
 
-    private void OnValidate()
+    protected void OnValidate()
     {
         transform.rotation = Quaternion.Euler(Vector3.forward * (90 * (int)opensTo));
     }
@@ -42,12 +42,12 @@ public class TestDoor : Interactive
             if (isOpen)
             {
                 //Close
-                StartCoroutine(Move(startPos));
+                StartCoroutine(Move(startPos, delayTimer));
             }
             else
             {
                 //Open
-                StartCoroutine(Move(endPos));
+                StartCoroutine(Move(endPos, delayTimer));
             }
             isOpen = !isOpen;
         }
@@ -57,14 +57,16 @@ public class TestDoor : Interactive
         }
     }
 
-    //while loop somehow isn't finishing
-    private IEnumerator Move(Vector3 destination)
+    protected IEnumerator Move(Vector3 destination, float timer)
     {
-        float delay = 0;
-        while (delay < delayTimer)
+        if (timer > 0)
         {
-            yield return null;
-            delay += Time.deltaTime;
+            float delay = 0;
+            while (delay < timer)
+            {
+                yield return null;
+                delay += Time.deltaTime;
+            }
         }
 
         while (Vector3.Distance(door.localPosition, destination) > 0)
@@ -83,13 +85,13 @@ public class TestDoor : Interactive
 
     public void ForceOpen()
     {
-        StartCoroutine(Move(endPos));
+        StartCoroutine(Move(endPos, delayTimer));
         isOpen = true;
     }
 
     public void ForceClose()
     {
-        StartCoroutine(Move(startPos));
+        StartCoroutine(Move(startPos, delayTimer));
         isOpen = false;
     }
 }
