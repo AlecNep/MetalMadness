@@ -17,7 +17,7 @@ public class PlayerControls : Damageable {
 
     public int mArmVariable;
     public int mTurnVariable;
-    public Interactive interactableObject { get; set; }
+    public Interactive interactableObject;
 
     //Movement and speed
     [SerializeField]
@@ -34,6 +34,17 @@ public class PlayerControls : Damageable {
             return mDashDuration + mDashDelayBuffer;
         }
     }
+    private int mIntendedDirection = 1;
+    [SerializeField]
+    public float mJumpForce;
+    [SerializeField]
+    public float mChargedJumpForce;
+    private bool mOnMovingObject; //used for when the player is on top of another moving object
+    private float mZDistance = 0f;
+
+    public bool mShifting = false;
+    private float mDistToGround;
+
     private bool mAttachedToWall = false;
     private bool mAttachedToEnemy = false;
     public bool mAttached
@@ -75,20 +86,13 @@ public class PlayerControls : Damageable {
     private bool mCanShift = true;
     
 
-    private int mIntendedDirection = 1; 
-    [SerializeField]
-    public float mJumpForce;
-    [SerializeField]
-    public float mChargedJumpForce;
-    private bool mOnMovingObject; //used for when the player is on top of another moving object
-    private float mZDistance = 0f;
-
-    public bool mShifting = false;
-    private float mDistToGround;
-
-    //Actual player stats
+    //Gameplay stats
     private const float DEFAULT_HEALTH = 100f;
+    [SerializeField]
+    private Vector3 spawnPoint;
 
+
+    //Weapon stuff
     public Weapon[] mWeapons; //TEMPORARY; DO NOT KEEP PUBLIC
     public int mWeaponIndex = 0; //TEMPORARY; DO NOT KEEP PUBLIC
     public int mPreviousWeaponIndex = 0; //TEMPORARY
@@ -98,17 +102,16 @@ public class PlayerControls : Damageable {
     private WeaponSelector mWeaponWheelRef;
     private float mWheelWidth;
 
-    public enum ControlMode {Gameplay = 0, WeaponWheel = 1, Menu = 2, Map = 3 };
+    //Probably needs to be deleted
+    /*public enum ControlMode {Gameplay = 0, WeaponWheel = 1, Menu = 2, Map = 3 };
     public ControlMode mCurControls = ControlMode.Gameplay;
-
-
+    */
 
     // Use this for initialization
     void Start() {
         health = maxHealth = DEFAULT_HEALTH; //TODO: make this more secure later!
         mRb = GetComponent<Rigidbody>(); //secure this later
         _mGravShifter = GetComponent<GravityShifter>(); //secure this later
-        //mCamera = Camera.main;
         mDistToGround = GetComponent<Collider>().bounds.extents.y; //secure this later
 
         mArms = transform.Find("Arms");
@@ -118,6 +121,8 @@ public class PlayerControls : Damageable {
         mWeaponCount = mWeapons.Length / 2;
 
         ClearWeapons(); //check later on if this is still necessary
+
+        SetDefaultSpawnPoint(); //TEMPORARY; PLEASE DELETE LATER
 
         //Need to slowly move this to a better class
         mWeaponWheelRef = GameManager.Instance.UI.transform.Find("Weapon Wheel").GetComponent<WeaponSelector>();
@@ -388,11 +393,26 @@ public class PlayerControls : Damageable {
         mDashTimer = 0;
     }
 
+    private void SetDefaultSpawnPoint()
+    {
+        spawnPoint = transform.position;
+    }
+
+    public void SetSpawnPoint(Vector3 respawn)
+    {
+        spawnPoint = respawn;
+    }
+
+    public Vector3 GetSpawnPoint()
+    {
+        return spawnPoint;
+    }
+
     public override void Die()
     {
         //All temporary code!
         mGravShifter.ShiftGravity(4 - (int)mGravShifter.mCurGravity);
-        transform.position = Vector3.zero;
+        transform.position = spawnPoint;
         mRb.velocity = Vector3.zero;
         health = maxHealth;
     }
