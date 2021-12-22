@@ -105,6 +105,7 @@
     <Compile Include="Assets\Scripts\Behaviors\Damageable.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Selector.cs" />
     <Compile Include="Assets\Scripts\CommandPattern.cs" />
+    <Compile Include="Assets\Scripts\Environment\TimedDoor.cs" />
     <Compile Include="Assets\Scripts\Environment\FireTrap.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Inverter.cs" />
     <Compile Include="Assets\Scripts\Items\Pickup.cs" />
@@ -136,7 +137,6 @@
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\ActionNode.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
-    <Compile Include="Assets\Scripts\Environment\TimedDoor.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
