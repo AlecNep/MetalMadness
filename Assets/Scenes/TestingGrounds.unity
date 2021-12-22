@@ -38578,6 +38578,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DefaultCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 8049338408270449001, guid: f337ee527d387cd44850104e7384f061,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8049338408270449002, guid: f337ee527d387cd44850104e7384f061,
         type: 3}
       propertyPath: m_RootOrder
