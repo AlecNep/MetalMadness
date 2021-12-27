@@ -9,7 +9,7 @@ namespace DigitalRuby.PyroParticles
     public class LoopingAudioSource
     {
         public AudioSource AudioSource { get; private set; }
-        public float TargetVolume { get; private set; }
+        public float TargetVolume;// { get; private set; }
 
         private float startMultiplier;
         private float stopMultiplier;
