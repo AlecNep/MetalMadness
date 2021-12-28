@@ -27,7 +27,7 @@ public class CameraBehavior : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         transform.position = playerRef.transform.position + Vector3.forward * defaultDistance;
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(Vector3.forward * playerRef.mGravShifter.GetShiftAngle()), rotationSpeed);
