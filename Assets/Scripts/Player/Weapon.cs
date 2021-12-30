@@ -19,6 +19,14 @@ public abstract class Weapon : MonoBehaviour {
     protected float mFireRate;
     [SerializeField]
     protected float mChargedFireRate;
+    [SerializeField]
+    protected float mScreenShake;
+    [SerializeField]
+    protected float mChargedShake;
+    [SerializeField]
+    protected float mShakeTime;
+    [SerializeField]
+    protected float mChargedShakeTime;
 
     protected Transform mArmsParent;
     protected PlayerControls mPlayer;

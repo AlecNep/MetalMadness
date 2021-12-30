@@ -15,7 +15,6 @@ public class CameraBehavior : MonoBehaviour
 
     private Transform customCam;
     private PlayerControls playerRef;
-    private 
 
     // Start is called before the first frame update
     void Start()
@@ -33,5 +32,31 @@ public class CameraBehavior : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(Vector3.forward * playerRef.mGravShifter.GetShiftAngle()), rotationSpeed);
         customCam.localPosition = Vector3.up * heightAbovePlayer;
         customCam.localRotation = Quaternion.Euler(Vector3.right * angle);
+    }
+
+    public void ScreenShake(float duration, float magnitude)
+    {
+        StartCoroutine(_ScreenShake(duration, magnitude));
+    }
+
+    private IEnumerator _ScreenShake(float duration, float magnitude)
+    {
+        Vector3 originalPos = customCam.localPosition;
+
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            customCam.localPosition = Vector3.MoveTowards(customCam.localPosition, new Vector3(customCam.localPosition.x + x, customCam.localPosition.y + y, originalPos.z), 0.1f);
+
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        customCam.localPosition = originalPos;
     }
 }

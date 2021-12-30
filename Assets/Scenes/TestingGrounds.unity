@@ -1366,6 +1366,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113991244}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &118105767 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8049338408270449001, guid: f337ee527d387cd44850104e7384f061,
+    type: 3}
+  m_PrefabInstance: {fileID: 8049338409254327816}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2016817c283e54194609683bd5f60a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &136894020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32615,6 +32627,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1378482055}
+    - target: {fileID: 3771687474184796620, guid: 37bc9c51d2823e54c88cfb280c051620,
+        type: 3}
+      propertyPath: MainCamera
+      value: 
+      objectReference: {fileID: 118105767}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37bc9c51d2823e54c88cfb280c051620, type: 3}
 --- !u!4 &1188591812956978344 stripped
@@ -33881,7 +33898,7 @@ PrefabInstance:
     - target: {fileID: 8049338408270449001, guid: f337ee527d387cd44850104e7384f061,
         type: 3}
       propertyPath: rotationSpeed
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8049338408270449002, guid: f337ee527d387cd44850104e7384f061,
         type: 3}
