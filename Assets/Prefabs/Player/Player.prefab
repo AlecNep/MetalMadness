@@ -146,10 +146,10 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 1
   mChargedFireRate: 1.5
-  mScreenShake: 0
-  mChargedShake: 0
-  mShakeTime: 0
-  mChargedShakeTime: 0
+  mScreenShake: 0.01
+  mChargedShake: 0.015
+  mShakeTime: 0.1
+  mChargedShakeTime: 0.1
   maxAmmo: 0
   mConeSpreadMax: 10
   mPieceCount: 8
@@ -390,9 +390,9 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 0.02
   mChargedFireRate: 0.005
-  mScreenShake: 0
+  mScreenShake: 0.004
   mChargedShake: 0
-  mShakeTime: 0
+  mShakeTime: 0.01
   mChargedShakeTime: 0
   maxAmmo: 0
 --- !u!1 &2711816003597898424
@@ -986,10 +986,10 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 1
   mChargedFireRate: 1.5
-  mScreenShake: 0
-  mChargedShake: 0
-  mShakeTime: 0
-  mChargedShakeTime: 0
+  mScreenShake: 0.01
+  mChargedShake: 0.015
+  mShakeTime: 0.1
+  mChargedShakeTime: 0.1
   maxAmmo: 0
   mConeSpreadMax: 10
   mPieceCount: 8
@@ -1319,9 +1319,9 @@ MonoBehaviour:
   mFireRate: 0.3
   mChargedFireRate: 0.4
   mScreenShake: 0.005
-  mChargedShake: 0.1
-  mShakeTime: 0.1
-  mChargedShakeTime: 0.1
+  mChargedShake: 0.008
+  mShakeTime: 0.05
+  mChargedShakeTime: 0.05
   maxAmmo: 0
   mChargedShot: {fileID: 1378722957567826, guid: cd74ca86a6e109f429218308f0e8d761,
     type: 3}
@@ -2060,9 +2060,9 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 0.02
   mChargedFireRate: 0.005
-  mScreenShake: 0
+  mScreenShake: 0.004
   mChargedShake: 0
-  mShakeTime: 0
+  mShakeTime: 0.01
   mChargedShakeTime: 0
   maxAmmo: 0
 --- !u!1 &2711816004617775959
@@ -2709,9 +2709,9 @@ MonoBehaviour:
   mFireRate: 0.3
   mChargedFireRate: 0.4
   mScreenShake: 0.005
-  mChargedShake: 0.1
-  mShakeTime: 0.1
-  mChargedShakeTime: 0.1
+  mChargedShake: 0.008
+  mShakeTime: 0.05
+  mChargedShakeTime: 0.05
   maxAmmo: 0
   mChargedShot: {fileID: 1378722957567826, guid: cd74ca86a6e109f429218308f0e8d761,
     type: 3}

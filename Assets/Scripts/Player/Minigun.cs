@@ -42,7 +42,8 @@ public class Minigun : Weapon {
         Vector3 lOrientation = Vector3.forward * mPlayer.mShotOrientation;
 
         mOrientation = Random.rotation;
-        GameObject lBlob = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject;
+        GameManager.Instance.MainCamera.ScreenShake(mScreenShake, mShakeTime);
+        GameObject lBlob = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lOrientation));
         lBlob.transform.rotation = Quaternion.RotateTowards(lBlob.transform.rotation, mOrientation, mConeSpreadMax);
         lBlob.GetComponent<Bullet>().SetDirection(lBlob.transform.right); //probably super expensive to call this on a full-auto weapon
     }
