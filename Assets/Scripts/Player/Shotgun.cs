@@ -11,6 +11,15 @@ public class Shotgun : Weapon {
     [SerializeField]
     public GameObject mChargedShot;
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        AudioSource[] sounds = GetComponents<AudioSource>();
+        soundFX = sounds[0];
+        chargedFX = sounds[1];
+    }
+
     // Use this for initialization
     new void Start () {
         mPieces = new List<Quaternion>(mPieceCount);
@@ -31,6 +40,7 @@ public class Shotgun : Weapon {
                 Vector3 lOrientation = Vector3.forward * mPlayer.mShotOrientation;
                 GameManager.Instance.MainCamera.ScreenShake(mChargedShake, mChargedShakeTime);
                 GameObject lBullet = Instantiate(mChargedShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject; //update soon
+                chargedFX.Play();
 
                 lBullet.GetComponent<Bullet>().SetDirection(lDirection);
             }
@@ -44,6 +54,7 @@ public class Shotgun : Weapon {
                 Vector3 lOrientation = Vector3.forward * mPlayer.mShotOrientation;
 
                 GameManager.Instance.MainCamera.ScreenShake(mScreenShake, mShakeTime);
+                soundFX.Play();
 
                 for (int i = 0; i < mPieceCount; i++)
                 {
