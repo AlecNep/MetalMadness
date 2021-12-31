@@ -5354,7 +5354,7 @@ PrefabInstance:
     - target: {fileID: 5476590306965759963, guid: 15f3fca27b9b5c14b9f362ffdafcb26f,
         type: 3}
       propertyPath: data.dataString
-      value: UEsDBBQAAAgIAAAYIeyP3c3tTwIAAPYEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMty4jAQ/BVK52XLJi5I9rZrCNkDgQqbysUXYY+xClly6RFexb/vSH6GnKya7hl1z4x8JUzoClIj1VKxbCUzIL9GxJ3Jj1EPvsCJ7qXYsgu0nA+WmcKRqOe8UcMkxkOXpmUJRrH0t9hzRw4waAXLpSoX2R5iqY3GcE65BoSUNC5bYOg6Iif8jJ9cyhlPk5k7XfD0FIxueExBGFA9tSM2tJplRcppWUHmJPfkSdDSw6AmCrTTcJz0VHLOdKOFmHPlvW6rAhQ4sxmjaM3f7+gFsH1hmtu73HWeazCNNkXPc6awQ3VR8kfWbSupPtTCPim34MVFj15TXXX1jTAOPZwrWb60F4fekSlYenij55RqM2jsMDz/qtyKI+UHuuPwUYB4lUslrcgQNMq6VKthMh+U6szFBaSHnldrbYMt21bfB9TO0bm4+QacYs7KnYN+RnVgy6XvuB8/KJzNX5Tsl0M3JTDqZLxr+Ef3wy1qgGemtEGo8Smcvp20ylHJwnfN2bEmlkqADzdWKhCUm/MGy5j7Kd5hg2vvkGfq3ktzeYO1z+AuxYd7fhDcQRt57MalC3lcgS7W1nAmoBftgFfsUyyFqJds2JM2bWtVTtNB2t6y7OtykWjyEM2mOxpRmE7oLhznD9MwD6NgArtwNnsMiN8+JtAn5ZtaaNMenJroiwvctPY3MloqWvmFzxQ9LtmllIOWM5HLbaoAxLqu0AkHhZfgu8wWGcMGbcEYJvy8yTUhXKYHyJKuUOKdLk5G0aSvkpCKfUrjIgmJ/X8jITdy+w9QSwMEFAAACAgAABgh7CCOeghtAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTVUVBKL0osyCgGihiCOKWZKSB2tJKJkbGJuVlSokliqplRYpKhbpqxmWGaoYmBUWqSobm5hYFSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAABgh7I/dze1PAgAA9gQAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAABgh7CCOeghtAAAAeAAAAAkAJAAAAAAAAAAAAAAAnAIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABUAwAAAAA=
+      value: UEsDBBQAAAgIAACYn+tr7gYFUQIAAPcEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1zmzAQ/SsenesOYMZOemttx+nBsSc0kwsXGRajsZAYfcQfGf/3rgQY4k5PaPa9Xb23u+KTMKFryIxUK8XytcyB/BgRdybfRj34DCe6lyJhF+g47yw3pSNRz3mlhkmMhy5NywqMYtlPseeOHGDQClZIVS3zPcylNhrDBeUaEFLSuGyBoc8ROeFn/OhSzniKZu50wdNjMLriMQNhQPXUjtjRGpYVGadVDbmT3JOjoKOHQUMUaKflOOmZ5JzpVgsx59p7TeoSFDizOaNozd/v6CWwfWlc4WHupig0mFaToucFU9ihpij5JZu2VVQfGmEflFt3zSR+CKdeVFN2/Q9jHHq4ULJ67m4OvSVTsuzwSs8Z1WbQ2WF48VW6FUfKD3TH4b0E8SJXSlqRI2iUdalWQ7QYlLq5m5eQHXpeo7ULdmxb/39CzsXVd+A056zaOeh73AQSLn3L/fxB4XB+o2S/HbotgVEn403DH7ofrlELPDGlDUKtT+H07aRVjkqWvmvOjjVzqQT4cGulBkG5OW+xjLkf4x02uPYOeaLuwbSXt1j3Du5SfLjnB8EdtJXH27h0KY9r0OXGGs4E9KId8IJ9mkshmi0b9qRLS6wqaDZI21uWf10uEkeTeDbd0ZjCNKK7cFxMpmERxkEEu3A2ewiI3z4m0Cfl20Zo2x6cmuiLC9y07j8yWila+43PFT2u2KWSg5YzUcgkUwBi01S4CQeFl+DDzJc5wwYlYAwTft7kMyVcZgfI01uh1DtdnoyiaV8lJTX7kMZFUjL3P46UXMn1L1BLAwQUAAAICAAAmJ/rII56CG0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNVRUEovSizIKAaKGII4pZkpIHa0komRsYm5WVKiSWKqmVFikqFumrGZYZqhiYFRapKhubmFgVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAmJ/ra+4GBVECAAD3BAAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAmJ/rII56CG0AAAB4AAAACQAkAAAAAAAAAAAAAACeAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAFYDAAAAAA==
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f3fca27b9b5c14b9f362ffdafcb26f, type: 3}
@@ -6844,10 +6844,20 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.04
       objectReference: {fileID: 0}
+    - target: {fileID: 7906550127431038493, guid: dbd44a1f705cf0440aa93a7e7971e458,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7906550127659781176, guid: dbd44a1f705cf0440aa93a7e7971e458,
         type: 3}
       propertyPath: m_Name
       value: TestDoor (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906550127659781176, guid: dbd44a1f705cf0440aa93a7e7971e458,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7906550127659781178, guid: dbd44a1f705cf0440aa93a7e7971e458,
         type: 3}
@@ -8533,10 +8543,20 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.03
       objectReference: {fileID: 0}
+    - target: {fileID: 7906550127431038493, guid: 5d6f3e0b72e0a37439b9e37493a58c1f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7906550127659781176, guid: 5d6f3e0b72e0a37439b9e37493a58c1f,
         type: 3}
       propertyPath: m_Name
       value: TimedDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906550127659781176, guid: 5d6f3e0b72e0a37439b9e37493a58c1f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7906550127659781178, guid: 5d6f3e0b72e0a37439b9e37493a58c1f,
         type: 3}
