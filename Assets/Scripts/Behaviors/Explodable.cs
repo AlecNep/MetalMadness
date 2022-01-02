@@ -18,7 +18,7 @@ public class Explodable : Damageable
     protected void Explode()
     {
         LayerMask entities = 1 << 8 | 1 << 12 | 1 << 13; //Player, enemy, and destructible layers
-        Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, entities);
+        Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, entities); //something about this line causes a StackOverflowException; address ASAP!
 
         foreach (Collider col in cols)
         {
@@ -26,6 +26,10 @@ public class Explodable : Damageable
                 continue;
             if (col.tag == "Player" || col.tag == "Enemy") //should probably be replaced with TryGetComponent
             {
+                LayerMask layers = 1 << 11 | 1 << 12 | 1 << 13 | 1 << 15; //environment, enemies, destructible, and doors
+                RaycastHit hit;
+
+
                 Damageable victim = col.GetComponent<Damageable>();
                 float value = (explosionRadius - Vector3.Distance(transform.position, col.transform.position)) / explosionRadius;
                 victim.ChangeHealth(-damage * (value));

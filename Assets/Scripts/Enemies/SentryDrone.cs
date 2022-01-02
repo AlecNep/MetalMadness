@@ -35,11 +35,14 @@ public class SentryDrone : Explodable
     {
         if (aiDestination.target != null && Vector3.Distance(transform.position, aiDestination.target.position) <= distanceThreshold && !isInRange)
         {//only call this once
-            isInRange = true;
-            //TODO
-            StartCoroutine(SelfDestruct());
+            isInRange = true; //this line is probably redundant
+
+            LayerMask layers = 1 << 11 | 1 << 12 | 1 << 13 | 1 << 15; //environment, enemies, destructible, and doors
+            RaycastHit hit;
+            if (!Physics.Raycast(transform.position, aiDestination.target.position - transform.position, out hit, distanceThreshold, layers))
+                StartCoroutine(SelfDestruct());
         }
-        if (Mathf.Abs(transform.position.z) > 0.1)
+        if (Mathf.Abs(transform.position.z) > 0.1) //reset Z-value to keep it at 0
             transform.position -= Vector3.forward * transform.position.z;
     }
 

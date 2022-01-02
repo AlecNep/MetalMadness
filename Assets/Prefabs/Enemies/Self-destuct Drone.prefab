@@ -375,8 +375,6 @@ MonoBehaviour:
   explosion: {fileID: 1741139860889314, guid: 7bdb4cb7604baf34b9167f46e0b962e4, type: 3}
   explosionForce: 15
   explosionRadius: 6
-  camShakeMagnitude: 0.1
-  camShakeTime: 0.1
   damage: 25
   distanceThreshold: 3
 --- !u!1 &902378422333210906
