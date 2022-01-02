@@ -1763,6 +1763,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1487448843}
   UI: {fileID: 1956335757}
+  MainCamera: {fileID: 849482003}
+--- !u!114 &849482003 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8049338408270449001, guid: f337ee527d387cd44850104e7384f061,
+    type: 3}
+  m_PrefabInstance: {fileID: 539010682}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2016817c283e54194609683bd5f60a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &849808898
 GameObject:
   m_ObjectHideFlags: 0
@@ -2594,7 +2607,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3771687474184796620, guid: 37bc9c51d2823e54c88cfb280c051620, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 37bc9c51d2823e54c88cfb280c051620, type: 3}
 --- !u!114 &1487448843 stripped
 MonoBehaviour:
@@ -3145,12 +3159,12 @@ PrefabInstance:
     - target: {fileID: 2711816005031834379, guid: 56981ab5b8e0799449f79ca896b724f5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.1
+      value: 37.42
       objectReference: {fileID: 0}
     - target: {fileID: 2711816005031834379, guid: 56981ab5b8e0799449f79ca896b724f5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.99
+      value: -21.45
       objectReference: {fileID: 0}
     - target: {fileID: 2711816005031834379, guid: 56981ab5b8e0799449f79ca896b724f5,
         type: 3}
