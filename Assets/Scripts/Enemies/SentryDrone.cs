@@ -64,11 +64,17 @@ public class SentryDrone : Explodable
         Explode();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player")
         {
-            aiDestination.target = other.transform;
+            LayerMask layers = 1 << 11 | 1 << 12 | 1 << 13 | 1 << 15; //environment, enemies, destructible, and doors
+            RaycastHit hit;
+            Vector3 direction = other.transform.position - transform.position;
+            if (!Physics.Raycast(transform.position, direction, out hit, Vector3.Distance(other.transform.position, transform.position), layers))
+            {
+                aiDestination.target = other.transform;
+            }
         }
     }
 
