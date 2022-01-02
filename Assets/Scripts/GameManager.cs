@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 
     public PlayerControls player;
     public GameObject UI;
+    public CameraBehavior MainCamera;
     public PauseMenu pauseMenu { get; private set; }
     public WeaponSelector weaponWheel { get; private set; }
 

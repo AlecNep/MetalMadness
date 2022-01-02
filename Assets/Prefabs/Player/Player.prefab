@@ -146,6 +146,10 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 1
   mChargedFireRate: 1.5
+  mScreenShake: 0.01
+  mChargedShake: 0.015
+  mShakeTime: 0.1
+  mChargedShakeTime: 0.1
   maxAmmo: 0
   mConeSpreadMax: 10
   mPieceCount: 8
@@ -250,6 +254,10 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 0.01
   mChargedFireRate: 1
+  mScreenShake: 0
+  mChargedShake: 0
+  mShakeTime: 0
+  mChargedShakeTime: 0
   maxAmmo: 0
   mChargedShot: {fileID: 1504163692822120, guid: 92493e8f18cd89f4d9208210ee4c2f18,
     type: 3}
@@ -382,6 +390,10 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 0.02
   mChargedFireRate: 0.005
+  mScreenShake: 0.004
+  mChargedShake: 0
+  mShakeTime: 0.01
+  mChargedShakeTime: 0
   maxAmmo: 0
 --- !u!1 &2711816003597898424
 GameObject:
@@ -711,6 +723,10 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 2
   mChargedFireRate: 2.5
+  mScreenShake: 0
+  mChargedShake: 0
+  mShakeTime: 0
+  mChargedShakeTime: 0
   maxAmmo: 0
   mChargedShot: {fileID: 1576011662434696, guid: fd3338df3ceb12642bba96880ea83a9f,
     type: 3}
@@ -970,6 +986,10 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 1
   mChargedFireRate: 1.5
+  mScreenShake: 0.01
+  mChargedShake: 0.015
+  mShakeTime: 0.1
+  mChargedShakeTime: 0.1
   maxAmmo: 0
   mConeSpreadMax: 10
   mPieceCount: 8
@@ -1298,6 +1318,10 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 0.3
   mChargedFireRate: 0.4
+  mScreenShake: 0.005
+  mChargedShake: 0.008
+  mShakeTime: 0.05
+  mChargedShakeTime: 0.05
   maxAmmo: 0
   mChargedShot: {fileID: 1378722957567826, guid: cd74ca86a6e109f429218308f0e8d761,
     type: 3}
@@ -1401,6 +1425,10 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 1
   mChargedFireRate: 0
+  mScreenShake: 0
+  mChargedShake: 0
+  mShakeTime: 0
+  mChargedShakeTime: 0
   maxAmmo: 0
 --- !u!1 &2711816004038822161
 GameObject:
@@ -2032,6 +2060,10 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 0.02
   mChargedFireRate: 0.005
+  mScreenShake: 0.004
+  mChargedShake: 0
+  mShakeTime: 0.01
+  mChargedShakeTime: 0
   maxAmmo: 0
 --- !u!1 &2711816004617775959
 GameObject:
@@ -2132,6 +2164,10 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 0.01
   mChargedFireRate: 1
+  mScreenShake: 0
+  mChargedShake: 0
+  mShakeTime: 0
+  mChargedShakeTime: 0
   maxAmmo: 0
   mChargedShot: {fileID: 1504163692822120, guid: 92493e8f18cd89f4d9208210ee4c2f18,
     type: 3}
@@ -2672,6 +2708,10 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 0.3
   mChargedFireRate: 0.4
+  mScreenShake: 0.005
+  mChargedShake: 0.008
+  mShakeTime: 0.05
+  mChargedShakeTime: 0.05
   maxAmmo: 0
   mChargedShot: {fileID: 1378722957567826, guid: cd74ca86a6e109f429218308f0e8d761,
     type: 3}
@@ -2775,6 +2815,10 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 1
   mChargedFireRate: 0
+  mScreenShake: 0
+  mChargedShake: 0
+  mShakeTime: 0
+  mChargedShakeTime: 0
   maxAmmo: 0
 --- !u!1 &2711816004787647116
 GameObject:
@@ -3064,6 +3108,10 @@ MonoBehaviour:
   mFiring: 0
   mFireRate: 2
   mChargedFireRate: 2.5
+  mScreenShake: 0
+  mChargedShake: 0
+  mShakeTime: 0
+  mChargedShakeTime: 0
   maxAmmo: 0
   mChargedShot: {fileID: 1576011662434696, guid: fd3338df3ceb12642bba96880ea83a9f,
     type: 3}
@@ -3213,6 +3261,7 @@ MonoBehaviour:
   maxHealth: 100
   mArmVariable: 0
   mTurnVariable: 0
+  interactableObject: {fileID: 0}
   mMovementSpeed: 3.5
   mDashSpeed: 5
   mChargedDashSpeed: 7
@@ -3222,12 +3271,12 @@ MonoBehaviour:
   mJumpForce: 9
   mChargedJumpForce: 12
   mShifting: 0
+  spawnPoint: {x: 0, y: 0, z: 0}
   mWeapons: []
   mWeaponIndex: 0
   mPreviousWeaponIndex: 1
   mWeaponCount: 0
   mWeaponWheelCursor: {fileID: 0}
-  mCurControls: 0
 --- !u!54 &2711816005031834376
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3256,7 +3305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7365d41a13948ea4ea77d06cd39f6ab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mCurGravity: 0
+  defaultGravity: 0
   mGravityFactor: 10
 --- !u!1 &2711816005103373703
 GameObject:

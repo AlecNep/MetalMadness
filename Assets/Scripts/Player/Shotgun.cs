@@ -29,6 +29,7 @@ public class Shotgun : Weapon {
                 mChargedDelayTimer = mChargedFireRate;
                 Vector3 lDirection = Vector3.Normalize(mBulletSpawn.position - transform.position);
                 Vector3 lOrientation = Vector3.forward * mPlayer.mShotOrientation;
+                GameManager.Instance.MainCamera.ScreenShake(mChargedShake, mChargedShakeTime);
                 GameObject lBullet = Instantiate(mChargedShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject; //update soon
 
                 lBullet.GetComponent<Bullet>().SetDirection(lDirection);
@@ -39,8 +40,10 @@ public class Shotgun : Weapon {
             if (mShotDelayTimer == 0)
             {
                 mShotDelayTimer = mFireRate;
-                Vector3 lDirection = Vector3.Normalize(mBulletSpawn.position - transform.position);
+                //Vector3 lDirection = Vector3.Normalize(mBulletSpawn.position - transform.position);
                 Vector3 lOrientation = Vector3.forward * mPlayer.mShotOrientation;
+
+                GameManager.Instance.MainCamera.ScreenShake(mScreenShake, mShakeTime);
 
                 for (int i = 0; i < mPieceCount; i++)
                 {
