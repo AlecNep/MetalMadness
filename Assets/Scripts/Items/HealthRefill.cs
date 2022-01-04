@@ -11,7 +11,17 @@ public class HealthRefill : Pickup
     {
         effect = () =>
         {
+            //if (GameManager.Instance.player.GetHealth() < GameManager.Instance.player.GetMaxHealth())
             GameManager.Instance.player.ChangeHealth(amount);
         };
+    }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player" && GameManager.Instance.player.GetHealth() < GameManager.Instance.player.GetMaxHealth())
+        {
+            effect();
+            Destroy(gameObject);
+        }
     }
 }

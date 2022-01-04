@@ -5,7 +5,7 @@ public abstract class Pickup : MonoBehaviour
 {
     protected Action effect;
 
-    protected void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {

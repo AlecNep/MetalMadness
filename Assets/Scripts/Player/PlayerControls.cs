@@ -90,7 +90,7 @@ public class PlayerControls : Damageable {
     private const float DEFAULT_HEALTH = 100f;
     [SerializeField]
     private Vector3 spawnPoint;
-
+    private static Checkpoint lastCheckpoint;
 
     //Weapon stuff
     public Weapon[] mWeapons; //TEMPORARY; DO NOT KEEP PUBLIC
@@ -294,6 +294,7 @@ public class PlayerControls : Damageable {
         }
     } //~~~~~~end Update~~~~~~
 
+
     public void SetWeapons(int newWeaponIndex)
     {
         mPreviousWeaponIndex = mWeaponIndex;
@@ -398,6 +399,16 @@ public class PlayerControls : Damageable {
         spawnPoint = transform.position;
     }
 
+    public static void SetCheckpoint(Checkpoint c)
+    {
+        lastCheckpoint = c;
+    }
+
+    public static Checkpoint GetCheckpoint()
+    {
+        return lastCheckpoint;
+    }
+
     public void SetSpawnPoint(Vector3 respawn)
     {
         spawnPoint = respawn;
@@ -411,10 +422,16 @@ public class PlayerControls : Damageable {
     public override void Die()
     {
         //All temporary code!
-        mGravShifter.ShiftGravity(4 - (int)mGravShifter.mCurGravity);
+        /*mGravShifter.ShiftGravity(4 - (int)mGravShifter.mCurGravity);
         transform.position = spawnPoint;
         mRb.velocity = Vector3.zero;
-        health = maxHealth;
+        health = maxHealth;*/
+
+        //mGravShifter.ShiftGravity((int)lastCheckpoint.orientation);
+        mGravShifter.mCurGravity = (GravityShifter.Gravity)lastCheckpoint.orientation; 
+        transform.position = lastCheckpoint.transform.position;
+        mRb.velocity = Vector3.zero;
+        health = lastCheckpoint.healthAtTime;
     }
 
     private void OnCollisionEnter(Collision col)

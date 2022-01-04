@@ -8,7 +8,17 @@ public class DashRefill : Pickup
     {
         effect = () =>
         {
+            //if (!GameManager.Instance.player.CanDash())
             GameManager.Instance.player.RefillDash();
         };
+    }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player" && !GameManager.Instance.player.CanDash())
+        {
+            effect();
+            Destroy(gameObject);
+        }
     }
 }

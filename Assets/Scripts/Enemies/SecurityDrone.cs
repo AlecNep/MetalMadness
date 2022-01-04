@@ -5,21 +5,27 @@ using Pathfinding;
 
 public class SecurityDrone : Explodable
 {
-    AIDestinationSetter aiDestination;
-    Rigidbody rb;
+    private AIDestinationSetter aiDestination;
+    private Rigidbody rb;
 
-    GameObject yellowLight;
-    GameObject blueLight;
-    GameObject redLight;
-
-    [SerializeField]
-    float fireRate;
-    float fireDelay = 0;
+    private GameObject yellowLight;
+    private GameObject blueLight;
+    private GameObject redLight;
 
     [SerializeField]
-    GameObject laser;
+    private float fireRate;
+    private float fireDelay = 0;
+
+    [SerializeField]
+    private float camShakeMagnitude;
+    [SerializeField]
+    private float camShakeTime;
+
+    [SerializeField]
+    private GameObject laser;
 
     private bool hasTarget = false;
+    private AudioSource laserSound;
 
 
     // Start is called before the first frame update
@@ -35,6 +41,7 @@ public class SecurityDrone : Explodable
         yellowLight.SetActive(false);
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+        laserSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -58,13 +65,19 @@ public class SecurityDrone : Explodable
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player")
         {
-            aiDestination.target = other.transform;
-            blueLight.SetActive(false);
-            yellowLight.SetActive(true);
+            LayerMask layers = 1 << 11 | 1 << 12 | 1 << 13 | 1 << 15; //environment, enemies, destructible, and doors
+            RaycastHit hit;
+            Vector3 direction = other.transform.position - transform.position;
+            if (!Physics.Raycast(transform.position, direction, out hit, Vector3.Distance(other.transform.position, transform.position), layers))
+            {
+                aiDestination.target = other.transform;
+                blueLight.SetActive(false);
+                yellowLight.SetActive(true);
+            }
         }
     }
 
@@ -88,6 +101,8 @@ public class SecurityDrone : Explodable
         if (cross.z < 0)
             angle *= -1;
         Vector3 lOrientation = angle * Vector3.forward;
+        laserSound.Play();
+        GameManager.Instance.MainCamera.ScreenShake(camShakeMagnitude, camShakeTime);
         GameObject lBullet = Instantiate(laser, transform.position, Quaternion.Euler(lOrientation)) as GameObject; //update soon
 
         lBullet.GetComponent<Bullet>().SetDirection(lDirection);
