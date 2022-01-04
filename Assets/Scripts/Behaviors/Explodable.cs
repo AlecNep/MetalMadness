@@ -10,33 +10,26 @@ public class Explodable : Damageable
     protected float explosionForce;
     [SerializeField]
     protected float explosionRadius;
-    [SerializeField]
-    protected float camShakeMagnitude;
-    [SerializeField]
-    protected float camShakeTime;
-    private AudioSource explosionSound;
 
     [SerializeField]
     protected float damage;
 
-    private void Awake()
-    {
-        explosionSound = GetComponent<AudioSource>();
-        if (explosionSound == null)
-            print("shitfuck");
-    }
 
     protected void Explode()
     {
         LayerMask entities = 1 << 8 | 1 << 12 | 1 << 13; //Player, enemy, and destructible layers
-        Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, entities);
+        Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, entities); //something about this line causes a StackOverflowException; address ASAP!
 
         foreach (Collider col in cols)
         {
             if (col.gameObject == gameObject)
                 continue;
-            if (col.tag == "Player" || col.tag == "Enemy") //this if-statement might be completely useless
+            if (col.tag == "Player" || col.tag == "Enemy") //should probably be replaced with TryGetComponent
             {
+                LayerMask layers = 1 << 11 | 1 << 12 | 1 << 13 | 1 << 15; //environment, enemies, destructible, and doors
+                RaycastHit hit;
+
+
                 Damageable victim = col.GetComponent<Damageable>();
                 float value = (explosionRadius - Vector3.Distance(transform.position, col.transform.position)) / explosionRadius;
                 victim.ChangeHealth(-damage * (value));
@@ -46,11 +39,6 @@ public class Explodable : Damageable
             col.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius, 0f, ForceMode.Impulse);
 
         }
-
-        GameManager.Instance.MainCamera.ScreenShake(camShakeMagnitude, camShakeTime);
-        explosionSound.Play();
-        if (!explosionSound.isPlaying)
-            print("shitfuck2");
 
         Instantiate(explosion, transform.position, transform.rotation);
         Destroy(gameObject);

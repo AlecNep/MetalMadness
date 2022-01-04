@@ -28,6 +28,9 @@ public abstract class Weapon : MonoBehaviour {
     [SerializeField]
     protected float mChargedShakeTime;
 
+    protected AudioSource soundFX;
+    protected AudioSource chargedFX;
+
     protected Transform mArmsParent;
     protected PlayerControls mPlayer;
     protected Transform mBulletSpawn;
@@ -38,7 +41,7 @@ public abstract class Weapon : MonoBehaviour {
     [SerializeField]
     protected int maxAmmo;
 
-    public void Awake()
+    protected virtual void Awake()
     {
         mBulletSpawn = transform.Find("BulletSpawn");
         mFiringLocation = mBulletSpawn.position;
@@ -99,5 +102,9 @@ public abstract class Weapon : MonoBehaviour {
     public virtual void StopFiring()
     {
         mFiring = false;
+        if (soundFX != null && soundFX.isPlaying)
+            soundFX.Stop();
+        if (chargedFX != null && chargedFX.isPlaying)
+            chargedFX.Stop();
     }
 }
