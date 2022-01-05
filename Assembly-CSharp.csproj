@@ -95,7 +95,6 @@
     <Compile Include="Assets\Scripts\Player\Thermite.cs" />
     <Compile Include="Assets\Scripts\Environment\DamageHazard.cs" />
     <Compile Include="Assets\PorglezompPyroclastics\ExplosionMat.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Checkpoint.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\ActionNode.cs" />
     <Compile Include="Assets\Scripts\UI\Compass.cs" />
@@ -139,6 +138,7 @@
     <Compile Include="Assets\Scripts\Environment\RemotePlatform.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireLightScript.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Checkpoint.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
