@@ -35,7 +35,7 @@ public class TestDoor : Interactive
         endPos = startPos + Vector3.right * door.localScale.x;
     }
 
-    public override void Interact(string input = "")
+    /*public override void Interact(string input = "")
     {
         if (input == "")
         {
@@ -55,6 +55,21 @@ public class TestDoor : Interactive
         {
             //not sure if we will need this, but it's good to have
         }
+    }*/
+
+    public override void Interact()
+    {
+        if (isOpen)
+        {
+            //Close
+            StartCoroutine(Move(startPos, delayTimer));
+        }
+        else
+        {
+            //Open
+            StartCoroutine(Move(endPos, delayTimer));
+        }
+        isOpen = !isOpen;
     }
 
     protected IEnumerator Move(Vector3 destination, float timer)
