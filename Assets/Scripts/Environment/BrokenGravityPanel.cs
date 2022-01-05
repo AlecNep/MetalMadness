@@ -27,7 +27,9 @@ public class BrokenGravityPanel : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    
+
+    protected void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out GravityShifter shiftable))
         {
@@ -35,7 +37,7 @@ public class BrokenGravityPanel : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected void OnTriggerExit(Collider other)
     {
         if (other.TryGetComponent(out GravityShifter shiftable))
         {

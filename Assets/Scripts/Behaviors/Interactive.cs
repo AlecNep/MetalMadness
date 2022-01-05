@@ -7,11 +7,11 @@ public class Interactive : MonoBehaviour
     protected GameObject bounds;
     protected GameObject interactableObject;
 
-    //public virtual void Interact() { }
-    public virtual void Interact(string input="") {}
-    protected string input;
+    public virtual void Interact() { }
+    public virtual void Interact(string input) {}
+    protected string input; //probably redundant
 
-    protected void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
@@ -19,7 +19,7 @@ public class Interactive : MonoBehaviour
         }
     }
 
-    protected void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {

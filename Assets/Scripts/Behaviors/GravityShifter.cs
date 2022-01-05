@@ -64,6 +64,14 @@ public class GravityShifter : MonoBehaviour {
         Lock(true);
     }
 
+    public void ForceGravity(Gravity pDirection)
+    {
+        if (mCurGravity != pDirection)
+            mRb.velocity = Vector3.zero;
+        mCurGravity = pDirection;
+        Lock(true);
+    }
+
     //Might not need to be public; but I'll leave it that way for now
     public void Lock(bool locked)
     {

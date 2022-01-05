@@ -5,23 +5,30 @@ using UnityEngine;
 public class InteractivePanel : Interactive
 {
     public Interactive[] interactables;
+    [SerializeField]
+    private string data;
 
-    public override void Interact(string input = "")
+    public override void Interact()
     {
-        //there is probably a better way to do this
-        if (input == "")
-        {
-            foreach (Interactive i in interactables)
-            {
-                i.Interact();
-            }
-        }
+        if (data != "")
+            _Interact(data);
         else
+            _Interact();
+    }
+
+    public void _Interact(string input)
+    {
+        foreach (Interactive i in interactables)
         {
-            foreach (Interactive i in interactables)
-            {
-                i.Interact(input);
-            }
+            i.Interact(input);
+        }
+    }
+
+    public void _Interact()
+    {
+        foreach (Interactive i in interactables)
+        {
+            i.Interact();
         }
     }
 }
