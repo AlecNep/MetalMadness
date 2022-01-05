@@ -15,14 +15,18 @@ public class CameraBehavior : MonoBehaviour
 
     private Transform customCam;
     private PlayerControls playerRef;
+    private Transform audioListener;
 
     // Start is called before the first frame update
     void Start()
     {
         customCam = transform.Find("Camera");
+        audioListener = transform.Find("AudioListener");
+        
         if (customCam == null)
             Debug.LogError("Somehow the custom camera doesn't have a camera child object");
         playerRef = GameManager.Instance.player;
+        audioListener.localPosition = Vector3.back * defaultDistance;
     }
 
     // Update is called once per frame
