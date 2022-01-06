@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Player\Shotgun.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\MeteorSwarmScript.cs" />
     <Compile Include="Assets\Scripts\Environment\InteractiveLaserTrap.cs" />
+    <Compile Include="Assets\Scenes\Menu\MainMenu.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\exploders\Exploder2D.cs" />
     <Compile Include="Assets\Scripts\Player\AutomaticWeapon.cs" />
     <Compile Include="Assets\Scripts\Player\StickyBomb.cs" />
@@ -139,7 +140,6 @@
     <Compile Include="Assets\Scripts\Environment\RemotePlatform.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireLightScript.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
-    <Compile Include="Assets\Scenes\Menu\MainMenu.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
