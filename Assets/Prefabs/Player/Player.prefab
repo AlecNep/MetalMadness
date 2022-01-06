@@ -4240,6 +4240,7 @@ MonoBehaviour:
   mDashDelayBuffer: 1
   mJumpForce: 9
   mChargedJumpForce: 12
+  mCutJumpHeight: 0.6
   mShifting: 0
   spawnPoint: {x: 0, y: 0, z: 0}
   mWeapons: []

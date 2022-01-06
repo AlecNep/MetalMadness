@@ -39,6 +39,8 @@ public class PlayerControls : Damageable {
     public float mJumpForce;
     [SerializeField]
     public float mChargedJumpForce;
+    [Range(0, 1)]
+    public float mCutJumpHeight;
     private bool mOnMovingObject; //used for when the player is on top of another moving object
     private float mZDistance = 0f;
 
