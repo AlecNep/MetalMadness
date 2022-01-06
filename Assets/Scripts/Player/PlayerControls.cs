@@ -122,7 +122,22 @@ public class PlayerControls : Damageable {
 
         ClearWeapons(); //check later on if this is still necessary
 
-        SetDefaultSpawnPoint(); //TEMPORARY; PLEASE DELETE LATER
+        /*
+         * Adds a backup checkpoint in case one was never set; SHOULD be purely for testing/development purposes. 
+         * In other words, THIS PROBABLY SHOULD NOT BE HERE FOR THE DEMO VERSION, AND DEFINITELY SHOULD NOT BE HERE FOR THE FULL VERSION
+         */
+        if (lastCheckpoint == null)
+        {
+            Debug.Log("PlayerControls: Needed to create a backup checkpoint (for testing). If this causes any future errors, then there is a problem with the way the backup checkpoint is being created");
+            SetCheckpoint(Checkpoint.CreateCheckpoint());
+            lastCheckpoint.ToString();
+            if (lastCheckpoint == null) //Seriously, if this block of code is reached, something went wrong
+            {
+                Debug.Log("PlayerControls: lastCheckpoint is STILL null; some serious shit must have gone down to reach this point");
+            }
+            //lastCheckpoint.healthAtTime = health;
+            //lastCheckpoint.SetCheckpointOrientation((int)mGravShifter.mCurGravity);
+        }
 
         //Need to slowly move this to a better class
         mWeaponWheelRef = GameManager.Instance.UI.transform.Find("Weapon Wheel").GetComponent<WeaponSelector>();
@@ -409,6 +424,11 @@ public class PlayerControls : Damageable {
         return lastCheckpoint;
     }
 
+    public static bool HasCheckpoint()
+    {
+        return lastCheckpoint != null;
+    }
+
     public void SetSpawnPoint(Vector3 respawn)
     {
         spawnPoint = respawn;
@@ -427,6 +447,7 @@ public class PlayerControls : Damageable {
         mRb.velocity = Vector3.zero;
         health = maxHealth;*/
 
+        Debug.Log("PlayerControls: Do we even have a checkpoint to return to? " + (lastCheckpoint != null));
         //mGravShifter.ShiftGravity((int)lastCheckpoint.orientation);
         mGravShifter.mCurGravity = (GravityShifter.Gravity)lastCheckpoint.orientation; 
         transform.position = lastCheckpoint.transform.position;

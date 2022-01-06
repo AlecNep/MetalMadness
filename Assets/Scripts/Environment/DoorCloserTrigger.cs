@@ -11,7 +11,6 @@ public class DoorCloserTrigger : Interactive
 
     protected new void OnTriggerEnter(Collider other)
     {
-        print(name + " detected " + other);
         if (!activatedOnce && other.tag == "Player")
         {
             foreach (TestDoor door in doors)
