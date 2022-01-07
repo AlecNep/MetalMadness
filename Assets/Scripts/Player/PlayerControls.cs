@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerControls : Damageable {
 
@@ -39,6 +40,9 @@ public class PlayerControls : Damageable {
     public float mJumpForce;
     [SerializeField]
     public float mChargedJumpForce;
+    [Range(0, 1)]
+    public float mCutJumpHeight;
+    public bool isGrounded;
     private bool mOnMovingObject; //used for when the player is on top of another moving object
     private float mZDistance = 0f;
 
@@ -102,10 +106,6 @@ public class PlayerControls : Damageable {
     private WeaponSelector mWeaponWheelRef;
     private float mWheelWidth;
 
-    //Probably needs to be deleted
-    /*public enum ControlMode {Gameplay = 0, WeaponWheel = 1, Menu = 2, Map = 3 };
-    public ControlMode mCurControls = ControlMode.Gameplay;
-    */
 
     // Use this for initialization
     void Start() {
@@ -364,9 +364,22 @@ public class PlayerControls : Damageable {
         return mDashDelay - mDashTimer <= mDashDuration;
     }
 
-    public bool IsGrounded()
+    /*public bool IsGrounded()
     {
         return Physics.Raycast(transform.position, -transform.up, mDistToGround + 0.1f);
+    }*/
+
+    private void OnTriggerStay(Collider other)
+    {
+        int[] standables = {11, 12, 13, 15};
+        if (standables.Contains(other.gameObject.layer)){
+            isGrounded = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        isGrounded = false;
     }
 
     private void DetachFromMovingObject()

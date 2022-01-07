@@ -149,29 +149,43 @@ namespace CommandPattern //Might not need this
     //Active gameplay commands
     public class Jump : Command
     {
+        private Vector3 relativeDirections;
         public override void Press()
         {
             
-            if (mPlayerControls.IsGrounded())
+            if (mPlayerControls.isGrounded)
             {
+                relativeDirections = mPlayer.transform.InverseTransformDirection(mPlayerRb.velocity);
                 if (OverCharge.mCharged)
                 {
                     //Doesn't seem to make a difference; very inconsistent regardless
-                    mPlayerRb.AddForce(mPlayerControls.mChargedJumpForce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
+                    //mPlayerRb.AddForce(mPlayerControls.mChargedJumpForce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
+
+                    relativeDirections.y = mPlayerControls.mChargedJumpForce;
+                    //mPlayerRb.velocity = mPlayer.transform.TransformDirection(relativeUp);
                     //mPlayerRb.velocity = -mPlayerControls.mGravShifter.mGravNormal * mPlayerControls.mChargedJumpForce;
                 }
                 else
                 {
                     //Doesn't seem to make a difference; very inconsistent regardless
-                    mPlayerRb.AddForce(mPlayerControls.mJumpForce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
+                    //mPlayerRb.AddForce(mPlayerControls.mJumpForce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
                     //mPlayerRb.velocity = -mPlayerControls.mGravShifter.mGravNormal * mPlayerControls.mJumpForce;
+                    relativeDirections.y = mPlayerControls.mJumpForce;
+                    
                 }
+                mPlayerRb.velocity = mPlayer.transform.TransformDirection(relativeDirections);
             }
         }
 
         public override void Release()
         {
-            
+            relativeDirections = mPlayer.transform.InverseTransformDirection(mPlayerRb.velocity);
+            if (relativeDirections.y > 0)
+            {
+                //mPlayerRb.velocity = new Vector3(relativeUp.x, relativeUp.y * mPlayerControls.mCutJumpHeight, relativeUp.z);
+                relativeDirections.y *= mPlayerControls.mCutJumpHeight;
+                mPlayerRb.velocity = mPlayer.transform.TransformDirection(relativeDirections);
+            }
         }
 
         public Jump() : base()
