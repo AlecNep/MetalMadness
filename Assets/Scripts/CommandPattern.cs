@@ -153,7 +153,7 @@ namespace CommandPattern //Might not need this
         public override void Press()
         {
             
-            if (mPlayerControls.IsGrounded())
+            if (mPlayerControls.isGrounded)
             {
                 relativeDirections = mPlayer.transform.InverseTransformDirection(mPlayerRb.velocity);
                 if (OverCharge.mCharged)
