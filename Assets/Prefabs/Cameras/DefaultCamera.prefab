@@ -87,7 +87,7 @@ MonoBehaviour:
   defaultDistance: -10
   heightAbovePlayer: 1.5
   angle: 4
-  rotationSpeed: 2
+  rotationSpeed: 20
 --- !u!1 &8049338408908858358
 GameObject:
   m_ObjectHideFlags: 0

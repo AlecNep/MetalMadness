@@ -12,7 +12,7 @@ public class TestDoor : Interactive
     protected float speed;
     protected bool isOpen = false;
 
-    public enum Orientation { left = 0, up = 1, right = 2, down = 3 }
+    public enum Orientation { right = 0, up = 1, left = 2, down = 3 }
     [SerializeField]
     public Orientation opensTo;
 

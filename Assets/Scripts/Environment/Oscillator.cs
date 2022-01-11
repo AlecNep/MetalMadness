@@ -33,14 +33,19 @@ public class Oscillator : MonoBehaviour {
             mStartingPoint = transform.position.x;
             lRot = 0;
         }
-        if (mReversed)
-            mMovementSpeed *= -1;
+        
 
         transform.rotation = Quaternion.Euler(0, 0, 90 * lRot);
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void Start()
+    {
+        if (mReversed)
+            mMovementSpeed *= -1;
+    }
+
+    // Update is called once per frame
+    void Update () {
         mCounter += Time.deltaTime;
 
         mMovementVar = mStartingPoint + mMovementDistance * Mathf.Sin(mCounter * mMovementSpeed);
