@@ -64,14 +64,26 @@ public class SentryDrone : Explodable
         Explode();
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
+        {
+            aiDestination.target = GameManager.Instance.player.transform;
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player") 
         {
+            if (aiDestination.target != null && aiDestination.target.name == "Player") //could already be chasing the player if theyre shot; no need to check again
+            {
+                return;
+            }
             LayerMask layers = 1 << 11 | 1 << 12 | 1 << 13 | 1 << 15; //environment, enemies, destructible, and doors
             RaycastHit hit;
             Vector3 direction = other.transform.position - transform.position;
-            if (!Physics.Raycast(transform.position, direction, out hit, Vector3.Distance(other.transform.position, transform.position), layers))
+            if (!Physics.Raycast(transform.position, direction, out hit, direction.magnitude, layers))
             {
                 aiDestination.target = other.transform;
             }

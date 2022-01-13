@@ -7,14 +7,11 @@ public class TimedDoor : TestDoor
     [SerializeField]
     private float timeOpen;
 
-    public override void Interact(string input = "")
+    public override void Interact()
     {
-        if (input == "")
+        if (!isOpen)
         {
-            if (!isOpen)
-            {
-                StartCoroutine(TimedOpen());
-            }
+            StartCoroutine(TimedOpen());
         }
     }
 
@@ -23,7 +20,7 @@ public class TimedDoor : TestDoor
         StartCoroutine(Move(endPos, delayTimer));
 
         yield return new WaitForSecondsRealtime(timeOpen);
-
+        
         StartCoroutine(Move(startPos, 0));
     }
 }
