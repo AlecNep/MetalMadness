@@ -43,6 +43,7 @@ public class PlayerControls : Damageable {
     [Range(0, 1)]
     public float mCutJumpHeight;
     public bool isGrounded;
+    private bool alreadyLanded;
     private bool mOnMovingObject; //used for when the player is on top of another moving object
     private float mZDistance = 0f;
 
@@ -60,6 +61,23 @@ public class PlayerControls : Damageable {
     }
 
     //Overcharge
+    private bool _isCharged;
+    public bool isCharged
+    {
+        get
+        {
+            return _isCharged;
+        }
+        set
+        {
+            _isCharged = value;
+            if (mWeapons != null)
+            {
+                mWeapons[mWeaponIndex].Overcharged(_isCharged);
+                mWeapons[mWeaponIndex + mWeaponCount].Overcharged(_isCharged);
+            }
+        }
+    }
     private float mChargeEnergy;
 
     //Gravity stuff
@@ -76,6 +94,12 @@ public class PlayerControls : Damageable {
             return _mGravShifter;
         }
     }
+
+    //Visual effect stuff
+    private Transform feetZone;
+    private TrailRenderer dashTrail;
+    private ParticleSystem landingDust;
+    private ParticleSystem jumpBlast;
 
     public int mShotOrientation
     {
@@ -112,15 +136,26 @@ public class PlayerControls : Damageable {
         health = maxHealth = DEFAULT_HEALTH; //TODO: make this more secure later!
         mRb = GetComponent<Rigidbody>(); //secure this later
         _mGravShifter = GetComponent<GravityShifter>(); //secure this later
-        mDistToGround = GetComponent<Collider>().bounds.extents.y; //secure this later
+        mDistToGround = GetComponent<Collider>().bounds.extents.y; //secure this later //UPDATE: might not need this anymore with the new foot detection trigger
 
         mArms = transform.Find("Arms");
         mArms.localEulerAngles = new Vector3(DEFAULT_ARM_ROTATION, 0, 0);
+
+        feetZone = transform.Find("FeetDetection");
 
         mWeapons = GetComponentsInChildren<Weapon>();
         mWeaponCount = mWeapons.Length / 2;
 
         ClearWeapons(); //check later on if this is still necessary
+
+        dashTrail = GetComponent<TrailRenderer>();
+        dashTrail.enabled = false;
+
+        Transform tempDust = transform.Find("DustEffect");
+        landingDust = tempDust.GetComponent<ParticleSystem>();
+
+        Transform tempJump = transform.Find("JumpEffect");
+        jumpBlast = tempJump.GetComponent<ParticleSystem>();
 
         /*
          * Adds a backup checkpoint in case one was never set; SHOULD be purely for testing/development purposes. 
@@ -154,9 +189,6 @@ public class PlayerControls : Damageable {
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mBodyRotationSpeed);
         }
-
-        //mCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
-        //mCamera.transform.rotation = Quaternion.Euler(0, 0, _mGravShifter.GetShiftAngle());
     }
 
     
@@ -194,6 +226,8 @@ public class PlayerControls : Damageable {
                 {
                     if (IsDashing())
                     {
+                        if (!dashTrail.enabled)
+                            dashTrail.enabled = true;
                         //following lines are reduced by 1/10th because of the left stick sensitivity
                         float lDashSpeed = CommandPattern.OverCharge.mCharged ? mChargedDashSpeed : mDashSpeed;
                         transform.position += 0.1f * mIntendedDirection * mGravShifter.GetMovementVector() * lDashSpeed;
@@ -361,13 +395,19 @@ public class PlayerControls : Damageable {
 
     public bool IsDashing()
     {
-        return mDashDelay - mDashTimer <= mDashDuration;
+        bool dashing = mDashDelay - mDashTimer <= mDashDuration;
+        dashTrail.enabled = dashing;
+        return dashing;
     }
 
-    /*public bool IsGrounded()
+    private void OnTriggerEnter(Collider other)
     {
-        return Physics.Raycast(transform.position, -transform.up, mDistToGround + 0.1f);
-    }*/
+        if (!alreadyLanded && LayerMask.LayerToName(other.gameObject.layer) == "Environment")
+        {
+            alreadyLanded = true;
+            landingDust.Play();
+        }
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -380,6 +420,49 @@ public class PlayerControls : Damageable {
     private void OnTriggerExit(Collider other)
     {
         isGrounded = false;
+    }
+
+    private Vector3 GetRelativeVelocity()
+    {
+        return transform.InverseTransformDirection(mRb.velocity);
+    }
+
+    public void Jump()
+    {
+        if (isGrounded)
+        {
+            Vector3 lRelVel = GetRelativeVelocity();
+            float particleSize;
+            alreadyLanded = false;
+
+            if (isCharged)
+            {
+                lRelVel.y = mChargedJumpForce;
+                particleSize = 4;
+            }
+            else
+            {
+                lRelVel.y = mJumpForce;
+                particleSize = 2;
+            }
+            jumpBlast.transform.position = feetZone.position;
+            var main = jumpBlast.main;
+            main.startSize = particleSize;
+            jumpBlast.Play();
+
+            mRb.velocity = transform.TransformDirection(lRelVel);
+        }
+    }
+
+    public void JumpSlowdown()
+    {
+        Vector3 lRelVel = GetRelativeVelocity();
+
+        if (lRelVel.y > 0)
+        {
+            lRelVel.y *= mCutJumpHeight;
+            mRb.velocity = transform.TransformDirection(lRelVel);
+        }
     }
 
     private void DetachFromMovingObject()
