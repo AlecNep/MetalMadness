@@ -95,6 +95,9 @@ public class PlayerControls : Damageable {
         }
     }
 
+    public event OnVarChangeDel OnVarChange;
+    public delegate void OnVarChangeDel(int newVal);
+
     //Visual effect stuff
     private Transform feetZone;
     private TrailRenderer dashTrail;
