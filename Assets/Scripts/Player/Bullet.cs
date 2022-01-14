@@ -37,7 +37,6 @@ public class Bullet : MonoBehaviour {
 
     public void OnCollisionEnter(Collision collision)
     {
-        //if (collision.gameObject.tag != "Player" && collision.gameObject.tag != "PlayerBullet")
         if(collision.gameObject.tag != "PlayerBullet" && collision.gameObject.tag != "EnemyBullet")
         {
             Damageable victim = collision.collider.GetComponent<Damageable>();
@@ -45,7 +44,8 @@ public class Bullet : MonoBehaviour {
             {
                 victim.ChangeHealth(-damage);
             }
-            Instantiate(impactEffect, transform.position, transform.rotation);
+            if (impactEffect != null)
+                Instantiate(impactEffect, transform.position, transform.rotation);
             Destroy(gameObject);
         }
         

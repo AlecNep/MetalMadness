@@ -113,6 +113,7 @@
     <Compile Include="Assets\Scripts\Enemies\ShiftableBot.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Repeater.cs" />
     <Compile Include="Assets\Scripts\UI\PauseMenu.cs" />
+    <Compile Include="Assets\Scripts\Behaviors\CustomSingleEffect.cs" />
     <Compile Include="Assets\Scripts\Behaviors\Explodable.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeGun.cs" />
     <Compile Include="Assets\Scripts\Tools\QuickFunctions.cs" />
@@ -141,8 +142,6 @@
     <Compile Include="Assets\Scripts\Environment\RemotePlatform.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireLightScript.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
-    <Compile Include="Assets\Scripts\Environment\BlackoutCover.cs" />
-    <Compile Include="Assets\Scripts\Behaviors\CustomSingleEffect.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
