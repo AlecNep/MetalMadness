@@ -11,7 +11,8 @@ public class Bullet : MonoBehaviour {
     protected float mMaxLifespan;
     [SerializeField]
     protected float damage;
-    
+    [SerializeField]
+    protected GameObject impactEffect;
 
 
     // Use this for initialization
@@ -44,6 +45,7 @@ public class Bullet : MonoBehaviour {
             {
                 victim.ChangeHealth(-damage);
             }
+            Instantiate(impactEffect, transform.position, transform.rotation);
             Destroy(gameObject);
         }
         
