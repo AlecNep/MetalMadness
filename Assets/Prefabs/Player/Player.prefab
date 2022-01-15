@@ -47,6 +47,7 @@ MonoBehaviour:
   mSpeed: 0.5
   mMaxLifespan: 0
   damage: 0
+  impactEffect: {fileID: 0}
 --- !u!1 &2711816003242497700
 GameObject:
   m_ObjectHideFlags: 0
@@ -2574,6 +2575,7 @@ MonoBehaviour:
   mSpeed: 0.5
   mMaxLifespan: 0
   damage: 0
+  impactEffect: {fileID: 0}
 --- !u!1 &2711816004320730164
 GameObject:
   m_ObjectHideFlags: 0
@@ -4242,12 +4244,11 @@ MonoBehaviour:
   mDashTimer: 0
   mDashDuration: 0.25
   mDashDelayBuffer: 1
-  mJumpForce: 9
-  mChargedJumpForce: 12
+  mJumpForce: 10
+  mChargedJumpForce: 13
   mCutJumpHeight: 0.8
   isGrounded: 0
   mShifting: 0
-  isCharged: 0
   spawnPoint: {x: 0, y: 0, z: 0}
   mWeapons: []
   mWeaponIndex: 0
@@ -4263,7 +4264,7 @@ Rigidbody:
   m_GameObject: {fileID: 2711816005031834378}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0.5
+  m_Drag: 0.4
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -4283,7 +4284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultGravity: 0
-  mGravityFactor: 10
+  mGravityFactor: 13
 --- !u!96 &1464723468965905427
 TrailRenderer:
   serializedVersion: 2
@@ -9466,13 +9467,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7819399886748905453}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2711816005031834379}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &4120806570706168268
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -14309,7 +14310,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
-  m_RenderAlignment: 1
+  m_RenderAlignment: 2
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0

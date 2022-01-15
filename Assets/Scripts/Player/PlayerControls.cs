@@ -103,6 +103,7 @@ public class PlayerControls : Damageable {
     private TrailRenderer dashTrail;
     private ParticleSystem landingDust;
     private ParticleSystem jumpBlast;
+    private Vector3 lastJumpPos;
 
     public int mShotOrientation
     {
@@ -191,6 +192,11 @@ public class PlayerControls : Damageable {
         if (transform.rotation != mTargetRotation)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, mTargetRotation, mBodyRotationSpeed);
+        }
+
+        if (jumpBlast.isPlaying)
+        {
+            jumpBlast.transform.position = lastJumpPos;
         }
     }
 
@@ -448,9 +454,9 @@ public class PlayerControls : Damageable {
                 lRelVel.y = mJumpForce;
                 particleSize = 2;
             }
-            jumpBlast.transform.position = feetZone.position;
             var main = jumpBlast.main;
             main.startSize = particleSize;
+            lastJumpPos = feetZone.position;
             jumpBlast.Play();
 
             mRb.velocity = transform.TransformDirection(lRelVel);
