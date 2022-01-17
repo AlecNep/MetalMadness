@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour {
     public PauseMenu pauseMenu { get; private set; }
     public WeaponSelector weaponWheel { get; private set; }
 
+    public Checkpoint lastCheckpoint;
+    public SaveLoadDataUtil DataUtil { get; private set; }
+    
+
     public enum GameMode { Gameplay = 0, WeaponWheel = 1, Menu = 2, Map = 3 };
     private static GameMode _currentGameMode = GameMode.Gameplay;
     public static GameMode currentGameMode //consider making this static
@@ -42,10 +46,16 @@ public class GameManager : MonoBehaviour {
         weaponWheel = UI.transform.Find("Weapon Wheel").GetComponent<WeaponSelector>();
         if (weaponWheel == null)
             Debug.LogError("Unable to find Weapon Wheel inside the UI");
+        DataUtil = GetComponent<SaveLoadDataUtil>();
     }
 
     public static void SetGameMode(int mode)
     {
         currentGameMode = (GameMode)mode;
+    }
+
+    public void SetCheckpoint(Checkpoint c)
+    {
+        lastCheckpoint = c;
     }
 }

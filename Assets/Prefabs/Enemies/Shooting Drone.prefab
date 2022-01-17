@@ -310,6 +310,8 @@ GameObject:
   - component: {fileID: 6788125315816705641}
   - component: {fileID: 6788125315816705640}
   - component: {fileID: 2630699934419541538}
+  - component: {fileID: 5333631321327166370}
+  - component: {fileID: 7137700403076897393}
   m_Layer: 12
   m_Name: Shooting Drone
   m_TagString: Enemy
@@ -558,3 +560,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5333631321327166370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6788125315816705646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 587ffc026762e5847878251fffad1ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
+--- !u!114 &7137700403076897393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6788125315816705646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6bc4de2f368b14b918401a932e91e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

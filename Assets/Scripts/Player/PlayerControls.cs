@@ -1,10 +1,11 @@
-﻿//using System; //Probably need to get rid of this
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class PlayerControls : Damageable {
+
+public class PlayerControls : Damageable, ISaveable {
 
     public Rigidbody mRb { get; private set; }
     private Camera mCamera;
@@ -100,6 +101,7 @@ public class PlayerControls : Damageable {
 
     //Visual effect stuff
     private Transform feetZone;
+    private int objectsInFeetZone;
     private TrailRenderer dashTrail;
     private ParticleSystem landingDust;
     private ParticleSystem jumpBlast;
@@ -116,13 +118,22 @@ public class PlayerControls : Damageable {
     private const float mGravShiftDelay = 1.5f; //potentially allow the player to reduce this later
     private float shiftTimer = 0f;
     private bool mCanShift = true;
-    
+
 
     //Gameplay stats
     private const float DEFAULT_HEALTH = 100f;
     [SerializeField]
     private Vector3 spawnPoint;
     private static Checkpoint lastCheckpoint;
+    [Serializable]
+    private struct SaveData
+    {
+        public float health;
+        public float spawnX;
+        public float spawnY;
+        public float spawnZ;
+        public GravityShifter.Gravity orientation;
+    }
 
     //Weapon stuff
     public Weapon[] mWeapons; //TEMPORARY; DO NOT KEEP PUBLIC
@@ -167,7 +178,7 @@ public class PlayerControls : Damageable {
          */
         if (lastCheckpoint == null)
         {
-            Debug.Log("PlayerControls: Needed to create a backup checkpoint (for testing). If this causes any future errors, then there is a problem with the way the backup checkpoint is being created");
+            //Debug.Log("PlayerControls: Needed to create a backup checkpoint (for testing). If this causes any future errors, then there is a problem with the way the backup checkpoint is being created");
             SetCheckpoint(Checkpoint.CreateCheckpoint());
             lastCheckpoint.ToString();
             if (lastCheckpoint == null) //Seriously, if this block of code is reached, something went wrong
@@ -185,7 +196,7 @@ public class PlayerControls : Damageable {
     }
 
 
-    private void Update() 
+    private void Update()
     {
         mTargetRotation = Quaternion.LookRotation(mGravShifter.GetMovementVector() * -mIntendedDirection, -mGravShifter.GetGravityNormal());
 
@@ -200,8 +211,8 @@ public class PlayerControls : Damageable {
         }
     }
 
-    
-    void FixedUpdate () {
+
+    void FixedUpdate() {
 
         float lLx = Input.GetAxis("LStickX");
         float lLy = Input.GetAxis("LStickY");
@@ -210,7 +221,7 @@ public class PlayerControls : Damageable {
 
 
         //Left stick controls
-        if((int)GameManager.currentGameMode < 2) //Can move with the "Gameplay" and "WeaponWheel" modes
+        if ((int)GameManager.currentGameMode < 2) //Can move with the "Gameplay" and "WeaponWheel" modes
         {
             //Main movement section
             if (!mAttachedToWall) //cannot move if attached to a wall
@@ -229,7 +240,7 @@ public class PlayerControls : Damageable {
                     }
                 }
 
-                LayerMask layers = 1 << 11 | 1 << 12 | 1 << 13 | 1<< 15; //environment, enemies, destructible, and doors
+                LayerMask layers = 1 << 11 | 1 << 12 | 1 << 13 | 1 << 15; //environment, enemies, destructible, and doors
                 RaycastHit hit;
                 if (!Physics.Raycast(transform.position, mGravShifter.GetMovementVector() * mIntendedDirection, out hit, 0.7f, layers))
                 {
@@ -278,7 +289,7 @@ public class PlayerControls : Damageable {
                 }
                 //end arm movement section
             }
-            
+
 
             if (mDashTimer > 0)
             {
@@ -305,7 +316,7 @@ public class PlayerControls : Damageable {
                     shiftTimer = 0;
                 }
             }
-            
+
 
             if (lGravInput.magnitude > 0.1f && CanShift() && !mAttached)
             {
@@ -314,7 +325,7 @@ public class PlayerControls : Damageable {
 
                 if (cross.z > 0)
                     lGravAngle = -lGravAngle;
-                
+
                 if (Mathf.Abs(lGravAngle) < 135f) //not downwards
                 {
                     mCanShift = false;
@@ -336,7 +347,7 @@ public class PlayerControls : Damageable {
                         mGravShifter.ShiftGravity(3);
                     }
                 }
-                
+
             }
         }
         else if ((int)GameManager.currentGameMode == 1) //Weapon wheel mode
@@ -348,7 +359,7 @@ public class PlayerControls : Damageable {
             {
                 mWeaponWheelRef.Selector(lRStick);
             }
-            
+
         }
     } //~~~~~~end Update~~~~~~
 
@@ -411,6 +422,7 @@ public class PlayerControls : Damageable {
 
     private void OnTriggerEnter(Collider other)
     {
+        //++objectsInFeetZone;
         if (!alreadyLanded && LayerMask.LayerToName(other.gameObject.layer) == "Environment")
         {
             alreadyLanded = true;
@@ -420,8 +432,8 @@ public class PlayerControls : Damageable {
 
     private void OnTriggerStay(Collider other)
     {
-        int[] standables = {11, 12, 13, 15};
-        if (standables.Contains(other.gameObject.layer)){
+        int[] standables = { 11, 12, 13, 15 };
+        if (standables.Contains(other.gameObject.layer)) {
             isGrounded = true;
         }
     }
@@ -544,20 +556,52 @@ public class PlayerControls : Damageable {
         return spawnPoint;
     }
 
+    //Save data utilities
+    public object CaptureState()
+    {
+        print("Capturing player state");
+        return new SaveData
+        {
+            health = health,
+            spawnX = lastCheckpoint.transform.position.x,
+            spawnY = lastCheckpoint.transform.position.y,
+            spawnZ = lastCheckpoint.transform.position.z,
+            orientation = (GravityShifter.Gravity)lastCheckpoint.orientation
+        };
+    }
+
+    public void LoadState(object data)
+    {
+        print("Loading player state");
+        var saveData = (SaveData)data;
+        health = saveData.health;
+        spawnPoint = new Vector3(saveData.spawnX, saveData.spawnY, saveData.spawnZ);
+        mGravShifter.mCurGravity = saveData.orientation;
+        transform.position = spawnPoint;
+    }
+
+    //end save data utilities
+
     public override void Die()
     {
-        //All temporary code!
-        /*mGravShifter.ShiftGravity(4 - (int)mGravShifter.mCurGravity);
-        transform.position = spawnPoint;
-        mRb.velocity = Vector3.zero;
-        health = maxHealth;*/
-
-        Debug.Log("PlayerControls: Do we even have a checkpoint to return to? " + (lastCheckpoint != null));
-        //mGravShifter.ShiftGravity((int)lastCheckpoint.orientation);
+        /*Debug.Log("PlayerControls: Do we even have a checkpoint to return to? " + (lastCheckpoint != null));
         mGravShifter.mCurGravity = (GravityShifter.Gravity)lastCheckpoint.orientation; 
         transform.position = lastCheckpoint.transform.position;
         mRb.velocity = Vector3.zero;
-        health = lastCheckpoint.healthAtTime;
+        health = lastCheckpoint.healthAtTime;*/
+        StartCoroutine(DeathSequence());
+    }
+
+    private IEnumerator DeathSequence()
+    {
+        //Explosion or death effect
+        //gameObject.SetActive(false);
+        print("You died!");
+        yield return new WaitForSeconds(1);
+        print("Finished waiting after death");
+        //gameObject.SetActive(true);
+        GameManager.Instance.DataUtil.Load();
+        print("loaded");
     }
 
     private void OnCollisionEnter(Collision col)

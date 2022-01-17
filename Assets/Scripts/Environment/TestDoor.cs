@@ -1,8 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class TestDoor : Interactive
+public class TestDoor : Interactive, ISaveable
 {
     protected Vector3 startPos;
     protected Vector3 endPos;
@@ -17,6 +17,12 @@ public class TestDoor : Interactive
     public Orientation opensTo;
 
     protected Transform door;
+
+    [Serializable]
+    private struct SaveData
+    {
+        public bool isOpen;
+    }
 
     protected void OnValidate()
     {
@@ -34,28 +40,6 @@ public class TestDoor : Interactive
         startPos = door.localPosition;
         endPos = startPos + Vector3.right * door.localScale.x;
     }
-
-    /*public override void Interact(string input = "")
-    {
-        if (input == "")
-        {
-            if (isOpen)
-            {
-                //Close
-                StartCoroutine(Move(startPos, delayTimer));
-            }
-            else
-            {
-                //Open
-                StartCoroutine(Move(endPos, delayTimer));
-            }
-            isOpen = !isOpen;
-        }
-        else
-        {
-            //not sure if we will need this, but it's good to have
-        }
-    }*/
 
     public override void Interact()
     {
@@ -108,5 +92,19 @@ public class TestDoor : Interactive
     {
         StartCoroutine(Move(startPos, delayTimer));
         isOpen = false;
+    }
+
+    public object CaptureState()
+    {
+        return new SaveData
+        {
+            isOpen = isOpen
+        };
+    }
+
+    public void LoadState(object data)
+    {
+        var saveData = (SaveData)data;
+        isOpen = saveData.isOpen;
     }
 }

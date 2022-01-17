@@ -228,6 +228,8 @@ GameObject:
   - component: {fileID: 902378422123219912}
   - component: {fileID: 902378422123219917}
   - component: {fileID: 902378422123219916}
+  - component: {fileID: 5094155024568750203}
+  - component: {fileID: 7229069414721171942}
   m_Layer: 12
   m_Name: Self-destuct Drone
   m_TagString: Enemy
@@ -377,6 +379,31 @@ MonoBehaviour:
   explosionRadius: 6
   damage: 25
   distanceThreshold: 3
+--- !u!114 &5094155024568750203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902378422123219894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 587ffc026762e5847878251fffad1ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
+--- !u!114 &7229069414721171942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902378422123219894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6bc4de2f368b14b918401a932e91e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &902378422333210906
 GameObject:
   m_ObjectHideFlags: 0

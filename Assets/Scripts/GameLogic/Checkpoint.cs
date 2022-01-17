@@ -25,8 +25,9 @@ public class Checkpoint : MonoBehaviour
         {
             alreadyTriggered = true;
             PlayerControls.SetCheckpoint(this);
-            PlayerControls playRef = GameManager.Instance.player;
-            healthAtTime = playRef.GetHealth();
+            GameManager.Instance.DataUtil.Save();
+            /*PlayerControls playRef = GameManager.Instance.player;
+            healthAtTime = playRef.GetHealth();*/
             //TODO: code for ammo
         }
     }

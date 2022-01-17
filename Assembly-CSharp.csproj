@@ -142,6 +142,10 @@
     <Compile Include="Assets\Scripts\Environment\RemotePlatform.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireLightScript.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Behaviors\SaveableEntity.cs" />
+    <Compile Include="Assets\Scripts\Behaviors\ISaveable.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\SaveLoadDataUtil.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
