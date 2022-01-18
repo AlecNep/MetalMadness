@@ -13,6 +13,7 @@ TagManager:
   - Serviceable
   - Explosion
   - WeaponWheel
+  - Pickup
   layers:
   - Default
   - TransparentFX

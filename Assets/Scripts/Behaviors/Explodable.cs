@@ -14,6 +14,12 @@ public class Explodable : Damageable
     [SerializeField]
     protected float damage;
 
+    private Renderer rend;
+
+    private void Awake()
+    {
+        rend = GetComponentInChildren<Renderer>();
+    }
 
     protected void Explode()
     {
@@ -46,9 +52,12 @@ public class Explodable : Damageable
             
 
         }
-
+        health = 0;
+        gameObject.SetActive(false);
+        //rend.enabled = false;
         Instantiate(explosion, transform.position, transform.rotation);
-        Destroy(gameObject);
+        //gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 
     public override void Die()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class Enemy : MonoBehaviour, ISaveable
 {
@@ -12,6 +13,7 @@ public class Enemy : MonoBehaviour, ISaveable
         public float yPos;
         public float zPos;
     }
+
 
     public object CaptureState()
     {
@@ -34,15 +36,34 @@ public class Enemy : MonoBehaviour, ISaveable
     public void LoadState(object data)
     {
         var saveData = (SaveData)data;
+
+        if (TryGetComponent(out AIDestinationSetter ai))
+        {
+            ai.target = null;
+        }
+
         if (TryGetComponent(out Damageable d))
         {
-            if (d.GetHealth() <= 0)
+            if (saveData.health <= 0)
+            {
                 gameObject.SetActive(false);
+                //rend.enabled = false;
+            }
+                
             else
+            {
                 d.SetHealth(saveData.health);
+                d.gameObject.SetActive(true);
+                //rend.enabled = true;
+            }
+                
+                
         }
         else
             Debug.LogError("Enemy.LoadState: " + name + " was not able to detect Damageable component");
+        
+        
+
         transform.position = new Vector3(saveData.xPos, saveData.yPos, saveData.zPos);
     }
 }

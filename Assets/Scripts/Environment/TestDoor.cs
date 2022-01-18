@@ -106,5 +106,13 @@ public class TestDoor : Interactive, ISaveable
     {
         var saveData = (SaveData)data;
         isOpen = saveData.isOpen;
+        if (isOpen)
+        {
+            door.localPosition = endPos;
+        }
+        else
+        {
+            door.localPosition = startPos;
+        }
     }
 }
