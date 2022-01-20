@@ -6,7 +6,6 @@ using Pathfinding;
 public class SentryDrone : Explodable
 {
     AIDestinationSetter aiDestination;
-    Rigidbody rb;
 
     [SerializeField]
     float distanceThreshold;
@@ -60,7 +59,7 @@ public class SentryDrone : Explodable
             yield return new WaitForSeconds(0.05f);
         }
         yield return new WaitForSeconds(0.1f);
-
+        aiDestination.target = null;
         Explode();
     }
 

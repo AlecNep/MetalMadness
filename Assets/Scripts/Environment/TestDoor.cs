@@ -10,6 +10,7 @@ public class TestDoor : Interactive, ISaveable
     protected float delayTimer;
     [SerializeField]
     protected float speed;
+    protected bool isMoving = false;
     protected bool isOpen = false;
 
     public enum Orientation { right = 0, up = 1, left = 2, down = 3 }
@@ -58,6 +59,7 @@ public class TestDoor : Interactive, ISaveable
 
     protected IEnumerator Move(Vector3 destination, float timer)
     {
+        isMoving = true;
         if (timer > 0)
         {
             float delay = 0;
@@ -79,17 +81,32 @@ public class TestDoor : Interactive, ISaveable
             }
 
             yield return null;
-        }        
+        }
+        isMoving = false;
     }
 
     public void ForceOpen()
     {
+        StartCoroutine(_ForceOpen());
+    }
+
+    private IEnumerator _ForceOpen()
+    {
+        while (isMoving)
+            yield return null;
         StartCoroutine(Move(endPos, delayTimer));
         isOpen = true;
     }
 
     public void ForceClose()
     {
+        StartCoroutine(_ForceClose());
+    }
+
+    private IEnumerator _ForceClose()
+    {
+        while (isMoving)
+            yield return null;
         StartCoroutine(Move(startPos, delayTimer));
         isOpen = false;
     }

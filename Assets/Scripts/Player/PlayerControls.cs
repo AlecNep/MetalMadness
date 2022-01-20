@@ -559,7 +559,6 @@ public class PlayerControls : Damageable, ISaveable {
     //Save data utilities
     public object CaptureState()
     {
-        print("Capturing player state");
         return new SaveData
         {
             health = health,
@@ -572,7 +571,6 @@ public class PlayerControls : Damageable, ISaveable {
 
     public void LoadState(object data)
     {
-        print("Loading player state");
         var saveData = (SaveData)data;
         health = saveData.health;
         spawnPoint = new Vector3(saveData.spawnX, saveData.spawnY, saveData.spawnZ);
@@ -598,10 +596,8 @@ public class PlayerControls : Damageable, ISaveable {
         //gameObject.SetActive(false);
         print("You died!");
         yield return new WaitForSeconds(1);
-        print("Finished waiting after death");
         //gameObject.SetActive(true);
         GameManager.Instance.DataUtil.Load();
-        print("loaded");
     }
 
     private void OnCollisionEnter(Collision col)

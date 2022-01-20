@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6629891960277946697}
   - component: {fileID: 6629891960277946696}
   - component: {fileID: 6629891960277946699}
+  - component: {fileID: 37063128279925604}
   m_Layer: 0
   m_Name: Shift Refill
   m_TagString: Pickup
@@ -121,3 +122,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9150dc83bbdfceb478c40a1e0261c3c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  respawnable: 0
+  respawnRate: 0
+--- !u!114 &37063128279925604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6629891960277946698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 587ffc026762e5847878251fffad1ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
