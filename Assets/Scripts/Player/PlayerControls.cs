@@ -180,11 +180,13 @@ public class PlayerControls : Damageable, ISaveable {
         {
             //Debug.Log("PlayerControls: Needed to create a backup checkpoint (for testing). If this causes any future errors, then there is a problem with the way the backup checkpoint is being created");
             SetCheckpoint(Checkpoint.CreateCheckpoint());
-            lastCheckpoint.ToString();
+            //lastCheckpoint.ToString();
             if (lastCheckpoint == null) //Seriously, if this block of code is reached, something went wrong
             {
                 Debug.Log("PlayerControls: lastCheckpoint is STILL null; some serious shit must have gone down to reach this point");
             }
+            else
+                GameManager.Instance.DataUtil.Save();
             //lastCheckpoint.healthAtTime = health;
             //lastCheckpoint.SetCheckpointOrientation((int)mGravShifter.mCurGravity);
         }
