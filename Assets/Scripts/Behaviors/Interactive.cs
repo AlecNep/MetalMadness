@@ -9,6 +9,8 @@ public class Interactive : MonoBehaviour
 
     public virtual void Interact() { }
     public virtual void Interact(string input) {}
+    public virtual void Interact(bool input) { }
+    public virtual void Interact(int input) { }
     protected string input; //probably redundant
 
     protected virtual void OnTriggerEnter(Collider other)

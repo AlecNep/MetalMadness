@@ -7,6 +7,8 @@ public class DoorCloserTrigger : Interactive, ISaveable
 {
     [SerializeField]
     private TestDoor[] doors;
+    [SerializeField]
+    private InteractivePanel[] panels;
 
     public bool isResuseable;
     private bool activatedOnce = false;
@@ -22,11 +24,16 @@ public class DoorCloserTrigger : Interactive, ISaveable
     {
         if (other.tag == "Player")
         {
+            //There is probably a cleaner way to do this. Maybe with an XOR
             if (isResuseable)
             {
                 foreach (TestDoor door in doors)
                 {
                     door.ForceClose();
+                }
+                foreach (InteractivePanel panel in panels)
+                {
+                    panel.Interact(2);
                 }
             }
             else if (!activatedOnce)
@@ -34,6 +41,10 @@ public class DoorCloserTrigger : Interactive, ISaveable
                 foreach (TestDoor door in doors)
                 {
                     door.ForceClose();
+                }
+                foreach (InteractivePanel panel in panels)
+                {
+                    panel.Interact(2);
                 }
                 activatedOnce = true;
             }
