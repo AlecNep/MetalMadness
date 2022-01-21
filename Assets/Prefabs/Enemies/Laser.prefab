@@ -63,6 +63,8 @@ MonoBehaviour:
   mSpeed: 15
   mMaxLifespan: 5
   damage: 5
+  impactEffect: {fileID: 1250507045210962, guid: 3fe0df07025a3e747855b1bb671fc04e,
+    type: 3}
 --- !u!54 &1098584771592321518
 Rigidbody:
   m_ObjectHideFlags: 0

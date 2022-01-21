@@ -1,8 +1,8 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractiveLaserTrap : LaserTrap
+public class InteractiveLaserTrap : LaserTrap, ISaveable
 {
     private bool _isOn;
     private bool isOn
@@ -16,6 +16,12 @@ public class InteractiveLaserTrap : LaserTrap
             _isOn = value;
             laser.gameObject.SetActive(_isOn);
         }
+    }
+
+    [Serializable]
+    private struct SaveData
+    {
+        public bool isOn;
     }
 
     // Start is called before the first frame update
@@ -38,5 +44,19 @@ public class InteractiveLaserTrap : LaserTrap
     public override bool IsPoweredOn()
     {
         return isOn;
+    }
+
+    public object CaptureState()
+    {
+        return new SaveData
+        {
+            isOn = isOn
+        };
+    }
+
+    public void LoadState(object data)
+    {
+        var saveData = (SaveData)data;
+        isOn = saveData.isOn;
     }
 }

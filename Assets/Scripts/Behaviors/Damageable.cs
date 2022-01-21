@@ -19,6 +19,8 @@ public class Damageable : MonoBehaviour
 
     public float GetHealth() { return health; }
 
+    public void SetHealth(float h) { health = h; }
+
     public float GetMaxHealth() { return maxHealth; }
 
     public virtual void Die() { Destroy(gameObject); }

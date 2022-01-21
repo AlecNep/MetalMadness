@@ -6,7 +6,6 @@ using Pathfinding;
 public class SecurityDrone : Explodable
 {
     private AIDestinationSetter aiDestination;
-    private Rigidbody rb;
 
     private GameObject yellowLight;
     private GameObject blueLight;

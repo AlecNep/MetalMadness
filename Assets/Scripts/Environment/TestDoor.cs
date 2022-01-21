@@ -1,8 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class TestDoor : Interactive
+public class TestDoor : Interactive, ISaveable
 {
     protected Vector3 startPos;
     protected Vector3 endPos;
@@ -10,6 +10,7 @@ public class TestDoor : Interactive
     protected float delayTimer;
     [SerializeField]
     protected float speed;
+    protected bool isMoving = false;
     protected bool isOpen = false;
 
     public enum Orientation { right = 0, up = 1, left = 2, down = 3 }
@@ -17,6 +18,12 @@ public class TestDoor : Interactive
     public Orientation opensTo;
 
     protected Transform door;
+
+    [Serializable]
+    private struct SaveData
+    {
+        public bool isOpen;
+    }
 
     protected void OnValidate()
     {
@@ -35,28 +42,6 @@ public class TestDoor : Interactive
         endPos = startPos + Vector3.right * door.localScale.x;
     }
 
-    /*public override void Interact(string input = "")
-    {
-        if (input == "")
-        {
-            if (isOpen)
-            {
-                //Close
-                StartCoroutine(Move(startPos, delayTimer));
-            }
-            else
-            {
-                //Open
-                StartCoroutine(Move(endPos, delayTimer));
-            }
-            isOpen = !isOpen;
-        }
-        else
-        {
-            //not sure if we will need this, but it's good to have
-        }
-    }*/
-
     public override void Interact()
     {
         if (isOpen)
@@ -74,6 +59,7 @@ public class TestDoor : Interactive
 
     protected IEnumerator Move(Vector3 destination, float timer)
     {
+        isMoving = true;
         if (timer > 0)
         {
             float delay = 0;
@@ -95,18 +81,55 @@ public class TestDoor : Interactive
             }
 
             yield return null;
-        }        
+        }
+        isMoving = false;
     }
 
     public void ForceOpen()
     {
+        StartCoroutine(_ForceOpen());
+    }
+
+    private IEnumerator _ForceOpen()
+    {
+        while (isMoving)
+            yield return null;
         StartCoroutine(Move(endPos, delayTimer));
         isOpen = true;
     }
 
     public void ForceClose()
     {
+        StartCoroutine(_ForceClose());
+    }
+
+    private IEnumerator _ForceClose()
+    {
+        while (isMoving)
+            yield return null;
         StartCoroutine(Move(startPos, delayTimer));
         isOpen = false;
+    }
+
+    public object CaptureState()
+    {
+        return new SaveData
+        {
+            isOpen = isOpen
+        };
+    }
+
+    public void LoadState(object data)
+    {
+        var saveData = (SaveData)data;
+        isOpen = saveData.isOpen;
+        if (isOpen)
+        {
+            door.localPosition = endPos;
+        }
+        else
+        {
+            door.localPosition = startPos;
+        }
     }
 }

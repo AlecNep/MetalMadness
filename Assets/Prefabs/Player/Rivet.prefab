@@ -243,6 +243,8 @@ MonoBehaviour:
   mSpeed: 17
   mMaxLifespan: 5
   damage: 5
+  impactEffect: {fileID: 1570927096764274, guid: 643639841fb531e4ba8097fed4eb9ac7,
+    type: 3}
 --- !u!122 &122781736629081404
 Halo:
   m_ObjectHideFlags: 0

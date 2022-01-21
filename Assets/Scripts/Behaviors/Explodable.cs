@@ -13,12 +13,17 @@ public class Explodable : Damageable
 
     [SerializeField]
     protected float damage;
+    protected Rigidbody rb;
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     protected void Explode()
     {
+        rb.velocity = Vector3.zero;
         //Should probably put all this into the actual explosion script
-
         LayerMask entities = 1 << 8 | 1 << 12 | 1 << 13; //Player, enemy, and destructible layers
         Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, entities); //something about this line causes a StackOverflowException; address ASAP!
 
@@ -46,9 +51,12 @@ public class Explodable : Damageable
             
 
         }
-
+        health = 0;
+        gameObject.SetActive(false);
+        //rend.enabled = false;
         Instantiate(explosion, transform.position, transform.rotation);
-        Destroy(gameObject);
+        //gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 
     public override void Die()

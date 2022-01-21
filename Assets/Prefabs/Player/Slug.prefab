@@ -79,6 +79,8 @@ MonoBehaviour:
   mSpeed: 15
   mMaxLifespan: 3
   damage: 15
+  impactEffect: {fileID: 1150934714579380, guid: 32eda45eeb8d3af4aba3a7479d5c87c1,
+    type: 3}
 --- !u!1 &8581171206398126288
 GameObject:
   m_ObjectHideFlags: 0
