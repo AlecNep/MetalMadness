@@ -58,4 +58,10 @@ public class GameManager : MonoBehaviour {
     {
         lastCheckpoint = c;
     }
+
+    public void ReloadCheckpoint()
+    {
+        DataUtil.Load();
+        pauseMenu.PauseGame();
+    }
 }
