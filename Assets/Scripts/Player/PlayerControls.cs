@@ -99,13 +99,26 @@ public class PlayerControls : Damageable, ISaveable {
     public event OnVarChangeDel OnVarChange;
     public delegate void OnVarChangeDel(int newVal);
 
-    //Visual effect stuff
+    //FX stuff
     private Transform feetZone;
     private int objectsInFeetZone;
     private TrailRenderer dashTrail;
     private ParticleSystem landingDust;
     private ParticleSystem jumpBlast;
     private Vector3 lastJumpPos;
+    private Quaternion lastJumpRot;
+    private Vector3 lastLandingPos;
+    private Quaternion lastLandingRot;
+
+    public AudioSource fxAudio;
+    [SerializeField]
+    public AudioClip dashSound;
+    [SerializeField]
+    public AudioClip chargedDashSound;
+    [SerializeField]
+    public AudioClip gravShiftSound;
+    [SerializeField]
+    public AudioClip landingSound;
 
     public int mShotOrientation
     {
@@ -152,6 +165,7 @@ public class PlayerControls : Damageable, ISaveable {
         mRb = GetComponent<Rigidbody>(); //secure this later
         _mGravShifter = GetComponent<GravityShifter>(); //secure this later
         mDistToGround = GetComponent<Collider>().bounds.extents.y; //secure this later //UPDATE: might not need this anymore with the new foot detection trigger
+        fxAudio = GetComponent<AudioSource>();
 
         mArms = transform.Find("Arms");
         mArms.localEulerAngles = new Vector3(DEFAULT_ARM_ROTATION, 0, 0);
@@ -210,6 +224,12 @@ public class PlayerControls : Damageable, ISaveable {
         if (jumpBlast.isPlaying)
         {
             jumpBlast.transform.position = lastJumpPos;
+            jumpBlast.transform.rotation = lastJumpRot;
+        }
+        if (landingDust.isPlaying)
+        {
+            landingDust.transform.position = lastLandingPos;
+            landingDust.transform.rotation = lastLandingRot;
         }
     }
 
@@ -332,6 +352,7 @@ public class PlayerControls : Damageable, ISaveable {
                 {
                     mCanShift = false;
                     shiftTimer = mGravShiftDelay;
+                    fxAudio.PlayOneShot(gravShiftSound);
 
                     if (lGravAngle > -45f && lGravAngle <= 45f)
                     {
@@ -428,6 +449,8 @@ public class PlayerControls : Damageable, ISaveable {
         if (!alreadyLanded && LayerMask.LayerToName(other.gameObject.layer) == "Environment")
         {
             alreadyLanded = true;
+            lastLandingPos = feetZone.position;
+            lastLandingRot = Quaternion.Euler(transform.rotation.eulerAngles + (-90 * Vector3.right));
             landingDust.Play();
         }
     }
@@ -471,6 +494,7 @@ public class PlayerControls : Damageable, ISaveable {
             var main = jumpBlast.main;
             main.startSize = particleSize;
             lastJumpPos = feetZone.position;
+            lastJumpRot = transform.rotation;
             jumpBlast.Play();
 
             mRb.velocity = transform.TransformDirection(lRelVel);

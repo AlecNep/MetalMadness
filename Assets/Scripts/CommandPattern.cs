@@ -261,6 +261,14 @@ namespace CommandPattern //Might not need this
         {
             if (mPlayerControls.CanDash())
             {
+                AudioClip sound;
+                if (mPlayerControls.isCharged)
+                    sound = mPlayerControls.chargedDashSound;
+                else
+                    sound = mPlayerControls.dashSound;
+
+                mPlayerControls.fxAudio.PlayOneShot(sound);
+
                 mPlayerControls.mDashTimer = mPlayerControls.mDashDelay; //probably should be waaaay more secure than this
             }
         }

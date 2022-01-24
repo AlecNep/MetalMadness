@@ -14,6 +14,12 @@ public class InteractivePanel : Interactive, ISaveable
     protected State currentState = State.Standby;
     private GameObject[] screens;
 
+    [SerializeField]
+    private AudioClip closeEnoughSound;
+    [SerializeField]
+    private AudioClip activateSound;
+    private AudioSource audio;
+
     [Serializable]
     private struct SaveData
     {
@@ -30,6 +36,7 @@ public class InteractivePanel : Interactive, ISaveable
             print("screens[" + (int)s + "] = " + s.ToString());
         }
         SetScreen();
+        audio = GetComponent<AudioSource>();
     }
 
     private void SetScreen()
@@ -45,6 +52,7 @@ public class InteractivePanel : Interactive, ISaveable
 
     public override void Interact()
     {
+        audio.PlayOneShot(activateSound);
         if (data != "")
             _Interact(data);
         else
@@ -53,6 +61,7 @@ public class InteractivePanel : Interactive, ISaveable
 
     public override void Interact(int input)
     {
+        audio.PlayOneShot(activateSound);
         currentState = (State)input;
         SetScreen();
     }
@@ -61,6 +70,7 @@ public class InteractivePanel : Interactive, ISaveable
 
     public void _Interact(string input)
     {
+        audio.PlayOneShot(activateSound);
         foreach (Interactive i in interactables)
         {
             i.Interact(input);
@@ -69,11 +79,19 @@ public class InteractivePanel : Interactive, ISaveable
 
     public void _Interact()
     {
+
         if (currentState == State.Standby)
+        {
             currentState = State.Activated;
+        }
+            
         else if (currentState == State.Activated)
+        {
             currentState = State.Standby;
+        }
+            
         SetScreen();
+        audio.PlayOneShot(activateSound);
 
         foreach (Interactive i in interactables)
         {
@@ -94,5 +112,13 @@ public class InteractivePanel : Interactive, ISaveable
         var saveData = (SaveData)data;
         currentState = (State)saveData.curState;
         SetScreen();
+    }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+
+        if (other.tag == "Player")
+            audio.PlayOneShot(closeEnoughSound);
     }
 }
