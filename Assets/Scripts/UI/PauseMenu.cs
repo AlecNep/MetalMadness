@@ -8,19 +8,10 @@ public class PauseMenu : MonoBehaviour
     public static bool isPaused;
     private int previousGameMode;
 
-    public GameObject pausedFirstButton, controlsClosedButton;
+    public GameObject pausedFirstButton, controlsFirstButton, controlsClosedButton;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject controlsMenu;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void PauseGame()
     {
@@ -60,11 +51,15 @@ public class PauseMenu : MonoBehaviour
     public void OpenControls()
     {
         //TODO
+        controlsMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(controlsFirstButton);
     }
 
     public void CloseControls()
     {
         //TODO
+        controlsMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(controlsClosedButton);
     }

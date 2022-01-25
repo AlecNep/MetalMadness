@@ -12,13 +12,29 @@ public class PlayerControls : Damageable, ISaveable {
     private Quaternion mTargetRotation;
     public Transform mArms { get; private set; }
     private readonly float DEFAULT_ARM_ROTATION = 90f;
-    private readonly float ARM_SHIFTING_THRESHOLD = 0.25f;
+    private readonly float DEFAULT_AIMING_THRESHOLD = 0.25f;
+    private static bool _aimThreshSet = false;
+    private static float _aimThresh;
+    public static float armAimThreshold
+    {
+        get
+        {
+            return _aimThresh;
+        }
+        set
+        {
+            _aimThresh = value;
+            if (!_aimThreshSet)
+                _aimThreshSet = true;
+        }
+    }
 
     private float mBodyRotationSpeed = 20f;
     private float mArmRotationSpeed = 20f;
 
     public int mArmVariable;
     public int mTurnVariable;
+    
     public Interactive interactableObject;
 
     //Movement and speed
@@ -49,7 +65,6 @@ public class PlayerControls : Damageable, ISaveable {
     private float mZDistance = 0f;
 
     public bool mShifting = false;
-    private float mDistToGround;
 
     private bool mAttachedToWall = false;
     private bool mAttachedToEnemy = false;
@@ -93,6 +108,22 @@ public class PlayerControls : Damageable, ISaveable {
                 _mGravShifter = gameObject.AddComponent<GravityShifter>();
             }
             return _mGravShifter;
+        }
+    }
+    private static bool _gravThreshSet = false;
+    private static float _gravThresh;
+    private static float DEFAULT_SHIFT_THRESHOLD = 0.25f;
+    public static float gravShiftThreshold
+    {
+        get
+        {
+            return _gravThresh;
+        }
+        set
+        {
+            _gravThresh = value;
+            if (!_gravThreshSet)
+                _gravThreshSet = true;
         }
     }
 
@@ -158,13 +189,20 @@ public class PlayerControls : Damageable, ISaveable {
     private WeaponSelector mWeaponWheelRef;
     private float mWheelWidth;
 
+    void Awake()
+    {
+        if (!_gravThreshSet)
+            gravShiftThreshold = DEFAULT_SHIFT_THRESHOLD;
+        if (!_aimThreshSet)
+            armAimThreshold = DEFAULT_AIMING_THRESHOLD;
+    }
 
     // Use this for initialization
     void Start() {
         health = maxHealth = DEFAULT_HEALTH; //TODO: make this more secure later!
         mRb = GetComponent<Rigidbody>(); //secure this later
         _mGravShifter = GetComponent<GravityShifter>(); //secure this later
-        mDistToGround = GetComponent<Collider>().bounds.extents.y; //secure this later //UPDATE: might not need this anymore with the new foot detection trigger
+        //mDistToGround = GetComponent<Collider>().bounds.extents.y; //secure this later //UPDATE: might not need this anymore with the new foot detection trigger
         fxAudio = GetComponent<AudioSource>();
 
         mArms = transform.Find("Arms");
@@ -289,7 +327,7 @@ public class PlayerControls : Damageable, ISaveable {
                 //End main movement section
 
                 //Arm movement section
-                if (Mathf.Abs(lLy) >= ARM_SHIFTING_THRESHOLD)
+                if (Mathf.Abs(lLy) >= armAimThreshold)
                 {
                     Vector3 lArmRot;
                     if (lLy > 0) //Aiming to the relative up
@@ -340,7 +378,7 @@ public class PlayerControls : Damageable, ISaveable {
             }
 
 
-            if (lGravInput.magnitude > 0.1f && CanShift() && !mAttached)
+            if (lGravInput.magnitude > gravShiftThreshold && CanShift() && !mAttached)
             {
                 lGravAngle = Vector2.Angle(Vector2.up, lGravInput);
                 Vector3 cross = Vector3.Cross(Vector2.up, lGravInput);
