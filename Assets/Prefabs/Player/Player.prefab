@@ -4236,11 +4236,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  armAimThreshold: 0.25
   mArmVariable: 0
   mTurnVariable: 0
   interactableObject: {fileID: 0}
-  mMovementSpeed: 3.5
+  mMovementSpeed: 2.2
   mDashSpeed: 5
   mChargedDashSpeed: 7
   mDashTimer: 0
@@ -4251,7 +4250,6 @@ MonoBehaviour:
   mCutJumpHeight: 0.8
   isGrounded: 0
   mShifting: 0
-  gravShiftThreshold: 0.25
   fxAudio: {fileID: 0}
   dashSound: {fileID: 8300000, guid: 43cb8ad15e801e546a250a08efe15811, type: 3}
   chargedDashSound: {fileID: 8300000, guid: ef6bd1f8fc147a54fbdcc49ed6f64678, type: 3}

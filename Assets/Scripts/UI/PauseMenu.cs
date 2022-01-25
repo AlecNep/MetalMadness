@@ -12,6 +12,15 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject controlsMenu;
 
+    [SerializeField]
+    private AudioSource sounds;
+    [SerializeField]
+    private AudioClip open, select, close;
+
+    private void Awake()
+    {
+        sounds = GetComponent<AudioSource>();
+    }
 
     public void PauseGame()
     {
@@ -19,6 +28,7 @@ public class PauseMenu : MonoBehaviour
         
         if (isPaused)
         {
+            sounds.PlayOneShot(open);
             Time.timeScale = 0f;
             gameObject.SetActive(true);
             AudioListener.pause = true;

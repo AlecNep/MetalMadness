@@ -314,7 +314,7 @@ public class PlayerControls : Damageable, ISaveable {
                     }
                     else
                     {
-                        transform.position += mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
+                        transform.position += 0.1f * mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
                     }
                 }
 
