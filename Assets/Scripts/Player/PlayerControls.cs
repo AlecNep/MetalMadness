@@ -150,6 +150,10 @@ public class PlayerControls : Damageable, ISaveable {
     public AudioClip gravShiftSound;
     [SerializeField]
     public AudioClip landingSound;
+    [SerializeField]
+    public AudioClip jumpSound;
+    [SerializeField]
+    public AudioClip chargeJumpSound;
 
     public int mShotOrientation
     {
@@ -390,7 +394,8 @@ public class PlayerControls : Damageable, ISaveable {
                 {
                     mCanShift = false;
                     shiftTimer = mGravShiftDelay;
-                    fxAudio.PlayOneShot(gravShiftSound);
+                    alreadyLanded = false;
+                    fxAudio.PlayOneShot(gravShiftSound, 0.3f);
 
                     if (lGravAngle > -45f && lGravAngle <= 45f)
                     {
@@ -489,6 +494,7 @@ public class PlayerControls : Damageable, ISaveable {
             alreadyLanded = true;
             lastLandingPos = feetZone.position;
             lastLandingRot = Quaternion.Euler(transform.rotation.eulerAngles + (-90 * Vector3.right));
+            fxAudio.PlayOneShot(landingSound, 0.5f);
             landingDust.Play();
         }
     }
@@ -518,16 +524,19 @@ public class PlayerControls : Damageable, ISaveable {
             Vector3 lRelVel = GetRelativeVelocity();
             float particleSize;
             alreadyLanded = false;
+            //AudioClip jumpSFX;
 
             if (isCharged)
             {
                 lRelVel.y = mChargedJumpForce;
                 particleSize = 4;
+                fxAudio.PlayOneShot(chargeJumpSound, 0.3f);
             }
             else
             {
                 lRelVel.y = mJumpForce;
                 particleSize = 2;
+                fxAudio.PlayOneShot(jumpSound, 0.4f);
             }
             var main = jumpBlast.main;
             main.startSize = particleSize;

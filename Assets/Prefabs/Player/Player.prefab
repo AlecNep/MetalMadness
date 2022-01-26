@@ -1825,7 +1825,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 30114844b380b88418785402b1e582c0, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1921,7 +1921,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fecc3e7a0166a104cb810435f6fdf37b, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3507,7 +3507,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 30114844b380b88418785402b1e582c0, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3603,7 +3603,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fecc3e7a0166a104cb810435f6fdf37b, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4253,8 +4253,10 @@ MonoBehaviour:
   fxAudio: {fileID: 0}
   dashSound: {fileID: 8300000, guid: 43cb8ad15e801e546a250a08efe15811, type: 3}
   chargedDashSound: {fileID: 8300000, guid: ef6bd1f8fc147a54fbdcc49ed6f64678, type: 3}
-  gravShiftSound: {fileID: 8300000, guid: 01921d47e632c4146a41c3f660a95aeb, type: 3}
-  landingSound: {fileID: 0}
+  gravShiftSound: {fileID: 8300000, guid: 0707b4b0d6cbbdb45a161c51faaa217c, type: 3}
+  landingSound: {fileID: 8300000, guid: 0462feb393ce2b64b9f78c8bc9303014, type: 3}
+  jumpSound: {fileID: 8300000, guid: 3becec1909f194046945d85ac1077772, type: 3}
+  chargeJumpSound: {fileID: 8300000, guid: 069b466ee743a78438ac7cbf8b9f12b3, type: 3}
   spawnPoint: {x: 0, y: 0, z: 0}
   mWeapons: []
   mWeaponIndex: 0

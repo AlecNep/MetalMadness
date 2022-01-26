@@ -18,6 +18,7 @@ public class TestDoor : Interactive, ISaveable
     public Orientation opensTo;
 
     protected Transform door;
+    protected AudioSource sound;
 
     [Serializable]
     private struct SaveData
@@ -40,6 +41,7 @@ public class TestDoor : Interactive, ISaveable
 
         startPos = door.localPosition;
         endPos = startPos + Vector3.right * door.localScale.x;
+        sound = GetComponent<AudioSource>();
     }
 
     public override void Interact()
@@ -69,7 +71,7 @@ public class TestDoor : Interactive, ISaveable
                 delay += Time.deltaTime;
             }
         }
-
+        sound.Play();
         while (Vector3.Distance(door.localPosition, destination) > 0)
         {
             door.localPosition = Vector3.MoveTowards(door.localPosition, destination, speed * Time.deltaTime);

@@ -13,10 +13,18 @@ public class Checkpoint : MonoBehaviour
     public Orientation orientation;
 
     private bool alreadyTriggered = false;
+    private ParticleSystem sparkle;
+    protected AudioSource sfx;
 
     public void SetCheckpointOrientation(int o)
     {
         orientation = (Orientation)o;
+    }
+
+    private void Awake()
+    {
+        sparkle = GetComponent<ParticleSystem>();
+        sfx = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,6 +32,8 @@ public class Checkpoint : MonoBehaviour
         if (other.tag == "Player" && !alreadyTriggered)
         {
             alreadyTriggered = true;
+            sparkle.Play();
+            sfx.Play();
             PlayerControls.SetCheckpoint(this);
             GameManager.Instance.DataUtil.Save();
             /*PlayerControls playRef = GameManager.Instance.player;
