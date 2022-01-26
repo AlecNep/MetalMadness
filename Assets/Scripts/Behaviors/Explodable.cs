@@ -53,10 +53,7 @@ public class Explodable : Damageable
         }
         health = 0;
         gameObject.SetActive(false);
-        //rend.enabled = false;
         Instantiate(explosion, transform.position, transform.rotation);
-        //gameObject.SetActive(false);
-        //Destroy(gameObject);
     }
 
     public override void Die()

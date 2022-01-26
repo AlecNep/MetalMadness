@@ -41,27 +41,26 @@ public class Enemy : MonoBehaviour, ISaveable
         {
             ai.target = null;
         }
+        if (TryGetComponent(out Drone drone))
+        {
+            drone.SetIdleMode();
+        }
 
         if (TryGetComponent(out Damageable d))
         {
             if (saveData.health <= 0)
             {
                 gameObject.SetActive(false);
-                //rend.enabled = false;
             }
                 
             else
             {
                 d.SetHealth(saveData.health);
                 d.gameObject.SetActive(true);
-                //rend.enabled = true;
             }
-                
-                
         }
         else
             Debug.LogError("Enemy.LoadState: " + name + " was not able to detect Damageable component");
-        
         
 
         transform.position = new Vector3(saveData.xPos, saveData.yPos, saveData.zPos);

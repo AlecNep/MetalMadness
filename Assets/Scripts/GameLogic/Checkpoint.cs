@@ -16,6 +16,8 @@ public class Checkpoint : MonoBehaviour
     private ParticleSystem sparkle;
     protected AudioSource sfx;
 
+    public bool startingCheckpoint;
+
     public void SetCheckpointOrientation(int o)
     {
         orientation = (Orientation)o;
@@ -32,8 +34,12 @@ public class Checkpoint : MonoBehaviour
         if (other.tag == "Player" && !alreadyTriggered)
         {
             alreadyTriggered = true;
-            sparkle.Play();
-            sfx.Play();
+            if (!startingCheckpoint)
+            {
+                sparkle.Play();
+                sfx.Play();
+            }
+            
             PlayerControls.SetCheckpoint(this);
             GameManager.Instance.DataUtil.Save();
             /*PlayerControls playRef = GameManager.Instance.player;

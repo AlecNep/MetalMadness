@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -72,5 +73,10 @@ public class PauseMenu : MonoBehaviour
         controlsMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(controlsClosedButton);
+    }
+
+    public void QuitToMenu()
+    {
+        SceneManager.LoadScene("StartMenu");
     }
 }

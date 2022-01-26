@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class SentryDrone : Explodable
+public class SentryDrone : Drone
 {
     AIDestinationSetter aiDestination;
 
@@ -11,22 +11,11 @@ public class SentryDrone : Explodable
     float distanceThreshold;
     bool isInRange = false;
 
-    GameObject redLight;
-    GameObject yellowLight;
-
     // Start is called before the first frame update
     void Start()
     {
         health = maxHealth;
         aiDestination = GetComponent<AIDestinationSetter>();
-
-        Transform lLights = transform.Find("Lights");
-        redLight = lLights.Find("Red light").gameObject;
-        yellowLight = lLights.Find("Yellow light").gameObject;
-
-        redLight.SetActive(false);
-        rb = GetComponent<Rigidbody>();
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     // Update is called once per frame
@@ -48,6 +37,7 @@ public class SentryDrone : Explodable
     private IEnumerator SelfDestruct()
     {
         aiDestination.target = null;
+        blueLight.SetActive(false);
         yellowLight.SetActive(false);
         redLight.SetActive(true);
         yield return new WaitForSeconds(0.05f);
@@ -68,6 +58,7 @@ public class SentryDrone : Explodable
         if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
         {
             aiDestination.target = GameManager.Instance.player.transform;
+            SetAlertMode();
         }
     }
 
@@ -85,6 +76,8 @@ public class SentryDrone : Explodable
             if (!Physics.Raycast(transform.position, direction, out hit, direction.magnitude, layers))
             {
                 aiDestination.target = other.transform;
+                if (!isAlerted)
+                    SetAlertMode();
             }
         }
     }
@@ -94,6 +87,7 @@ public class SentryDrone : Explodable
         if (other.tag == "Player")
         {
             aiDestination.target = null;
+            SetIdleMode();
         }
     }
 }

@@ -737,7 +737,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -300}
-  m_SizeDelta: {x: 550, y: 250}
+  m_SizeDelta: {x: 700, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &539782948
 MonoBehaviour:
@@ -812,7 +812,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 516.27, y: 233.94}
+  m_SizeDelta: {x: 604, y: 233}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &579785417
 MonoBehaviour:
@@ -834,7 +834,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: METAL MADNESS
+  m_text: WHERE IS UP?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9706466fe1613984e8a705e43b38f8d6, type: 2}
   m_sharedMaterial: {fileID: 2387661700693985797, guid: 9706466fe1613984e8a705e43b38f8d6,
@@ -963,6 +963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148ee4c944447744fa5112a51cf7d88c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  music: {fileID: 158562755}
 --- !u!1 &1395916120
 GameObject:
   m_ObjectHideFlags: 0

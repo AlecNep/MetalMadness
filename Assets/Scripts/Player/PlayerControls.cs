@@ -154,6 +154,9 @@ public class PlayerControls : Damageable, ISaveable {
     public AudioClip jumpSound;
     [SerializeField]
     public AudioClip chargeJumpSound;
+    [SerializeField]
+    public GameObject explosion;
+    public bool canMove = true;
 
     public int mShotOrientation
     {
@@ -283,150 +286,152 @@ public class PlayerControls : Damageable, ISaveable {
         float lRx = Input.GetAxis("RStickX");
         float lRy = Input.GetAxis("RStickY");
 
-
-        //Left stick controls
-        if ((int)GameManager.currentGameMode < 2) //Can move with the "Gameplay" and "WeaponWheel" modes
+        if (canMove)
         {
-            //Main movement section
-            if (!mAttachedToWall) //cannot move if attached to a wall
+            //Left stick controls
+            if ((int)GameManager.currentGameMode < 2) //Can move with the "Gameplay" and "WeaponWheel" modes
             {
-                if (lLx != 0)
+                //Main movement section
+                if (!mAttachedToWall) //cannot move if attached to a wall
                 {
-                    if (lLx < 0)
-                    {   //turn to the relative left
-                        mIntendedDirection = -1;
-                        mArmVariable = mTurnVariable = 2;
+                    if (lLx != 0)
+                    {
+                        if (lLx < 0)
+                        {   //turn to the relative left
+                            mIntendedDirection = -1;
+                            mArmVariable = mTurnVariable = 2;
+                        }
+                        else
+                        {   //turn to the relative right
+                            mIntendedDirection = 1;
+                            mArmVariable = mTurnVariable = 0;
+                        }
+                    }
+
+                    LayerMask layers = 1 << 11 | 1 << 12 | 1 << 13 | 1 << 15; //environment, enemies, destructible, and doors
+                    RaycastHit hit;
+                    if (!Physics.Raycast(transform.position, mGravShifter.GetMovementVector() * mIntendedDirection, out hit, 0.7f, layers))
+                    {
+                        if (IsDashing())
+                        {
+                            if (!dashTrail.enabled)
+                                dashTrail.enabled = true;
+                            //following lines are reduced by 1/10th because of the left stick sensitivity
+                            float lDashSpeed = CommandPattern.OverCharge.mCharged ? mChargedDashSpeed : mDashSpeed;
+                            transform.position += 0.1f * mIntendedDirection * mGravShifter.GetMovementVector() * lDashSpeed;
+                        }
+                        else
+                        {
+                            transform.position += 0.1f * mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
+                        }
+                    }
+
+
+                    mZDistance = transform.position.z;
+                    if (Mathf.Abs(mZDistance) > 0.05f)
+                    {
+                        transform.position -= Vector3.forward * mZDistance;
+                    }
+                    //End main movement section
+
+                    //Arm movement section
+                    if (Mathf.Abs(lLy) >= armAimThreshold)
+                    {
+                        Vector3 lArmRot;
+                        if (lLy > 0) //Aiming to the relative up
+                        {
+                            lArmRot = 180 * Vector3.right;
+                            mArmVariable = 1;
+                        }
+                        else //Aiming to the relative down
+                        {
+                            lArmRot = Vector3.zero;
+                            mArmVariable = 3;
+                        }
+                        mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(lArmRot), mArmRotationSpeed);
                     }
                     else
-                    {   //turn to the relative right
-                        mIntendedDirection = 1;
-                        mArmVariable = mTurnVariable = 0;
-                    }
-                }
-
-                LayerMask layers = 1 << 11 | 1 << 12 | 1 << 13 | 1 << 15; //environment, enemies, destructible, and doors
-                RaycastHit hit;
-                if (!Physics.Raycast(transform.position, mGravShifter.GetMovementVector() * mIntendedDirection, out hit, 0.7f, layers))
-                {
-                    if (IsDashing())
                     {
-                        if (!dashTrail.enabled)
-                            dashTrail.enabled = true;
-                        //following lines are reduced by 1/10th because of the left stick sensitivity
-                        float lDashSpeed = CommandPattern.OverCharge.mCharged ? mChargedDashSpeed : mDashSpeed;
-                        transform.position += 0.1f * mIntendedDirection * mGravShifter.GetMovementVector() * lDashSpeed;
+                        mArmVariable = mTurnVariable;
+                        mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(Vector3.right * 90), mArmRotationSpeed);
                     }
-                    else
-                    {
-                        transform.position += 0.1f * mGravShifter.GetMovementVector() * (lLx * mMovementSpeed);
-                    }
+                    //end arm movement section
                 }
 
 
-                mZDistance = transform.position.z;
-                if (Mathf.Abs(mZDistance) > 0.05f)
+                if (mDashTimer > 0)
                 {
-                    transform.position -= Vector3.forward * mZDistance;
-                }
-                //End main movement section
-
-                //Arm movement section
-                if (Mathf.Abs(lLy) >= armAimThreshold)
-                {
-                    Vector3 lArmRot;
-                    if (lLy > 0) //Aiming to the relative up
+                    mDashTimer -= Time.deltaTime;
+                    if (mDashTimer < 0)
                     {
-                        lArmRot = 180 * Vector3.right;
-                        mArmVariable = 1;
+                        mDashTimer = 0;
                     }
-                    else //Aiming to the relative down
-                    {
-                        lArmRot = Vector3.zero;
-                        mArmVariable = 3;
-                    }
-                    mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(lArmRot), mArmRotationSpeed);
                 }
-                else
-                {
-                    mArmVariable = mTurnVariable;
-                    mArms.localRotation = Quaternion.RotateTowards(mArms.localRotation, Quaternion.Euler(Vector3.right * 90), mArmRotationSpeed);
-                }
-                //end arm movement section
             }
 
-
-            if (mDashTimer > 0)
+            //Right stick controls
+            if (GameManager.currentGameMode == 0) //can only shift gravity in gameplay mode;
             {
-                mDashTimer -= Time.deltaTime;
-                if (mDashTimer < 0)
+                Vector2 lGravInput = new Vector2(lRx, lRy);
+                float lGravAngle = 0f;
+
+
+                if (shiftTimer > 0)
                 {
-                    mDashTimer = 0;
+                    shiftTimer -= Time.deltaTime;
+                    if (shiftTimer < 0)
+                    {
+                        shiftTimer = 0;
+                    }
+                }
+
+
+                if (lGravInput.magnitude > gravShiftThreshold && CanShift() && !mAttached)
+                {
+                    lGravAngle = Vector2.Angle(Vector2.up, lGravInput);
+                    Vector3 cross = Vector3.Cross(Vector2.up, lGravInput);
+
+                    if (cross.z > 0)
+                        lGravAngle = -lGravAngle;
+
+                    if (Mathf.Abs(lGravAngle) < 135f) //not downwards
+                    {
+                        mCanShift = false;
+                        shiftTimer = mGravShiftDelay;
+                        alreadyLanded = false;
+                        fxAudio.PlayOneShot(gravShiftSound, 0.25f);
+
+                        if (lGravAngle > -45f && lGravAngle <= 45f)
+                        {
+                            //Shift gravity to the relative "up"
+                            mGravShifter.ShiftGravity(2);
+                        }
+                        else if (lGravAngle > 45f && lGravAngle <= 135f)
+                        {
+                            //Shift gravity to the relative "right"
+                            mGravShifter.ShiftGravity(1);
+                        }
+                        else if (lGravAngle <= -45f && lGravAngle >= -135f)
+                        {
+                            //Shift gravity to the relative "left"
+                            mGravShifter.ShiftGravity(3);
+                        }
+                    }
+
+                }
+            }
+            else if ((int)GameManager.currentGameMode == 1) //Weapon wheel mode
+            {
+                Vector3 lUpRight = Vector3.right + Vector3.up;
+                Vector3 lRStick = new Vector3(lRx, lRy);
+                mWeaponWheelCursor.transform.localPosition = lUpRight * (-mWheelWidth / 2) + lRStick * (mWheelWidth / 3f);
+                if (lRStick.magnitude > 0.5f) //totally arbitrary number right now
+                {
+                    mWeaponWheelRef.Selector(lRStick);
                 }
             }
         }
-
-        //Right stick controls
-        if (GameManager.currentGameMode == 0) //can only shift gravity in gameplay mode;
-        {
-            Vector2 lGravInput = new Vector2(lRx, lRy);
-            float lGravAngle = 0f;
-
-
-            if (shiftTimer > 0)
-            {
-                shiftTimer -= Time.deltaTime;
-                if (shiftTimer < 0)
-                {
-                    shiftTimer = 0;
-                }
-            }
-
-
-            if (lGravInput.magnitude > gravShiftThreshold && CanShift() && !mAttached)
-            {
-                lGravAngle = Vector2.Angle(Vector2.up, lGravInput);
-                Vector3 cross = Vector3.Cross(Vector2.up, lGravInput);
-
-                if (cross.z > 0)
-                    lGravAngle = -lGravAngle;
-
-                if (Mathf.Abs(lGravAngle) < 135f) //not downwards
-                {
-                    mCanShift = false;
-                    shiftTimer = mGravShiftDelay;
-                    alreadyLanded = false;
-                    fxAudio.PlayOneShot(gravShiftSound, 0.3f);
-
-                    if (lGravAngle > -45f && lGravAngle <= 45f)
-                    {
-                        //Shift gravity to the relative "up"
-                        mGravShifter.ShiftGravity(2);
-                    }
-                    else if (lGravAngle > 45f && lGravAngle <= 135f)
-                    {
-                        //Shift gravity to the relative "right"
-                        mGravShifter.ShiftGravity(1);
-                    }
-                    else if (lGravAngle <= -45f && lGravAngle >= -135f)
-                    {
-                        //Shift gravity to the relative "left"
-                        mGravShifter.ShiftGravity(3);
-                    }
-                }
-
-            }
-        }
-        else if ((int)GameManager.currentGameMode == 1) //Weapon wheel mode
-        {
-            Vector3 lUpRight = Vector3.right + Vector3.up;
-            Vector3 lRStick = new Vector3(lRx, lRy);
-            mWeaponWheelCursor.transform.localPosition = lUpRight * (-mWheelWidth / 2) + lRStick * (mWheelWidth / 3f);
-            if (lRStick.magnitude > 0.5f) //totally arbitrary number right now
-            {
-                mWeaponWheelRef.Selector(lRStick);
-            }
-
-        }
+        
     } //~~~~~~end Update~~~~~~
 
 
@@ -649,28 +654,15 @@ public class PlayerControls : Damageable, ISaveable {
         spawnPoint = new Vector3(saveData.spawnX, saveData.spawnY, saveData.spawnZ);
         mGravShifter.mCurGravity = saveData.orientation;
         transform.position = spawnPoint;
+        mDashTimer = 0;
+        mRb.velocity = Vector3.zero;
     }
 
     //end save data utilities
 
     public override void Die()
     {
-        /*Debug.Log("PlayerControls: Do we even have a checkpoint to return to? " + (lastCheckpoint != null));
-        mGravShifter.mCurGravity = (GravityShifter.Gravity)lastCheckpoint.orientation; 
-        transform.position = lastCheckpoint.transform.position;
-        mRb.velocity = Vector3.zero;
-        health = lastCheckpoint.healthAtTime;*/
-        StartCoroutine(DeathSequence());
-    }
-
-    private IEnumerator DeathSequence()
-    {
-        //Explosion or death effect
-        //gameObject.SetActive(false);
-        print("You died!");
-        yield return new WaitForSeconds(1);
-        //gameObject.SetActive(true);
-        GameManager.Instance.DataUtil.Load();
+        GameManager.Instance.PlayerDeathSequence();
     }
 
     private void OnCollisionEnter(Collision col)

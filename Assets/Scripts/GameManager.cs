@@ -49,6 +49,27 @@ public class GameManager : MonoBehaviour {
         DataUtil = GetComponent<SaveLoadDataUtil>();
     }
 
+    public void PlayerDeathSequence()
+    {
+        StartCoroutine(_PlayerDeathSequence());
+    }
+
+    private IEnumerator _PlayerDeathSequence()
+    {
+        player.canMove = false;
+        print("You died!");
+
+        player.gameObject.SetActive(false);
+        Instantiate(player.explosion, player.transform.position, player.transform.rotation);
+        print("made it past the explosion");
+        yield return new WaitForSeconds(2);
+        print("made it past the waiting");
+        Instance.DataUtil.Load();
+        print("gameManager: loaded");
+        player.gameObject.SetActive(true);
+        player.canMove = true;
+    }
+
     public static void SetGameMode(int mode)
     {
         currentGameMode = (GameMode)mode;
