@@ -73,7 +73,7 @@
     <Compile Include="Assets\Scripts\Player\Shotgun.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\MeteorSwarmScript.cs" />
     <Compile Include="Assets\Scripts\Environment\InteractiveLaserTrap.cs" />
-    <Compile Include="Assets\Scenes\Menu\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\exploders\Exploder2D.cs" />
     <Compile Include="Assets\Scripts\Player\AutomaticWeapon.cs" />
     <Compile Include="Assets\Scripts\Player\StickyBomb.cs" />
@@ -94,7 +94,6 @@
     <Compile Include="Assets\Scripts\Environment\InteractivePanel.cs" />
     <Compile Include="Assets\Scripts\Explosion.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\PseudoVolumetricExplosion.cs" />
-    <Compile Include="Assets\Scripts\Environment\PanelManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerControls.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireCollisionForwardScript.cs" />
     <Compile Include="Assets\Scripts\Player\Thermite.cs" />
@@ -104,6 +103,7 @@
     <Compile Include="Assets\Scripts\GameLogic\Checkpoint.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\VolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\ActionNode.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Drone.cs" />
     <Compile Include="Assets\Scripts\UI\Compass.cs" />
     <Compile Include="Assets\Scripts\Environment\BrokenGravityPanel.cs" />
     <Compile Include="Assets\Scripts\Enemies\SecurityDrone.cs" />
@@ -124,7 +124,6 @@
     <Compile Include="Assets\Scripts\Tools\QuickFunctions.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireBaseScript.cs" />
     <Compile Include="Assets\Scripts\Player\StickyBombLauncher.cs" />
-    <Compile Include="Assets\Scripts\Environment\PanelManagerEditor.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\PseudoVolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Environment\SawTrap.cs" />
     <Compile Include="Assets\Scripts\Player\Minigun.cs" />
@@ -147,7 +146,8 @@
     <Compile Include="Assets\Scripts\Environment\RemotePlatform.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireLightScript.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Drone.cs" />
+    <Compile Include="Assets\Scripts\UI\FinalScene.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\CreditsLoader.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

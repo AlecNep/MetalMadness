@@ -53,6 +53,10 @@ public class PauseMenu : MonoBehaviour
             yield return null;
             ++i;
         }
+        if (controlsMenu.activeSelf)
+        {
+            CloseControls();
+        }
         gameObject.SetActive(false);
         AudioListener.pause = false;
         Time.timeScale = 1f;
@@ -77,6 +81,15 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitToMenu()
     {
+        ResetGameManager();
         SceneManager.LoadScene("StartMenu");
+    }
+
+    private void ResetGameManager()
+    {
+        Time.timeScale = 1;
+        isPaused = false;
+        GameManager.SetGameMode(0);
+        AudioListener.pause = false;
     }
 }

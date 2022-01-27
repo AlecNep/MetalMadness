@@ -52,6 +52,7 @@ MonoBehaviour:
   shrapnelAmmoAtTime: 0
   bulletsAtTime: 0
   orientation: 0
+  startingCheckpoint: 0
 --- !u!65 &6533018272145995136
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4917,7 +4918,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 13b481262ca11bc4cbfa819b6dfe28cc, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3445a8b2782c4134985eb470cc656b10, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.2
   m_Pitch: 1

@@ -28,6 +28,7 @@ public class Drone : Explodable
     {
         yellowLight.SetActive(false);
         blueLight.SetActive(true);
+        redLight.SetActive(false);
         isAlerted = false;
     }
 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 
+[RequireComponent(typeof(AudioSource))]
 public abstract class Pickup : MonoBehaviour, ISaveable
 {
     protected Action effect;
@@ -11,12 +12,19 @@ public abstract class Pickup : MonoBehaviour, ISaveable
     protected bool grabbed;
     protected float timer;
 
+    protected AudioSource pickupSound;
+
     [Serializable]
     private struct SaveData
     {
         public bool respawnable;
         public float respawnRate;
         public bool grabbed;
+    }
+
+    protected void Awake()
+    {
+        pickupSound = GetComponent<AudioSource>();
     }
 
     protected void OnValidate()
@@ -31,12 +39,14 @@ public abstract class Pickup : MonoBehaviour, ISaveable
     {
         if (other.tag == "Player")
         {
+
             grabbed = true;
             if (respawnable)
             {
                 timer = 0;
             }
             effect();
+            pickupSound.Play();
             gameObject.SetActive(false);
         }
     }
