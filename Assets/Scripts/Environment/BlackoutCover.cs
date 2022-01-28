@@ -1,14 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class BlackoutCover : Interactive
+public class BlackoutCover : Interactive, ISaveable
 {
     [Range(0,1)]
     public float fadeRate;
     private MeshRenderer mesh;
     [SerializeField]
     private bool isVisible;
+
+    [Serializable]
+    private struct SaveData
+    {
+        public bool visible;
+    }
 
     private void OnValidate()
     {
@@ -41,10 +48,6 @@ public class BlackoutCover : Interactive
             StartCoroutine(FadeIn());
     }
 
-    /*public void FadeIn()
-    {
-        StartCoroutine(_FadeIn());
-    }*/
 
     private IEnumerator FadeIn()
     {
@@ -62,11 +65,6 @@ public class BlackoutCover : Interactive
         }
     }
 
-    /*public void FadeOut()
-    {
-        StartCoroutine(_FadeOut());
-    }*/
-
     private IEnumerator FadeOut()
     {
         print("Fading out");
@@ -81,5 +79,19 @@ public class BlackoutCover : Interactive
                 break;
             }
         }
+    }
+
+    public object CaptureState()
+    {
+        return new SaveData
+        {
+            visible = isVisible
+        };
+    }
+
+    public void LoadState(object data)
+    {
+        var saveData = (SaveData)data;
+        isVisible = saveData.visible;
     }
 }

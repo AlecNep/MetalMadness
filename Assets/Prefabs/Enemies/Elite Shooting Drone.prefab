@@ -128,7 +128,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 12
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6788125315018188065
 GameObject:
@@ -504,7 +504,7 @@ MonoBehaviour:
   explosionForce: 15
   explosionRadius: 6
   damage: 25
-  fireRate: 2
+  fireRate: 1.5
   camShakeMagnitude: 0.004
   camShakeTime: 0.1
   laser: {fileID: 5606160744072448360, guid: 6b5c05959a1252d449d7d72c6cc98a5c, type: 3}
