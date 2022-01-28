@@ -1020,6 +1020,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148ee4c944447744fa5112a51cf7d88c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controlsMenu: {fileID: 0}
+  pausedFirstButton: {fileID: 0}
+  controlsFirstButton: {fileID: 0}
+  controlsClosedButton: {fileID: 0}
 --- !u!1 &1294406530
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,7 +1215,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Thank you for playing our proof-of-concept demo for \n\n\"Where is up?\"\n\n\nCredits:\nGerogre
+  m_text: "Thank you for playing our proof-of-concept demo for \n\n\"Where is up?\"\n\n\nCredits:\nGeorge
     Karev: gameplay design, level design\nAlec Nepute: gameplay design, programming"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
