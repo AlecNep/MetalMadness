@@ -24,6 +24,8 @@ public class Drone : Explodable
         rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
+    public virtual void ResetDrone() { }
+
     public void SetIdleMode()
     {
         yellowLight.SetActive(false);

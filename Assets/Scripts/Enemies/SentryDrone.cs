@@ -9,7 +9,7 @@ public class SentryDrone : Drone
 
     [SerializeField]
     float distanceThreshold;
-    bool isInRange = false;
+    bool SDTriggered = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,9 +21,9 @@ public class SentryDrone : Drone
     // Update is called once per frame
     void Update()
     {
-        if (aiDestination.target != null && Vector3.Distance(transform.position, aiDestination.target.position) <= distanceThreshold && !isInRange)
+        if (aiDestination.target != null && Vector3.Distance(transform.position, aiDestination.target.position) <= distanceThreshold && !SDTriggered)
         {//only call this once
-            isInRange = true; //this line is probably redundant
+            SDTriggered = true; //this line is probably redundant
 
             LayerMask layers = 1 << 11 | 1 << 12 | 1 << 13 | 1 << 15; //environment, enemies, destructible, and doors
             RaycastHit hit;
@@ -32,6 +32,12 @@ public class SentryDrone : Drone
         }
         if (Mathf.Abs(transform.position.z) > 0.1) //reset Z-value to keep it at 0
             transform.position -= Vector3.forward * transform.position.z;
+    }
+
+    public override void ResetDrone()
+    {
+        SetIdleMode();
+        SDTriggered = false;
     }
 
     private IEnumerator SelfDestruct()
@@ -49,7 +55,7 @@ public class SentryDrone : Drone
             yield return new WaitForSeconds(0.05f);
         }
         yield return new WaitForSeconds(0.1f);
-        aiDestination.target = null;
+        
         Explode();
     }
 

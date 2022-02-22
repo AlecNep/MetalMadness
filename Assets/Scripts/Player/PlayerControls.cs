@@ -493,7 +493,7 @@ public class PlayerControls : Damageable, ISaveable {
 
     private void OnTriggerEnter(Collider other)
     {
-        //++objectsInFeetZone;
+        ++objectsInFeetZone;
         if (!alreadyLanded && LayerMask.LayerToName(other.gameObject.layer) == "Environment")
         {
             alreadyLanded = true;
@@ -514,6 +514,11 @@ public class PlayerControls : Damageable, ISaveable {
 
     private void OnTriggerExit(Collider other)
     {
+        --objectsInFeetZone;
+        if (objectsInFeetZone == 0)
+        {
+            alreadyLanded = false;
+        }
         isGrounded = false;
     }
 

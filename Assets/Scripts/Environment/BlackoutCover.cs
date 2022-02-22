@@ -10,11 +10,13 @@ public class BlackoutCover : Interactive, ISaveable
     private MeshRenderer mesh;
     [SerializeField]
     private bool isVisible;
+    private bool alreadyActivated = false;
 
     [Serializable]
     private struct SaveData
     {
         public bool visible;
+        public bool activated;
     }
 
     private void OnValidate()
@@ -42,10 +44,18 @@ public class BlackoutCover : Interactive, ISaveable
 
     public override void Interact()
     {
-        if (isVisible)
-            StartCoroutine(FadeOut());
-        else
-            StartCoroutine(FadeIn());
+        if (!alreadyActivated)
+        {
+            alreadyActivated = true;
+            if (isVisible)
+            {
+                StartCoroutine(FadeOut());
+            }
+            else
+            {
+                StartCoroutine(FadeIn());
+            }
+        }
     }
 
 
@@ -55,7 +65,7 @@ public class BlackoutCover : Interactive, ISaveable
         while (mesh.material.color.a < 1)
         {
             yield return null;
-            mesh.material.color += Color.black * fadeRate;
+            mesh.material.color += Color.black * fadeRate * Time.deltaTime;
             if (mesh.material.color.a >= 1) //not sure if this value can even be higher than 1, but I'm adding it just in case
             {
                 mesh.material.color = Color.black;
@@ -71,7 +81,7 @@ public class BlackoutCover : Interactive, ISaveable
         while (mesh.material.color.a > 0)
         {
             yield return null;
-            mesh.material.color -= Color.black * fadeRate;
+            mesh.material.color -= Color.black * fadeRate * Time.deltaTime;
             if (mesh.material.color.a <= 0) //not sure if this value can even be lower than 0, but I'm adding it just in case
             {
                 mesh.material.color = Color.clear;
@@ -85,7 +95,8 @@ public class BlackoutCover : Interactive, ISaveable
     {
         return new SaveData
         {
-            visible = isVisible
+            visible = isVisible,
+            activated = alreadyActivated
         };
     }
 
@@ -93,5 +104,6 @@ public class BlackoutCover : Interactive, ISaveable
     {
         var saveData = (SaveData)data;
         isVisible = saveData.visible;
+        alreadyActivated = saveData.activated;
     }
 }

@@ -7,7 +7,7 @@ public abstract class Weapon : MonoBehaviour {
     [SerializeField]
     protected GameObject mShot;
     protected Rigidbody mShotRB;
-    protected GameObject mVFX;
+    protected ParticleSystem mVFX;
     protected GameObject mModel; //really not sure if this is necessary
     protected Vector3 mFiringLocation;
     protected float mShotDelayTimer;
@@ -49,6 +49,8 @@ public abstract class Weapon : MonoBehaviour {
         mFireType = mFireTypes.semi; //default
         mArmsParent = transform.parent.parent;
         mPlayer = mArmsParent.parent.GetComponent<PlayerControls>();
+
+        mVFX = GetComponentInChildren<ParticleSystem>();
     }
 
     public void Start()

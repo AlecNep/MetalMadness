@@ -43,20 +43,22 @@ public class Enemy : MonoBehaviour, ISaveable
         }
         if (TryGetComponent(out Drone drone))
         {
-            drone.SetIdleMode();
+            drone.ResetDrone();
         }
 
         if (TryGetComponent(out Damageable d))
         {
             if (saveData.health <= 0)
             {
-                gameObject.SetActive(false);
+                d.isAlive = false;
+                gameObject.SetActive(d.isAlive);
             }
                 
             else
             {
+                d.isAlive = true;
                 d.SetHealth(saveData.health);
-                d.gameObject.SetActive(true);
+                d.gameObject.SetActive(d.isAlive);
             }
         }
         else
