@@ -1,5 +1,48 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4319434188464314925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6071342371543727212}
+  - component: {fileID: 3469082859711845907}
+  m_Layer: 12
+  m_Name: Red light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6071342371543727212
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4319434188464314925}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.27, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6788125315257782776}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!122 &3469082859711845907
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4319434188464314925}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4279308782
+  m_Size: 0.2
 --- !u!1 &6788125313767474975
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,7 +128,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 12
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6788125315018188065
 GameObject:
@@ -199,6 +242,7 @@ Transform:
   m_Children:
   - {fileID: 6788125313767474968}
   - {fileID: 6788125315433396333}
+  - {fileID: 6071342371543727212}
   m_Father: {fileID: 6788125315816705647}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -310,6 +354,8 @@ GameObject:
   - component: {fileID: 6788125315816705641}
   - component: {fileID: 6788125315816705640}
   - component: {fileID: 8189229535565076831}
+  - component: {fileID: 6387998800565749370}
+  - component: {fileID: 3368998392338831404}
   m_Layer: 12
   m_Name: Elite Shooting Drone
   m_TagString: Enemy
@@ -406,7 +452,7 @@ MonoBehaviour:
   rotationSpeed: 360
   slowdownDistance: 0.6
   pickNextWaypointDist: 1.2
-  endReachedDistance: 5
+  endReachedDistance: 7
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -458,7 +504,7 @@ MonoBehaviour:
   explosionForce: 15
   explosionRadius: 6
   damage: 25
-  fireRate: 2
+  fireRate: 1.5
   camShakeMagnitude: 0.004
   camShakeTime: 0.1
   laser: {fileID: 5606160744072448360, guid: 6b5c05959a1252d449d7d72c6cc98a5c, type: 3}
@@ -474,7 +520,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fd3895a2d40b7c0438eb055779a0f92a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -558,3 +604,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6387998800565749370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6788125315816705646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 587ffc026762e5847878251fffad1ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
+--- !u!114 &3368998392338831404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6788125315816705646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6bc4de2f368b14b918401a932e91e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

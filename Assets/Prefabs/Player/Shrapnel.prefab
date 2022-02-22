@@ -143,6 +143,8 @@ MonoBehaviour:
   mSpeed: 15
   mMaxLifespan: 3
   damage: 3
+  impactEffect: {fileID: 1570927096764274, guid: 643639841fb531e4ba8097fed4eb9ac7,
+    type: 3}
 --- !u!136 &136506586143126650
 CapsuleCollider:
   m_ObjectHideFlags: 0

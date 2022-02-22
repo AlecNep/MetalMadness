@@ -13,42 +13,53 @@ public class Explodable : Damageable
 
     [SerializeField]
     protected float damage;
+    protected Rigidbody rb;
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     protected void Explode()
     {
-        //Should probably put all this into the actual explosion script
-
-        LayerMask entities = 1 << 8 | 1 << 12 | 1 << 13; //Player, enemy, and destructible layers
-        Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, entities); //something about this line causes a StackOverflowException; address ASAP!
-
-        foreach (Collider col in cols)
+        if (isAlive)
         {
-            if (col.gameObject == gameObject)
-                continue;
-            if (col.gameObject.TryGetComponent(out Damageable victim)) //should probably be replaced with TryGetComponent
+            isAlive = false;
+
+            rb.velocity = Vector3.zero;
+            //Should probably put all this into the actual explosion script
+            LayerMask entities = 1 << 8 | 1 << 12 | 1 << 13; //Player, enemy, and destructible layers
+            Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, entities); //something about this line causes a StackOverflowException; address ASAP!
+
+            foreach (Collider col in cols)
             {
-                LayerMask environmentLayers = 1 << LayerMask.NameToLayer("Environment") | 1 << LayerMask.NameToLayer("Doors"); //environment, enemies, destructible, and doors
-                RaycastHit hit;
-                Vector3 direction = col.transform.position - transform.position;
-                if (!Physics.Raycast(transform.position, direction, out hit, direction.magnitude, environmentLayers))
+                if (col.gameObject == gameObject)
+                    continue;
+                if (col.gameObject.TryGetComponent(out Damageable victim)) //should probably be replaced with TryGetComponent
                 {
-                    float value = (explosionRadius - Vector3.Distance(transform.position, col.transform.position)) / explosionRadius;
-                    victim.ChangeHealth(-damage * value);
-                    col.GetComponent<Rigidbody>().AddExplosionForce(explosionForce * value, transform.position, explosionRadius, 0f, ForceMode.Impulse);
+                    LayerMask environmentLayers = 1 << LayerMask.NameToLayer("Environment") | 1 << LayerMask.NameToLayer("Doors"); //environment, enemies, destructible, and doors
+                    RaycastHit hit;
+                    Vector3 direction = col.transform.position - transform.position;
+                    if (!Physics.Raycast(transform.position, direction, out hit, direction.magnitude, environmentLayers))
+                    {
+                        float value = (explosionRadius - Vector3.Distance(transform.position, col.transform.position)) / explosionRadius;
+                        victim.ChangeHealth(-damage * value);
+                        col.GetComponent<Rigidbody>().AddExplosionForce(explosionForce * value, transform.position, explosionRadius, 0f, ForceMode.Impulse);
+                    }
+
+                    //Damageable victim = col.GetComponent<Damageable>();
+
                 }
+                else
+                    print("explosion caught " + col.name);
 
-                //Damageable victim = col.GetComponent<Damageable>();
-                
+
             }
-            else
-                print("explosion caught " + col.name);
-            
-
+            health = 0;
+            gameObject.SetActive(false);
+            Instantiate(explosion, transform.position, transform.rotation);
         }
-
-        Instantiate(explosion, transform.position, transform.rotation);
-        Destroy(gameObject);
+        
     }
 
     public override void Die()

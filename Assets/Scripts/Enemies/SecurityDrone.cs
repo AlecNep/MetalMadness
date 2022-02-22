@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class SecurityDrone : Explodable
+public class SecurityDrone : Drone
 {
     private AIDestinationSetter aiDestination;
-    private Rigidbody rb;
 
-    private GameObject yellowLight;
-    private GameObject blueLight;
-    private GameObject redLight;
+    
 
     [SerializeField]
     private float fireRate;
@@ -34,13 +31,6 @@ public class SecurityDrone : Explodable
         health = maxHealth;
         aiDestination = GetComponent<AIDestinationSetter>();
 
-        Transform lLights = transform.Find("Lights");
-        yellowLight = lLights.Find("Yellow light").gameObject;
-        blueLight = lLights.Find("Blue light").gameObject;
-
-        yellowLight.SetActive(false);
-        rb = GetComponent<Rigidbody>();
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
         laserSound = GetComponent<AudioSource>();
     }
 
@@ -70,6 +60,7 @@ public class SecurityDrone : Explodable
         if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
         {
             aiDestination.target = GameManager.Instance.player.transform;
+            SetAlertMode();
         }
     }
 
@@ -87,8 +78,8 @@ public class SecurityDrone : Explodable
             if (!Physics.Raycast(transform.position, direction, out hit, direction.magnitude, layers))
             {
                 aiDestination.target = other.transform;
-                blueLight.SetActive(false);
-                yellowLight.SetActive(true);
+                if (!isAlerted)
+                    SetAlertMode();
             }
         }
     }
@@ -98,8 +89,7 @@ public class SecurityDrone : Explodable
         if (other.tag == "Player")
         {
             aiDestination.target = null;
-            yellowLight.SetActive(false);
-            blueLight.SetActive(true);
+            SetIdleMode();
         }
     }
 

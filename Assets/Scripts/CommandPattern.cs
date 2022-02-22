@@ -152,40 +152,32 @@ namespace CommandPattern //Might not need this
         private Vector3 relativeDirections;
         public override void Press()
         {
-            
-            if (mPlayerControls.isGrounded)
+            mPlayerControls.Jump();
+            /*if (mPlayerControls.isGrounded)
             {
                 relativeDirections = mPlayer.transform.InverseTransformDirection(mPlayerRb.velocity);
                 if (OverCharge.mCharged)
                 {
-                    //Doesn't seem to make a difference; very inconsistent regardless
-                    //mPlayerRb.AddForce(mPlayerControls.mChargedJumpForce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
-
                     relativeDirections.y = mPlayerControls.mChargedJumpForce;
-                    //mPlayerRb.velocity = mPlayer.transform.TransformDirection(relativeUp);
-                    //mPlayerRb.velocity = -mPlayerControls.mGravShifter.mGravNormal * mPlayerControls.mChargedJumpForce;
                 }
                 else
                 {
-                    //Doesn't seem to make a difference; very inconsistent regardless
-                    //mPlayerRb.AddForce(mPlayerControls.mJumpForce * (-mPlayerControls.mGravShifter.mGravNormal), ForceMode.Impulse);
-                    //mPlayerRb.velocity = -mPlayerControls.mGravShifter.mGravNormal * mPlayerControls.mJumpForce;
                     relativeDirections.y = mPlayerControls.mJumpForce;
                     
                 }
                 mPlayerRb.velocity = mPlayer.transform.TransformDirection(relativeDirections);
-            }
+            }*/
         }
 
         public override void Release()
         {
-            relativeDirections = mPlayer.transform.InverseTransformDirection(mPlayerRb.velocity);
+            mPlayerControls.JumpSlowdown();
+            /*relativeDirections = mPlayer.transform.InverseTransformDirection(mPlayerRb.velocity);
             if (relativeDirections.y > 0)
             {
-                //mPlayerRb.velocity = new Vector3(relativeUp.x, relativeUp.y * mPlayerControls.mCutJumpHeight, relativeUp.z);
                 relativeDirections.y *= mPlayerControls.mCutJumpHeight;
                 mPlayerRb.velocity = mPlayer.transform.TransformDirection(relativeDirections);
-            }
+            }*/
         }
 
         public Jump() : base()
@@ -269,6 +261,14 @@ namespace CommandPattern //Might not need this
         {
             if (mPlayerControls.CanDash())
             {
+                AudioClip sound;
+                if (mPlayerControls.isCharged)
+                    sound = mPlayerControls.chargedDashSound;
+                else
+                    sound = mPlayerControls.dashSound;
+
+                mPlayerControls.fxAudio.PlayOneShot(sound);
+
                 mPlayerControls.mDashTimer = mPlayerControls.mDashDelay; //probably should be waaaay more secure than this
             }
         }
@@ -290,16 +290,12 @@ namespace CommandPattern //Might not need this
 
         public override void Press()
         {
-            //probably super redundant
-            mCharged = true;
-            SetCharge(mCharged);
+            mPlayerControls.isCharged = true;
         }
         
         public override void Release()
         {
-            //probably super redundant
-            mCharged = false;
-            SetCharge(mCharged);
+            mPlayerControls.isCharged = false;
         }
 
         private void SetCharge(bool charged)

@@ -1,14 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class BlackoutCover : Interactive
+public class BlackoutCover : Interactive, ISaveable
 {
     [Range(0,1)]
     public float fadeRate;
     private MeshRenderer mesh;
     [SerializeField]
     private bool isVisible;
+    private bool alreadyActivated = false;
+
+    [Serializable]
+    private struct SaveData
+    {
+        public bool visible;
+        public bool activated;
+    }
 
     private void OnValidate()
     {
@@ -35,16 +44,20 @@ public class BlackoutCover : Interactive
 
     public override void Interact()
     {
-        if (isVisible)
-            StartCoroutine(FadeOut());
-        else
-            StartCoroutine(FadeIn());
+        if (!alreadyActivated)
+        {
+            alreadyActivated = true;
+            if (isVisible)
+            {
+                StartCoroutine(FadeOut());
+            }
+            else
+            {
+                StartCoroutine(FadeIn());
+            }
+        }
     }
 
-    /*public void FadeIn()
-    {
-        StartCoroutine(_FadeIn());
-    }*/
 
     private IEnumerator FadeIn()
     {
@@ -52,7 +65,7 @@ public class BlackoutCover : Interactive
         while (mesh.material.color.a < 1)
         {
             yield return null;
-            mesh.material.color += Color.black * fadeRate;
+            mesh.material.color += Color.black * fadeRate * Time.deltaTime;
             if (mesh.material.color.a >= 1) //not sure if this value can even be higher than 1, but I'm adding it just in case
             {
                 mesh.material.color = Color.black;
@@ -62,18 +75,13 @@ public class BlackoutCover : Interactive
         }
     }
 
-    /*public void FadeOut()
-    {
-        StartCoroutine(_FadeOut());
-    }*/
-
     private IEnumerator FadeOut()
     {
         print("Fading out");
         while (mesh.material.color.a > 0)
         {
             yield return null;
-            mesh.material.color -= Color.black * fadeRate;
+            mesh.material.color -= Color.black * fadeRate * Time.deltaTime;
             if (mesh.material.color.a <= 0) //not sure if this value can even be lower than 0, but I'm adding it just in case
             {
                 mesh.material.color = Color.clear;
@@ -81,5 +89,21 @@ public class BlackoutCover : Interactive
                 break;
             }
         }
+    }
+
+    public object CaptureState()
+    {
+        return new SaveData
+        {
+            visible = isVisible,
+            activated = alreadyActivated
+        };
+    }
+
+    public void LoadState(object data)
+    {
+        var saveData = (SaveData)data;
+        isVisible = saveData.visible;
+        alreadyActivated = saveData.activated;
     }
 }

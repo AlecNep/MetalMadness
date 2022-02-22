@@ -29,6 +29,10 @@ public class RivetGun : Weapon {
                 GameObject lBullet = Instantiate(mChargedShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject; //update soon
                 GameManager.Instance.MainCamera.ScreenShake(mChargedShake, mChargedShakeTime);
                 chargedFX.Play();
+                if (mVFX != null)
+                {
+                    mVFX.Play();
+                }
 
                 lBullet.GetComponent<Bullet>().SetDirection(lDirection);
             }
@@ -43,7 +47,11 @@ public class RivetGun : Weapon {
                 GameObject lBullet = Instantiate(mShot, mBulletSpawn.position, Quaternion.Euler(lOrientation)) as GameObject; //update soon
                 GameManager.Instance.MainCamera.ScreenShake(mScreenShake, mShakeTime);
                 soundFX.Play();
-
+                if (mVFX != null)
+                {
+                    mVFX.Play();
+                }
+                
                 lBullet.GetComponent<Bullet>().SetDirection(lDirection);
             }
         }
