@@ -4252,6 +4252,8 @@ MonoBehaviour:
   mChargedJumpForce: 13
   mCutJumpHeight: 0.8
   isGrounded: 0
+  dashDamage: 20
+  chargedDashDamage: 30
   mShifting: 0
   fxAudio: {fileID: 0}
   dashSound: {fileID: 8300000, guid: 43cb8ad15e801e546a250a08efe15811, type: 3}

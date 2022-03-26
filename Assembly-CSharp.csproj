@@ -124,11 +124,13 @@
     <Compile Include="Assets\Scripts\Tools\QuickFunctions.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireBaseScript.cs" />
     <Compile Include="Assets\Scripts\Player\StickyBombLauncher.cs" />
+    <Compile Include="Assets\Scripts\UI\FinalScene.cs" />
     <Compile Include="Assets\True Explosions\System\Scripts\effects\exploderComponents\PseudoVolumetricComponent.cs" />
     <Compile Include="Assets\Scripts\Environment\SawTrap.cs" />
     <Compile Include="Assets\Scripts\Player\Minigun.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Sequence.cs" />
     <Compile Include="Assets\Scripts\InputManager.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\CreditsLoader.cs" />
     <Compile Include="Assets\Scripts\CommandPattern.cs" />
     <Compile Include="Assets\Scripts\Environment\TimedDoor.cs" />
     <Compile Include="Assets\Scripts\Behavior Tree\Inverter.cs" />
@@ -146,8 +148,6 @@
     <Compile Include="Assets\Scripts\Environment\RemotePlatform.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireLightScript.cs" />
     <Compile Include="Assets\Scripts\Player\SpikeTip.cs" />
-    <Compile Include="Assets\Scripts\UI\FinalScene.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\CreditsLoader.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

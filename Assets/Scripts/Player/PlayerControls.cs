@@ -63,6 +63,10 @@ public class PlayerControls : Damageable, ISaveable {
     private bool alreadyLanded;
     private bool mOnMovingObject; //used for when the player is on top of another moving object
     private float mZDistance = 0f;
+    [SerializeField]
+    private float dashDamage;
+    [SerializeField]
+    private float chargedDashDamage;
 
     public bool mShifting = false;
 
@@ -504,6 +508,35 @@ public class PlayerControls : Damageable, ISaveable {
         }
     }
 
+    private void OnCollisionEnter(Collision col)
+    {
+        if (IsDashing() && col.gameObject.TryGetComponent(out Damageable damageable))
+        {
+            print("Should be dash damaging");
+            float lDamage = isCharged ? dashDamage : chargedDashDamage;
+            damageable.ChangeHealth(-lDamage);
+        }
+
+        GameObject lGO = col.gameObject;
+        if (lGO.tag == "MovingPlatform")
+        {
+            if (!mOnMovingObject)
+            {
+                mOnMovingObject = true;
+                transform.SetParent(lGO.transform, true);
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision col)
+    {
+        GameObject lGO = col.gameObject;
+        if (lGO.tag == "MovingPlatform")
+        {
+            DetachFromMovingObject();
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         int[] standables = { 11, 12, 13, 15 };
@@ -668,27 +701,5 @@ public class PlayerControls : Damageable, ISaveable {
     public override void Die()
     {
         GameManager.Instance.PlayerDeathSequence();
-    }
-
-    private void OnCollisionEnter(Collision col)
-    {
-        GameObject lGO = col.gameObject;
-        if (lGO.tag == "MovingPlatform")
-        {
-            if (!mOnMovingObject)
-            {
-                mOnMovingObject = true;
-                transform.SetParent(lGO.transform, true);
-            }
-        }
-    }
-
-    private void OnCollisionExit(Collision col)
-    {
-        GameObject lGO = col.gameObject;
-        if (lGO.tag == "MovingPlatform")
-        {
-            DetachFromMovingObject();
-        }
     }
 }
