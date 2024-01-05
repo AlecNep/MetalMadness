@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 33626532004108466}
   - component: {fileID: 23434847006468676}
   - component: {fileID: 65366433573631306}
+  - component: {fileID: -2188936561902687626}
   m_Layer: 11
   m_Name: Deck_FloorCeiling_01_snaps002
   m_TagString: Untagged
@@ -97,3 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.000025, y: 0.2500012, z: 3.0000248}
   m_Center: {x: 1.5000001, y: 0.124999404, z: 1.4999993}
+--- !u!54 &-2188936561902687626
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409081151409220}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
